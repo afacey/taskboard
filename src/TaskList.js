@@ -4,8 +4,8 @@ import TaskItem from './TaskItem';
 const TaskList = props => {
   return(
     <div>
-      <h2>{props.children} <span>{props.tasks.length}</span></h2>
-      <ul className="TaskList">
+      <h2>{props.children} {props.tasks.length > 0 && <span>: {props.tasks.length}</span>}</h2>
+      <ul className="">
         { 
           props.tasks.map(({key, task, status}) => (
             <TaskItem 

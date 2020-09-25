@@ -48,19 +48,18 @@ class App extends Component {
 
   moveTask = (key, status, direction) => {
     const dbRef = firebase.database().ref('tasks/' + key);
-    // TODO may need to change for stretch goals implementation
-    // const newStatus = status === 'new' ? 'inProgress' : 'complete';
-    // const newStatus = this.state.taskStatus[direction]
-    let newStatus;
+    const { taskStatus } = this.state;
+    const currentIdx = taskStatus.indexOf(status);
 
-    if (direction === 1) {
-      newStatus = status === 'new' ? 'inProgress' : 'inProgress' ? 'complete' : 'new';
-    } 
-    else if (direction === -1) {
-      newStatus = status === 'complete' ? 'inProgress' : 'inProgress' ? 'new' : 'complete';
-    }
+    // store new index as the value of currentIdx + the direction (1 or - 1)
+    let newIdx = currentIdx + direction;
 
-    dbRef.update({status: newStatus});
+    // prevent out of range indexes of the taskStatus array
+    // if newIdx < 0 - set to 0, if newIdx gte taskStatus length - set to last item in array, otherwise keep the value
+    newIdx = newIdx < 0 ? 0 : newIdx >= taskStatus.length ? taskStatus.length - 1 : newIdx;
+
+    // if task has a new position update it in the database
+    newIdx !== currentIdx && dbRef.update({status: taskStatus[newIdx]});
   }
 
   addTask = (evt) => {
@@ -79,7 +78,6 @@ class App extends Component {
 
   updateTask = (key, newValue) => {
     const dbRef = firebase.database().ref('tasks/' + key);
-
     dbRef.update({task: newValue})
   }
 
@@ -95,7 +93,7 @@ class App extends Component {
         {/* START of HEADER */}
         <header className="App-header">
           <div className="wrapper">
-            <h1>Productivity App</h1>
+            <h1>Task Board</h1>
             <form action="#" onSubmit={(e) => this.addTask(e)}>
               <label htmlFor="task" className="sr-only">Add A New Task</label>
               {/* TODO remove autocomplete for submission */}
