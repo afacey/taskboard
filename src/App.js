@@ -77,6 +77,12 @@ class App extends Component {
     this.setState({newTask: ""});
   }
 
+  updateTask = (key, newValue) => {
+    const dbRef = firebase.database().ref('tasks/' + key);
+
+    dbRef.update({task: newValue})
+  }
+
   render() {
     // heading text for task status lists
     const statusString = {
@@ -113,6 +119,7 @@ class App extends Component {
                       tasks={tasks} 
                       moveTask={this.moveTask}
                       removeTask={this.removeTask}
+                      editTask={this.updateTask}
                     >
                       {statusString[status]}
                     </TaskList>
