@@ -28,6 +28,8 @@ ul {
 body {
   font-size: 1.6rem;
   background-color: #EEE;
+  background-size: cover;
+  background-position: center;
 }
 
 .wrapper {
@@ -60,7 +62,16 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding: 2rem;
+  padding: 5rem 0;
+}
+
+.App-header h1 {
+  margin-bottom: 3rem;
+}
+
+.App-header input {
+  background-color: #EEE;
+  padding-left: 15px;
 }
 
 .App-link {
