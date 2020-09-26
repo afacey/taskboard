@@ -103,6 +103,8 @@ body {
 
 .taskLists .btn__taskList {
   float: right;
+  font-size: 1.6rem;
+  margin-top: 4px;
 }
 
 .taskLists .open {

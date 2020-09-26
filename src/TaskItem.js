@@ -12,6 +12,11 @@ class TaskItem extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const input = document.querySelector('#taskEdit');
+    input && input.focus();
+  }
+
   handleChange = (evt) => {
     this.setState({
       [evt.target.id]: evt.target.value
@@ -36,26 +41,30 @@ class TaskItem extends Component {
         <li className="taskItem">
       { 
         status !== 'open' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
-        <FontAwesomeIcon icon={faArrowLeft} />
+        <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
+        <span className="sr-only">Click to move task to the next status</span>
         </button>
       }
       { 
-        !this.state.isEditing ? task : 
-        <>
-        <form action="#" onSubmit={this.handleEditSubmit}>
-          {/* TODO remove autocomplete for submission */}
-          <input type="text" id="taskEdit" name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit} autoComplete="off"/>
-          <button className="btn__task btn__task--save">Save</button>
-          <button onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
-        </form>  
-      </>
+        !this.state.isEditing 
+          ? <p onClick={this.toggleEdit}>{task}</p> 
+          : <>
+              <form action="#" onSubmit={this.handleEditSubmit}>
+                {/* TODO remove autocomplete for submission */}
+                <input type="text" id="taskEdit" name="taskEdit" onBlur={this.toggleEdit} onChange={this.handleChange} value={this.state.taskEdit} autoComplete="off"/>
+                <button className="btn__task btn__task--save">Save</button>
+                <button onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
+              </form>  
+            </>
       }
-        <button className="btn__task btn__task--edit" onClick={this.toggleEdit}>
+        {/* <button className="btn__task btn__task--edit" onClick={this.toggleEdit}>
           {this.state.isEditing ? 'Cancel' : 'Edit'}
-        </button>
+        </button> */}
       
       { status !== 'complete' && <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
-      <FontAwesomeIcon icon={faArrowRight} />
+      <FontAwesomeIcon icon={faArrowRight} aria-hidden="true"/>
+      <span className="sr-only">Click to move task to the next status</span>
+
         </button>}
         </li>
       </>
