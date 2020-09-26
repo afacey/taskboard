@@ -1,16 +1,16 @@
 import React from 'react';
 import TaskItem from './TaskItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 const TaskList = props => {
   const { status, tasks, children } = props;
   return(
     <div className="taskList">
-      <h2 className={status + " clearfix"}>
+      <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
         {children} 
-        {tasks.length > 0 && <span> ({tasks.length})</span>}
-        <button className={`btn__taskList btn__taskList--${status}`}>+ Task</button>
-        {/* <button className="btn__taskList"><FontAwesomeIcon icon={faPlus} size="1x" /></button> */}
+        {tasks.length > 0 && <span class="taskList__count">{tasks.length}</span>}
+        <button className={`btn__taskList btn__taskList--add`}>+ Task</button>
+        <button className="btn__taskList btn__taskList--menu"><FontAwesomeIcon icon={faEllipsisV} /></button>
       </h2>
       <ul className="">
         { 

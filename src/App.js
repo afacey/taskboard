@@ -103,7 +103,7 @@ class App extends Component {
       <div className="App">
         {/* START of HEADER */}
         <header className="App-header">
-          <div className="wrapper">
+          <div className="wrapper flex-container">
             <h1>Task Board</h1>
             <form action="#" onSubmit={(e) => this.addTask(e)}>
               <label htmlFor="task" className="sr-only">Add A New Task</label>

@@ -30,6 +30,7 @@ body {
   background-color: #EEE;
   background-size: cover;
   background-position: center;
+  color: #111;
 }
 
 .wrapper {
@@ -53,23 +54,30 @@ body {
 }
 
 .App-header {
-  /* text-align: center; */
-  /* background-color: #282c34; */
-  /* min-height: 100vh; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
+  min-height: 20vh;
   font-size: calc(10px + 2vmin);
-  color: white;
-  padding: 5rem 0;
+  color:black;
+  padding: 3rem 0;
+  background-color: #FAFAFA;
+  border-bottom: 2px solid rgba(17,17,17,0.4);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.App-header .flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .App-header h1 {
   margin-bottom: 3rem;
   font-weight: 300;
   letter-spacing: 1px;
-  color: #27ae60;
+  /* color: #27ae60; */
+  color: #111;
+  
 }
 
 .App-header input {
@@ -82,7 +90,7 @@ body {
 }
 
 .App-main {
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
 .taskLists {
@@ -94,49 +102,79 @@ body {
   /* text-align: center; */
 }
 
-.taskLists h2 {
+.taskList__heading {
   margin-bottom: 1.5rem;
   font-weight: 400;
   /* text-align: left; */
   padding-bottom: 10px;
   border-radius: 5px;
-  position: relative;
+  /* position: relative; */
+  background-color: #FAFAFA;
+  padding: 1.5rem;
+}
+
+.taskList__count {
+  margin-left: 1rem;
 }
 
 .btn__taskList {
-  float: right;
   font-size: 1.6rem;
-  /* margin-top: 4px; */
+  padding: 6px;
+}
+
+.btn__taskList--menu {
+  float: left;
+  border: none;
+  background: none;
+  padding: 6px 10px;
+  /* color: #111; */
+}
+.btn__taskList--add {
+  float: right;
   border-radius: 5px;
-  padding: 5px;
-  /* border: 0; */
   color: #EEE;
 }
 
-.btn__taskList--open {
+.taskList__heading--open {
+  border-bottom: 5px solid rgb(178, 34, 34);
+}
+
+.taskList__heading--open .taskList__count,
+.taskList__heading--open .btn__taskList--menu {
+  color: rgb(178, 34, 34);
+}
+
+.taskList__heading--open .btn__taskList--add {
   border: 2px solid rgb(178, 34, 34);
   background: rgb(178, 34, 34);
 }
-.btn__taskList--inProgress {
+
+.taskList__heading--inProgress {
+  border-bottom: 5px solid rgb(70, 130, 180);
+}
+
+.taskList__heading--inProgress .taskList__count,
+.taskList__heading--inProgress .btn__taskList--menu {
+  color: rgb(70, 130, 180);
+}
+
+.taskList__heading--inProgress .btn__taskList--add {
   border: 2px solid rgb(70, 130, 180);
   background: rgb(70, 130, 180);
 }
 
-.btn__taskList--complete {
+.taskList__heading--complete {
+  border-bottom: 5px solid rgb(39, 174, 96);
+}
+
+.taskList__heading--complete .taskList__count,
+.taskList__heading--complete .btn__taskList--menu {
+  color: rgb(39, 174, 96);
+}
+
+.taskList__heading--complete .btn__taskList--add {
   border: 2px solid #27ae60;
   background: #27ae60;
-}
-
-.taskLists .open {
-  border-bottom: 5px solid rgb(178, 34, 34);
-}
-
-.taskLists .inProgress {
-  border-bottom: 5px solid rgb(70, 130, 180);
-}
-
-.taskLists .complete {
-  border-bottom: 5px solid rgb(39, 174, 96);
 }
 
 .taskLists li:not(:last-child) {
