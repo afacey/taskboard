@@ -143,7 +143,7 @@ class App extends Component {
         {/* START of FOOTER */}
         <footer>
           <div className="wrapper">
-            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com">Juno College</a> - Design Inspiration from <a href="https://dribbble.com/shots/6250762-Kanban-Board">Nikita</a></p>
+            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com">Juno College</a> - Design Inspiration from Scott Sobere-Yu and <a href="https://dribbble.com/shots/6250762-Kanban-Board">Nikita</a></p>
           </div>
         </footer>
       </div>

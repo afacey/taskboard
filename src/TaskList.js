@@ -3,12 +3,14 @@ import TaskItem from './TaskItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 const TaskList = props => {
+  const { status, tasks, children } = props;
   return(
     <div className="taskList">
-      <h2 className={props.status + " clearfix"}>
-        {props.children} 
-        {props.tasks.length > 0 && <span>({props.tasks.length})</span>}
-        {/* <button className="btn__taskList">+ Add Task</button> */}
+      <h2 className={status + " clearfix"}>
+        {children} 
+        {tasks.length > 0 && <span> ({tasks.length})</span>}
+        <button className={`btn__taskList btn__taskList--${status}`}>+ Task</button>
+        {/* <button className="btn__taskList"><FontAwesomeIcon icon={faPlus} size="1x" /></button> */}
       </h2>
       <ul className="">
         { 
@@ -23,7 +25,6 @@ const TaskList = props => {
               moveTask={props.moveTask} />)
           )
         }
-        <button className="btn__taskList"><FontAwesomeIcon icon={faPlus} size="2x" /></button>
       </ul>
     </div>
   )

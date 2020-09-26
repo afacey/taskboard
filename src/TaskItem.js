@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import autosize from 'autosize'
 
 class TaskItem extends Component {
   constructor(props) {
@@ -8,13 +9,17 @@ class TaskItem extends Component {
 
     this.state = {
       taskEdit: props.task,
-      isEditing: false
+      isEditing: false,
     }
   }
 
   componentDidUpdate() {
     const input = document.querySelector('#taskEdit');
-    input && input.focus();
+    if (input) {
+      autosize(input);
+      input.focus();
+    } 
+
   }
 
   handleChange = (evt) => {
@@ -37,40 +42,38 @@ class TaskItem extends Component {
     const { id, task, status } = this.props;
   
     return(
-      <>
-        <li className="taskItem">
-        <button onClick={this.removeTask} className="btn__task btn__task--delete">
-          <FontAwesomeIcon icon={faTimes} />
-        </button>
-      { 
-        status !== 'open' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
-        <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
-        <span className="sr-only">Click to move task to the next status</span>
-        </button>
-      }
-      { 
-        !this.state.isEditing 
-          ? <p onClick={this.toggleEdit}>{task}</p> 
-          : <>
-              <form action="#" onSubmit={this.handleEditSubmit}>
-                {/* TODO remove autocomplete for submission */}
-                <input type="text" id="taskEdit" name="taskEdit" onBlur={this.toggleEdit} onChange={this.handleChange} value={this.state.taskEdit} autoComplete="off"/>
-                <button className="btn__task btn__task--save">Save</button>
-              </form>  
-            </>
-      }
-        {/* <button className="btn__task btn__task--edit" onClick={this.toggleEdit}>
-          {this.state.isEditing ? 'Cancel' : 'Edit'}
-        </button> */}
+      <li className={`taskItem taskItem--${status}`} >
       
-      { status !== 'complete' && <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
-      <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
-      <span className="sr-only">Click to move task to the next status</span>
-
-        </button>}
-        </li>
-      </>
-  
+      {
+        status !== 'open' &&
+        <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
+          <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
+          <span className="sr-only">Click to move task to the next status</span>
+        </button>
+      }
+    
+    { 
+      !this.state.isEditing 
+        ? <p className="taskItem__text" onClick={this.toggleEdit}>{task}</p> 
+        :
+          <form action="#" onSubmit={this.handleEditSubmit} className="clearfix">
+            {/* TODO remove autocomplete for submission */}
+            <textarea className="taskItem__editInput" id="taskEdit" name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit}>
+            </textarea>
+            <button type="button" onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
+            <button type="button" onClick={this.toggleEdit} className="btn__task btn__task--edit">Cancel</button>
+            <button className="btn__task btn__task--save">Save</button>
+          </form>  
+    }
+      
+    {
+      status !== "complete" &&
+        <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
+          <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
+          <span className="sr-only">Click to move task to the next status</span>
+        </button>
+    }
+    </li>
     ) 
   }
 }
