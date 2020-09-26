@@ -25,6 +25,12 @@ ul {
   list-style: none; 
 }
 
+button:hover,
+button:active,
+button:focus {
+  cursor: pointer;
+}
+
 body {
   font-size: 1.6rem;
   background-color: #EEE;
@@ -34,7 +40,7 @@ body {
 }
 
 .wrapper {
-  max-width: 1400px;
+  max-width: 1440px;
   width: 90%;
   margin: 0 auto;
 }
@@ -54,7 +60,6 @@ body {
 }
 
 .App-header {
-  min-height: 20vh;
   font-size: calc(10px + 2vmin);
   color:black;
   padding: 3rem 0;
