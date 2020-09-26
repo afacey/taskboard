@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class TaskItem extends Component {
   constructor(props) {
@@ -39,9 +39,12 @@ class TaskItem extends Component {
     return(
       <>
         <li className="taskItem">
+        <button onClick={this.removeTask} className="btn__task btn__task--delete">
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
       { 
         status !== 'open' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
-        <FontAwesomeIcon icon={faArrowLeft} aria-hidden="true" />
+        <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
         <span className="sr-only">Click to move task to the next status</span>
         </button>
       }
@@ -53,7 +56,6 @@ class TaskItem extends Component {
                 {/* TODO remove autocomplete for submission */}
                 <input type="text" id="taskEdit" name="taskEdit" onBlur={this.toggleEdit} onChange={this.handleChange} value={this.state.taskEdit} autoComplete="off"/>
                 <button className="btn__task btn__task--save">Save</button>
-                <button onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
               </form>  
             </>
       }
@@ -62,7 +64,7 @@ class TaskItem extends Component {
         </button> */}
       
       { status !== 'complete' && <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
-      <FontAwesomeIcon icon={faArrowRight} aria-hidden="true"/>
+      <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
       <span className="sr-only">Click to move task to the next status</span>
 
         </button>}

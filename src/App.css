@@ -90,6 +90,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 4rem;
+  text-align: center;
 }
 
 .taskLists h2 {
@@ -102,9 +103,13 @@ body {
 }
 
 .taskLists .btn__taskList {
-  float: right;
-  font-size: 1.6rem;
-  margin-top: 4px;
+  /* float: right; */
+  /* font-size: 1.6rem; */
+  /* margin-top: 4px; */
+  /* border: 2px solid black;
+  border-radius: 50%;
+  padding: 10px; */
+  border: 0;
 }
 
 .taskLists .open {
@@ -162,27 +167,29 @@ body {
 }
 
 .btn__task--delete {
-  background-color: red;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  position: relative;
+  background: none;
+  top: 5px;
+  left: 10px;
+  color: black;
 }
 
 .btn__task--prev,
 .btn__task--next {
-  bottom: 0;
+  bottom: 10px;
+  background: none;
+  color: black;
   padding: 8px 20px;
 }
 
 .btn__task--prev {
   left: 0;
-  background: steelblue;
+  /* background: steelblue; */
   border-top-right-radius: 5px;
 }
 
 .btn__task--next {
   right: 0;
-  background: seagreen;
+  /* background: seagreen; */
   border-top-left-radius: 5px;;
 }
 
