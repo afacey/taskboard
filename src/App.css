@@ -88,7 +88,7 @@ body {
   display: flex;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 3rem;
 }
 
@@ -100,7 +100,7 @@ body {
   border-radius: 5px;
 }
 
-.taskLists .newTask {
+.taskLists .open {
   border-bottom: 5px solid firebrick;
 }
 
@@ -151,12 +151,14 @@ body {
   background-color: seagreen;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  position: relative;
 }
 
 .btn__task--delete {
   background-color: red;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  position: relative;
 }
 
 .btn__task--prev {

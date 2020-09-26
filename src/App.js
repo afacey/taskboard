@@ -9,7 +9,7 @@ class App extends Component {
     
     this.state = {
       newTask: "",
-      taskStatus: ['newTask', 'inProgress', 'complete'],
+      taskStatus: ['open', 'inProgress', 'complete'],
       taskItems: []
     }
   }
@@ -70,11 +70,11 @@ class App extends Component {
   addTask = (evt) => {
     evt.preventDefault();
     const dbRef = firebase.database().ref("tasks");
-
+    
     // store new task in object to pushed to db later
     const newTask = {
       task: this.state.newTask,
-      status: 'new'
+      status: this.state.taskStatus[0]
     }
 
     // push new task to the database
@@ -94,7 +94,7 @@ class App extends Component {
   render() {
     // heading text for task status lists
     const statusString = {
-      newTask: "New Tasks",
+      open: "Open",
       inProgress: "In Progress",
       complete: "Completed"
     }

@@ -33,7 +33,7 @@ class TaskItem extends Component {
       <>
         <li className="taskItem">
       { 
-        status !== 'newTask' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
+        status !== 'open' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
         <span role="img" aria-label="move task to previous status">Prev</span>
         </button>
       }
