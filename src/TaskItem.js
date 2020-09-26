@@ -1,4 +1,6 @@
 import React, { Component} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 class TaskItem extends Component {
   constructor(props) {
@@ -34,14 +36,15 @@ class TaskItem extends Component {
         <li className="taskItem">
       { 
         status !== 'open' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
-        <span role="img" aria-label="move task to previous status">Prev</span>
+        <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       }
       { 
         !this.state.isEditing ? task : 
         <>
         <form action="#" onSubmit={this.handleEditSubmit}>
-          <input type="text" id="taskEdit" name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit}/>
+          {/* TODO remove autocomplete for submission */}
+          <input type="text" id="taskEdit" name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit} autoComplete="off"/>
           <button className="btn__task btn__task--save">Save</button>
           <button onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
         </form>  
@@ -52,15 +55,13 @@ class TaskItem extends Component {
         </button>
       
       { status !== 'complete' && <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
-        <span role="img" aria-label="move task to next status">Next</span>
+      <FontAwesomeIcon icon={faArrowRight} />
         </button>}
         </li>
       </>
   
     ) 
   }
-
-  // const moveTask = () => props.moveTask(id, status);
 }
 
 export default TaskItem;

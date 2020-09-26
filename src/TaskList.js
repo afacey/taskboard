@@ -4,7 +4,11 @@ import TaskItem from './TaskItem';
 const TaskList = props => {
   return(
     <div className="taskList">
-      <h2 className={props.status}>{props.children} {props.tasks.length > 0 && <span>({props.tasks.length})</span>}</h2>
+      <h2 className={props.status + " clearfix"}>
+        {props.children} 
+        {props.tasks.length > 0 && <span>({props.tasks.length})</span>}
+        <button className="btn__taskList">+ Add Task</button>
+      </h2>
       <ul className="">
         { 
           props.tasks.map(({key, task, status}) => (

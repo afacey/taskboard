@@ -98,6 +98,7 @@ class App extends Component {
       inProgress: "In Progress",
       complete: "Completed"
     }
+
     return (
       <div className="App">
         {/* START of HEADER */}
@@ -122,9 +123,9 @@ class App extends Component {
                   const tasks = this.state.taskItems.filter(task => task.status === status);
                   return (
                     <TaskList 
+                      className="taskList" 
                       key={idx} 
                       status={status}
-                      className="taskList" 
                       tasks={tasks} 
                       moveTask={this.moveTask}
                       removeTask={this.removeTask}
@@ -139,6 +140,7 @@ class App extends Component {
           </div>
         </main>
 
+        {/* START of FOOTER */}
         <footer>
           <div className="wrapper">
             <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com">Juno College</a> - Design Inspiration from <a href="https://dribbble.com/shots/6250762-Kanban-Board">Nikita</a></p>

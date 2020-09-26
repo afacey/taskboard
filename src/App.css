@@ -89,15 +89,20 @@ body {
   justify-content: space-between;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .taskLists h2 {
   margin-bottom: 1.5rem;
   font-weight: 400;
-  text-align: center;
+  /* text-align: center; */
   padding-bottom: 10px;
   border-radius: 5px;
+  position: relative;
+}
+
+.taskLists .btn__taskList {
+  float: right;
 }
 
 .taskLists .open {
@@ -130,7 +135,7 @@ body {
 .btn__task {
   position: absolute;
   border: 0;
-  padding: 5px;
+  padding: 8px;
   color: #FAFAFA;
 }
 
@@ -161,16 +166,20 @@ body {
   position: relative;
 }
 
+.btn__task--prev,
+.btn__task--next {
+  bottom: 0;
+  padding: 8px 20px;
+}
+
 .btn__task--prev {
   left: 0;
-  bottom: 0;
   background: steelblue;
   border-top-right-radius: 5px;
 }
 
 .btn__task--next {
   right: 0;
-  bottom: 0;
   background: seagreen;
   border-top-left-radius: 5px;;
 }
