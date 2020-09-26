@@ -9,11 +9,12 @@ class App extends Component {
     
     this.state = {
       newTask: "",
-      taskStatus: ['new', 'inProgress', 'complete'],
+      taskStatus: ['newTask', 'inProgress', 'complete'],
       taskItems: []
     }
   }
 
+  // --------------------------- componentDidMount
   componentDidMount() {
     // db reference of "tasks"
     const dbRef = firebase.database().ref("tasks");
@@ -38,17 +39,21 @@ class App extends Component {
     });
   }
 
+// --------------------------- handleTaskChange
   // control input DOM changes in state
   handleTaskChange = (evt) => this.setState({newTask: evt.target.value});
 
+  // --------------------------- removeTask
   removeTask = (key) => {
     const dbRef = firebase.database().ref('tasks');
     dbRef.child(key).remove();
   }
-
+// --------------------------- moveTask
   moveTask = (key, status, direction) => {
     const dbRef = firebase.database().ref('tasks/' + key);
     const { taskStatus } = this.state;
+
+    // find current status index
     const currentIdx = taskStatus.indexOf(status);
 
     // store new index as the value of currentIdx + the direction (1 or - 1)
@@ -61,30 +66,35 @@ class App extends Component {
     // if task has a new position update it in the database
     newIdx !== currentIdx && dbRef.update({status: taskStatus[newIdx]});
   }
-
+// --------------------------- addTask
   addTask = (evt) => {
     evt.preventDefault();
     const dbRef = firebase.database().ref("tasks");
 
+    // store new task in object to pushed to db later
     const newTask = {
       task: this.state.newTask,
       status: 'new'
     }
 
+    // push new task to the database
     dbRef.push(newTask)
     
+    // clear the add task input
     this.setState({newTask: ""});
   }
 
+// --------------------------- updateTask
   updateTask = (key, newValue) => {
     const dbRef = firebase.database().ref('tasks/' + key);
     dbRef.update({task: newValue})
   }
 
+// --------------------------- render
   render() {
     // heading text for task status lists
     const statusString = {
-      new: "New Tasks",
+      newTask: "New Tasks",
       inProgress: "In Progress",
       complete: "Completed"
     }
@@ -113,6 +123,7 @@ class App extends Component {
                   return (
                     <TaskList 
                       key={idx} 
+                      status={status}
                       className="taskList" 
                       tasks={tasks} 
                       moveTask={this.moveTask}
@@ -127,6 +138,12 @@ class App extends Component {
             </div>
           </div>
         </main>
+
+        <footer>
+          <div className="wrapper">
+            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com">Juno College</a> - Design Inspiration from <a href="https://dribbble.com/shots/6250762-Kanban-Board">Nikita</a></p>
+          </div>
+        </footer>
       </div>
     );
   }

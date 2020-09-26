@@ -95,11 +95,89 @@ body {
 .taskLists h2 {
   margin-bottom: 1.5rem;
   font-weight: 400;
+  text-align: center;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+
+.taskLists .newTask {
+  border-bottom: 5px solid firebrick;
+}
+
+.taskLists .inProgress {
+  border-bottom: 5px solid steelblue;
+}
+
+.taskLists .complete {
+  border-bottom: 5px solid seagreen;
 }
 
 .taskLists li:not(:last-child) {
   margin-bottom: 2rem;
 }
+
+.taskItem {
+  padding: 2.5rem;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  background-color: #FAFAFA;
+  min-height: 120px;
+  overflow: hidden;
+}
+
+.btn__task {
+  position: absolute;
+  border: 0;
+  padding: 5px;
+  color: #FAFAFA;
+}
+
+.btn__task:hover,
+.btn__task:focus,
+.btn__task:active {
+  cursor: pointer;
+}
+
+.btn__task--edit {
+  top: 0;
+  right: 0;
+  background-color: orange;
+  border-bottom-left-radius: 5px;
+}
+
+.btn__task--save {
+  background-color: seagreen;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.btn__task--delete {
+  background-color: red;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.btn__task--prev {
+  left: 0;
+  bottom: 0;
+  background: steelblue;
+  border-top-right-radius: 5px;
+}
+
+.btn__task--next {
+  right: 0;
+  bottom: 0;
+  background: seagreen;
+  border-top-left-radius: 5px;;
+}
+
+footer {
+  padding: 2rem 0;
+  text-align: center;
+}
+
 
 @keyframes App-logo-spin {
   from {

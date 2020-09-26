@@ -31,10 +31,10 @@ class TaskItem extends Component {
   
     return(
       <>
-        <li>
+        <li className="taskItem">
       { 
-        status !== 'new' && <button onClick={ () => this.props.moveTask(id, status, -1)}>
-        <span role="img" aria-label="move task to previous status">⬅️</span>
+        status !== 'newTask' && <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
+        <span role="img" aria-label="move task to previous status">Prev</span>
         </button>
       }
       { 
@@ -42,16 +42,17 @@ class TaskItem extends Component {
         <>
         <form action="#" onSubmit={this.handleEditSubmit}>
           <input type="text" id="taskEdit" name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit}/>
-          <button><span role="img" aria-label="save editing task">✅</span></button>
-      <button type="button" onClick={this.toggleEdit}><span role="img" aria-label="cancel editing task">❌</span></button>
+          <button className="btn__task btn__task--save">Save</button>
+          <button onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
         </form>  
-      <button onClick={this.removeTask}><span role="img" aria-label="delete task">🗑</span></button>
       </>
       }
-        <button onClick={this.toggleEdit}>Edit</button>
+        <button className="btn__task btn__task--edit" onClick={this.toggleEdit}>
+          {this.state.isEditing ? 'Cancel' : 'Edit'}
+        </button>
       
-      { status !== 'complete' && <button onClick={ () => this.props.moveTask(id, status, 1)}>
-        <span role="img" aria-label="move task to next status">➡️</span>
+      { status !== 'complete' && <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
+        <span role="img" aria-label="move task to next status">Next</span>
         </button>}
         </li>
       </>
