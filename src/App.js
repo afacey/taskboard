@@ -8,9 +8,8 @@ class App extends Component {
     super();
     
     this.state = {
-      newTask: "",
       taskStatus: ['open', 'inProgress', 'complete'],
-      taskItems: []
+      taskItems: [],
     }
   }
 
@@ -38,17 +37,19 @@ class App extends Component {
       this.setState({taskItems});
     });
   }
+  // --------------------------- clearTaskboard
+  clearTaskboard = (newTask) => firebase.database().ref("tasks").remove();
 
-// --------------------------- handleTaskChange
-  // control input DOM changes in state
-  handleTaskChange = (evt) => this.setState({newTask: evt.target.value});
+  // --------------------------- addTask
+  addTask = (newTask) => firebase.database().ref("tasks").push(newTask);
+  
+  // --------------------------- updateTask
+  updateTask = (key, newValue) => firebase.database().ref('tasks/' + key).update({task: newValue});
 
   // --------------------------- removeTask
-  removeTask = (key) => {
-    const dbRef = firebase.database().ref('tasks');
-    dbRef.child(key).remove();
-  }
-// --------------------------- moveTask
+  removeTask = (key) => firebase.database().ref('tasks').child(key).remove();
+
+  // --------------------------- moveTask
   moveTask = (key, status, direction) => {
     const dbRef = firebase.database().ref('tasks/' + key);
     const { taskStatus } = this.state;
@@ -66,31 +67,8 @@ class App extends Component {
     // if task has a new position update it in the database
     newIdx !== currentIdx && dbRef.update({status: taskStatus[newIdx]});
   }
-// --------------------------- addTask
-  addTask = (evt) => {
-    evt.preventDefault();
-    const dbRef = firebase.database().ref("tasks");
-    
-    // store new task in object to pushed to db later
-    const newTask = {
-      task: this.state.newTask,
-      status: this.state.taskStatus[0]
-    }
 
-    // push new task to the database
-    dbRef.push(newTask)
-    
-    // clear the add task input
-    this.setState({newTask: ""});
-  }
-
-// --------------------------- updateTask
-  updateTask = (key, newValue) => {
-    const dbRef = firebase.database().ref('tasks/' + key);
-    dbRef.update({task: newValue})
-  }
-
-// --------------------------- render
+  // --------------------------- render
   render() {
     // heading text for task status lists
     const statusString = {
@@ -103,14 +81,10 @@ class App extends Component {
       <div className="App">
         {/* START of HEADER */}
         <header className="App-header">
+          {/* TODO flex-container still needed? */}
           <div className="wrapper flex-container">
             <h1>Task Board</h1>
-            <form action="#" onSubmit={(e) => this.addTask(e)}>
-              <label htmlFor="task" className="sr-only">Add A New Task</label>
-              {/* TODO remove autocomplete for submission */}
-              <input onChange={this.handleTaskChange} type="text" name="task" id="task" placeholder="add a task" value={this.state.newTask} autoComplete="off"/>
-              <button>Add Task!</button>
-            </form>
+            { this.state.taskItems.length > 0 && <button onClick={this.clearTaskboard}>Clear Board</button>}
           </div>
         </header>
         
@@ -127,6 +101,7 @@ class App extends Component {
                       key={idx} 
                       status={status}
                       tasks={tasks} 
+                      addTask={this.addTask}
                       moveTask={this.moveTask}
                       removeTask={this.removeTask}
                       editTask={this.updateTask}

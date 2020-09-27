@@ -34,19 +34,23 @@ class TaskItem extends Component {
     this.toggleEdit();
   }
 
+  handleMovePrev = () => this.props.moveTask(this.props.id, this.props.status, -1);
+  handleMoveNext = () => this.props.moveTask(this.props.id, this.props.status, 1);
+
   removeTask = () => this.props.removeTask(this.props.id);
   
-  toggleEdit = () => this.setState({isEditing: !this.state.isEditing})
+  toggleEdit = () => { this.setState({ isEditing: !this.state.isEditing }); }
+
   render() {
 
-    const { id, task, status } = this.props;
+    const { task, status } = this.props;
   
     return(
       <li className={`taskItem taskItem--${status}`} >
       
       {
         status !== 'open' &&
-        <button className="btn__task btn__task--prev" onClick={ () => this.props.moveTask(id, status, -1)}>
+        <button className="btn__task btn__task--prev" onClick={this.handleMovePrev}>
           <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
           <span className="sr-only">Click to move task to the next status</span>
         </button>
@@ -68,7 +72,7 @@ class TaskItem extends Component {
       
     {
       status !== "complete" &&
-        <button className="btn__task btn__task--next" onClick={ () => this.props.moveTask(id, status, 1)}>
+        <button className="btn__task btn__task--next" onClick={this.handleMoveNext}>
           <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
           <span className="sr-only">Click to move task to the next status</span>
         </button>
