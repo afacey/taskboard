@@ -14,6 +14,7 @@ html {
 
 h1,
 h2,
+h3,
 p,
 ul,
 li {
@@ -115,12 +116,11 @@ body {
 .taskList__heading {
   margin-bottom: 1.5rem;
   font-weight: 400;
-  /* text-align: left; */
   padding-bottom: 10px;
   border-radius: 5px;
-  /* position: relative; */
   background-color: #FAFAFA;
   padding: 1.5rem;
+  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
 }
 
 .taskList__count {
@@ -209,7 +209,7 @@ button:disabled:hover {
   /* border: 1px solid black; */
   border-radius: 5px;
   position: relative;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  /* box-shadow: 0 2px 5px rgba(0,0,0,0.5); */
   background-color: #FAFAFA;
   min-height: 120px;
   overflow: hidden;
@@ -234,15 +234,15 @@ button:disabled:hover {
 }
 
 .taskItem--open {
-  box-shadow: 0 1px 2px rgba(178, 34, 34,.8);
+  box-shadow: 0 2px 3px rgba(178, 34, 34,.8);
 }
 
 .taskItem--inProgress {
-  box-shadow: 0 1px 2px rgba(70, 130, 180,.8);
+  box-shadow: 0 2px 3px rgba(70, 130, 180,.8);
 }
 
 .taskItem--complete {
-  box-shadow: 0 1px 2px rgba(39, 174, 96,.8);
+  box-shadow: 0 2px 3px rgba(39, 174, 96,.8);
 }
 
 .taskItem--stage {

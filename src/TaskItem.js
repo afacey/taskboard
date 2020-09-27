@@ -1,7 +1,8 @@
 import React, { Component} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import autosize from 'autosize'
+import TaskForm from './TaskForm.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import autosize from 'autosize';
 
 class TaskItem extends Component {
   constructor(props) {
@@ -73,15 +74,16 @@ class TaskItem extends Component {
     { 
       !this.state.isEditing 
         ? <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
-        :
-          <form action="#" onSubmit={this.handleEditSubmit} onBlur={this.handleBlur} className="clearfix">
-            {/* TODO remove autocomplete for submission */}
-            <textarea className="taskItem__editInput" id={`taskEdit_${id}`} name="taskEdit" onChange={this.handleChange} value={this.state.taskEdit}>
-            </textarea>
-            <button type="button" onClick={this.removeTask} className="btn__task btn__task--delete">Delete</button>
-            <button type="button" onClick={this.toggleEdit} className="btn__task btn__task--edit">Cancel</button>
-            <button className="btn__task btn__task--save">Save</button>
-          </form>  
+        : <TaskForm 
+            id={id}
+            type="edit"
+            handleSubmit={this.handleEditSubmit} 
+            handleBlur={this.handleBlur} 
+            handleChange={this.handleChange}
+            taskValue={this.state.taskEdit}
+            removeTask={this.removeTask}
+            toggleForm={this.toggleEdit}
+          />
     }
       
     {

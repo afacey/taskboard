@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TaskItem from './TaskItem';
+import TaskForm from './TaskForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,10 +17,10 @@ class TaskList extends Component {
   toggleTaskStaging = () => {
     this.setState({isStaging: !this.state.isStaging});
 
-    if (this.state.isStaging) {
-      const task = document.querySelector('#task');
-      task.focus();
-    }
+    // if (this.state.isStaging) {
+    //   const task = document.querySelector('#task');
+    //   task.focus();
+    // }
   }
 
   handleStagingTask = (e) => {
@@ -55,16 +56,15 @@ class TaskList extends Component {
           { 
             this.state.isStaging && 
             <li className={`taskItem taskItem--${status}`}>
-              <form action="#" onSubmit={this.handleAddTask}>
-                <label htmlFor="task" className="sr-only">Add A New Task</label>
-                {/* TODO remove autocomplete for submission */}
-                <input 
-                  onChange={this.handleStagingTask} 
-                  type="text" name="task" id="task" placeholder="add a task" 
-                  value={this.state.stagingTask} autoComplete="off"
-                />
-                <button>Add Task!</button>
-              </form>
+              <h3>New Task</h3>
+              <TaskForm 
+                taskValue={this.state.stagingTask}
+                handleSubmit={this.handleAddTask}
+                toggleForm={this.toggleTaskStaging}
+                onBlur={this.toggleTaskStaging}
+                handleChange={this.handleStagingTask}
+
+              />
             </li>
           }
           { 
