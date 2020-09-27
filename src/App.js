@@ -94,7 +94,7 @@ class App extends Component {
 
             <button 
               onClick={this.clearTaskboard} 
-              className="btn__taskList" 
+              className="btn__taskList btn__taskList--clear" 
               disabled={ this.state.taskItems.length ? "" : "disabled" }
             >Clear Board</button>
             </div>

@@ -15,6 +15,11 @@ class TaskList extends Component {
 
   toggleTaskStaging = () => {
     this.setState({isStaging: !this.state.isStaging});
+
+    if (this.state.isStaging) {
+      const task = document.querySelector('#task');
+      task.focus();
+    }
   }
 
   handleStagingTask = (e) => {
@@ -43,16 +48,25 @@ class TaskList extends Component {
         <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
           {children} 
           {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
-          <button onClick={this.toggleTaskStaging} className={`btn__taskList btn__taskList--add`} disabled={ tasks.length ? "" : "disabled" }>+ Task</button>
+          <button onClick={this.toggleTaskStaging} className={`btn__taskList btn__taskList--add`}>+ Task</button>
           <button className="btn__taskList btn__taskList--menu"><FontAwesomeIcon icon={faEllipsisV} /></button>
         </h2>
         <ul className="taskList__list">
-          { (this.state.isStaging || !tasks.length) && <li><form action="#" onSubmit={(e) => this.handleAddTask(e)}>
-              <label htmlFor="task" className="sr-only">Add A New Task</label>
-              {/* TODO remove autocomplete for submission */}
-              <input onChange={this.handleStagingTask} type="text" name="task" id="task" placeholder="add a task" value={this.state.stagingTask} autoComplete="off"/>
-              <button>Add Task!</button>
-            </form></li>}
+          { 
+            this.state.isStaging && 
+            <li className={`taskItem taskItem--${status}`}>
+              <form action="#" onSubmit={this.handleAddTask}>
+                <label htmlFor="task" className="sr-only">Add A New Task</label>
+                {/* TODO remove autocomplete for submission */}
+                <input 
+                  onChange={this.handleStagingTask} 
+                  type="text" name="task" id="task" placeholder="add a task" 
+                  value={this.state.stagingTask} autoComplete="off"
+                />
+                <button>Add Task!</button>
+              </form>
+            </li>
+          }
           { 
             this.props.tasks.map(({key, task, status}) => (
               <TaskItem 
