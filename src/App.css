@@ -93,6 +93,14 @@ body {
   padding: 3rem 0;
 }
 
+.taskBoard__menu {
+  background-color: #FAFAFA;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  box-shadow: 0 2px 3px rgba(17,17,17,0.4);
+}
+
 .taskLists {
   display: flex;
   justify-content: space-between;
@@ -128,6 +136,15 @@ body {
 .btn__taskList {
   font-size: 1.6rem;
   padding: 6px;
+  border: 2px solid transparent;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
 }
 
 .btn__taskList--menu {
@@ -153,7 +170,6 @@ body {
 }
 
 .taskList__heading--open .btn__taskList--add {
-  border: 2px solid rgb(178, 34, 34);
   background: rgb(178, 34, 34);
 }
 
@@ -167,7 +183,6 @@ body {
 }
 
 .taskList__heading--inProgress .btn__taskList--add {
-  border: 2px solid rgb(70, 130, 180);
   background: rgb(70, 130, 180);
 }
 
@@ -181,14 +196,8 @@ body {
 }
 
 .taskList__heading--complete .btn__taskList--add {
-  border: 2px solid #27ae60;
   background: #27ae60;
 }
-
-.taskLists li:not(:last-child) {
-  /* margin-bottom: 2rem; */
-}
-
 
 .taskItem {
   padding: 2rem 5rem;

@@ -84,13 +84,20 @@ class App extends Component {
           {/* TODO flex-container still needed? */}
           <div className="wrapper flex-container">
             <h1>Task Board</h1>
-            { this.state.taskItems.length > 0 && <button onClick={this.clearTaskboard}>Clear Board</button>}
           </div>
         </header>
         
         {/* START of MAIN */}
         <main className="App-main">
           <div className="wrapper">
+            <div className="taskBoard__menu">
+
+            <button 
+              onClick={this.clearTaskboard} 
+              className="btn__taskList" 
+              disabled={ this.state.taskItems.length ? "" : "disabled" }
+            >Clear Board</button>
+            </div>
             <div className="taskLists">
               { 
                 this.state.taskStatus.map((status, idx) => {

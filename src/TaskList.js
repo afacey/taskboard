@@ -43,7 +43,7 @@ class TaskList extends Component {
         <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
           {children} 
           {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
-          <button onClick={this.toggleTaskStaging} className={`btn__taskList btn__taskList--add`}>+ Task</button>
+          <button onClick={this.toggleTaskStaging} className={`btn__taskList btn__taskList--add`} disabled={ tasks.length ? "" : "disabled" }>+ Task</button>
           <button className="btn__taskList btn__taskList--menu"><FontAwesomeIcon icon={faEllipsisV} /></button>
         </h2>
         <ul className="taskList__list">
