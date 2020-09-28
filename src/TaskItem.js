@@ -64,7 +64,8 @@ class TaskItem extends Component {
       <li className={`taskItem taskItem--${status}`} >
       
       {
-        status !== 'open' &&
+        status !== 'open' 
+        &&
         <button className="btn__task btn__task--prev" onClick={this.handleMovePrev}>
           <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
           <span className="sr-only">Click to move task to the next status</span>
@@ -87,11 +88,12 @@ class TaskItem extends Component {
     }
       
     {
-      status !== "complete" &&
-        <button className="btn__task btn__task--next" onClick={this.handleMoveNext}>
-          <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
-          <span className="sr-only">Click to move task to the next status</span>
-        </button>
+      status !== "complete" 
+      &&
+      <button className="btn__task btn__task--next" onClick={this.handleMoveNext}>
+        <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
+        <span className="sr-only">Click to move task to the next status</span>
+      </button>
     }
     </li>
     ) 

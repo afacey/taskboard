@@ -10,6 +10,8 @@ class App extends Component {
     this.state = {
       taskStatus: ['open', 'inProgress', 'complete'],
       taskItems: [],
+      searchTerms: "",
+      searchItems: []
     }
   }
 
@@ -68,6 +70,34 @@ class App extends Component {
     newIdx !== currentIdx && dbRef.update({status: taskStatus[newIdx]});
   }
 
+  // --------------------------- handleChange
+  handleChange = (evt) => {
+    const { name, value } = evt.target;
+    
+    
+    // call handleSearch if they are tasks, and the search value is gte 3 characters
+    if (name === 'searchTerms' && this.state.taskItems.length) {
+      this.setState({[name]: value}, this.handleSearch);
+      // this.handleSearch();
+    }
+    else { 
+      this.setState({[name]: value});
+    }
+  }
+
+  // --------------------------- handleSearch
+  handleSearch = () => {
+    const { searchTerms, taskItems }= this.state;
+    // create regex for search terms globall/case insensistive
+    const searchString = new RegExp(searchTerms, 'i');
+
+    // filter out tasks by test against search terms
+    const searchItems = taskItems.filter(({task}) => searchString.test(task));
+
+    // store filtered results into searchItems state to preserve the state of the taskItems
+    this.setState({searchItems});
+  }
+
   // --------------------------- render
   render() {
     // heading text for task status lists
@@ -75,7 +105,11 @@ class App extends Component {
       open: "Open",
       inProgress: "In Progress",
       complete: "Completed"
-    }
+    } 
+    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, } = this;
+    const { taskStatus, taskItems, searchItems, searchTerms } = this.state;
+    
+    const items = !searchTerms.length ? taskItems : searchItems;
 
     return (
       <div className="App">
@@ -93,25 +127,26 @@ class App extends Component {
             <div className="taskBoard__menu">
 
             <button 
-              onClick={this.clearTaskboard} 
+              onClick={clearTaskboard} 
               className="btn__taskList btn__taskList--clear" 
-              disabled={ this.state.taskItems.length ? "" : "disabled" }
+              disabled={ taskItems.length ? "" : "disabled" }
             >Clear Board</button>
+            <input type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
             </div>
             <div className="taskLists">
               { 
-                this.state.taskStatus.map((status, idx) => {
-                  const tasks = this.state.taskItems.filter(task => task.status === status);
+                taskStatus.map((status, idx) => {
+                  const tasks = items.filter(task => task.status === status);
                   return (
                     <TaskList 
                       className="taskList" 
                       key={idx} 
                       status={status}
                       tasks={tasks} 
-                      addTask={this.addTask}
-                      moveTask={this.moveTask}
-                      removeTask={this.removeTask}
-                      editTask={this.updateTask}
+                      addTask={addTask}
+                      moveTask={moveTask}
+                      removeTask={removeTask}
+                      editTask={updateTask}
                     >
                       {statusString[status]}
                     </TaskList>
