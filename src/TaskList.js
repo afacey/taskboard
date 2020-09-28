@@ -15,6 +15,7 @@ class TaskList extends Component {
     }
   }
 
+  // --------------------------- componentDidUpdate
   componentDidUpdate() {
     const input = document.querySelector(`#taskEdit_${this.props.status}`);
     if (input) {
@@ -23,6 +24,7 @@ class TaskList extends Component {
     } 
   }
 
+  // --------------------------- handleBlur
   handleBlur = (evt) => {
     // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
     const currentTarget = evt.currentTarget;
@@ -37,9 +39,12 @@ class TaskList extends Component {
     }, 0);
   }
 
+  // --------------------------- handleStagingTask
   handleStagingTask = (e) => this.setState({stagingTask: e.target.value});
+  // --------------------------- toggleTaskStaging
   toggleTaskStaging = () => this.setState({isStaging: !this.state.isStaging});
 
+  // --------------------------- handleAddTask
   handleAddTask = (e) => {
     e.preventDefault();
 
@@ -55,6 +60,7 @@ class TaskList extends Component {
     
   }
   
+  // --------------------------- render
   render() {
     const { status, tasks, children, editTask, removeTask, moveTask } = this.props;
   

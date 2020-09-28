@@ -13,16 +13,22 @@ class TaskItem extends Component {
       isEditing: false,
     }
   }
-
+  
+  // --------------------------- componentDidUpdate
   componentDidUpdate() {
     const input = document.querySelector(`#taskEdit_${this.props.id}`);
     if (input) {
       autosize(input);
+
+      // set the cursor to the end of the text input by setting value to "" > focus > value back to state.taskEdit
+      input.value = "";
       input.focus();
+      input.value = this.state.taskEdit;
     } 
 
   }
 
+  // --------------------------- handleBlur
   handleBlur = (evt) => {
     // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
     const currentTarget = evt.currentTarget;
@@ -37,25 +43,32 @@ class TaskItem extends Component {
     }, 0);
   }
 
+  // --------------------------- handleChange
   handleChange = (evt) => {
     this.setState({
       [evt.target.name]: evt.target.value
     })
   }
 
+  // --------------------------- handleEditSubmit
   handleEditSubmit = (evt) => {
     evt.preventDefault();
     this.props.editTask(this.props.id, this.state.taskEdit);
     this.setState({isEditing: false});
   }
 
+  // --------------------------- handleMovePrev
   handleMovePrev = () => this.props.moveTask(this.props.id, this.props.status, -1);
+  // --------------------------- handleMoveNext
   handleMoveNext = () => this.props.moveTask(this.props.id, this.props.status, 1);
 
+  // --------------------------- removeTask
   removeTask = () => this.props.removeTask(this.props.id);
   
+  // --------------------------- toggleEdit
   toggleEdit = () => this.setState({ isEditing: !this.state.isEditing });
 
+  // --------------------------- render
   render() {
 
     const { id, task, status } = this.props;
