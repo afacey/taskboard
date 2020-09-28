@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
-import TaskBoardMenu from './TaskBoardMenu.js';
-import TaskList from './TaskList.js';
+import TaskBoardMenu from './components/TaskBoardMenu.js';
+import TaskList from './components/TaskList.js';
 import './App.css';
 
 class App extends Component {
@@ -117,15 +117,14 @@ class App extends Component {
     return (
       <div className="App">
         {/* START of HEADER */}
-        <header className="App-header">
-          {/* TODO flex-container still needed? */}
-          <div className="wrapper flex-container">
+        <header>
+          <div className="wrapper">
             <h1>Task Board</h1>
           </div>
         </header>
         
         {/* START of MAIN */}
-        <main className="App-main">
+        <main>
           <div className="wrapper">
             <TaskBoardMenu 
               clearTaskboard={clearTaskboard}
@@ -161,7 +160,7 @@ class App extends Component {
         {/* START of FOOTER */}
         <footer>
           <div className="wrapper">
-            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com">Juno College</a> - Design Inspiration from Scott Sobere-Yu and <a href="https://dribbble.com/shots/6250762-Kanban-Board">Nikita</a></p>
+            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com" target="_blank" rel="noopener noreferrer">Juno College</a> - Design Inspiration from <a href="https://scottrs.ca" target="_blank" rel="noopener noreferrer">Scott Sobere-Yu</a> and <a href="https://dribbble.com/shots/6250762-Kanban-Board" target="_blank" rel="noopener noreferrer">Nikita</a></p>
           </div>
         </footer>
       </div>

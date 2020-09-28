@@ -6,11 +6,17 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 *, *:before, *:after {box-sizing: inherit}
 
-.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
-html {
-  font-size: 62.5%;
-}
+/* 
+================================================================================ END OF SETUP/NORMALIZE
+*/
+
+/* 
+================================================================================ GLOBAL
+*/
+
+html { font-size: 62.5%; }
 
 h1,
 h2,
@@ -22,23 +28,12 @@ li {
   margin: 0;
 }
 
-ul { 
-  list-style: none; 
-}
+ul {  list-style: none; }
 
-button:hover,
-button:active,
-button:focus {
-  cursor: pointer;
-}
 
-body {
-  font-size: 1.6rem;
-  background-color: #EEE;
-  background-size: cover;
-  background-position: center;
-  color: #111;
-}
+/* 
+================================================================================ LAYOUT
+*/
 
 .wrapper {
   max-width: 1440px;
@@ -46,20 +41,62 @@ body {
   margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 
+================================================================================ TYPOGRAPHY
+*/
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* 
+================================================================================ COMPONENTS
+*/
+
+/* ------------------------------------ BUTTONS */
+.btn {
+  font-size: 1.6rem;
+  color: #EEE;
+  color: #FAFAFA;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 6px;
 }
 
-.App-header {
+.btn:hover,
+.btn:active,
+.btn:focus {
+  cursor: pointer;
+}
+
+.btn:disabled { opacity: 0.4; }
+.btn:disabled:hover { cursor: not-allowed;}
+
+.btn--black { background-color: rgb(17, 17, 17); }
+.btn--blue { background-color: rgb(70, 130, 180); }
+.btn--green { background-color: rgb(39, 174, 96); }
+.btn--orange { background-color: orange; }
+.btn--red { background-color: rgb(178, 34, 34); }
+
+/* 
+================================================================================ BODY
+*/
+
+body {
+  font-size: 1.6rem;
+  background-color: #EEE;
+  color: #111;
+}
+
+/* 
+================================================================================ HEADER
+*/
+
+header {
   font-size: calc(10px + 2vmin);
-  color:black;
+  color:#111;
   padding: 3rem 0;
   background-color: #FAFAFA;
   border-bottom: 2px solid rgba(17,17,17,0.4);
@@ -67,14 +104,7 @@ body {
   border-bottom-right-radius: 5px;
 }
 
-.App-header .flex-container {
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* justify-content: space-between; */
-  /* align-items: baseline; */
-}
-
-.App-header h1 {
+header h1 {
   /* margin-bottom: 3rem; */
   font-weight: 300;
   letter-spacing: 1px;
@@ -82,74 +112,59 @@ body {
   color: #111;
 }
 
+/* 
+================================================================================ MAIN
+*/
 
-.App-link {
-  color: #61dafb;
-}
+main { padding: 3rem 0; }
 
-.App-main {
-  padding: 3rem 0;
-}
+/* 
+================================================================================ MAIN > TASKBOARD MENU
+*/
 
+/* TODO flex or grid? */
 .taskBoard__menu {
   background-color: #FAFAFA;
   border-radius: 5px;
   margin-bottom: 2rem;
   padding: 2rem;
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
-  display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
-  grid-template-columns: 3fr 3fr 1fr;
+  /* display: grid; */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
+  display: flex;
+  justify-content: space-between;
   justify-items: space-between;
   align-items: center;
 }
 
+/* ------------------------------------ MAIN > TASKBOARD MENU > LIST FILTER */
+
 .inputContainer__filter {
   display: flex;
-  /* justify-content: space-between; */
   align-items: baseline;
   padding: 1rem;
 }
 
 .inputContainer__filter label { 
-  margin-right: 1rem;
-  padding: 1rem;
-  background-color: orange;
-  border-radius: 5px;
-  color: #FAFAFA;
   opacity: 0.4;
   transition: opacity 0.3s;
 }
+.inputContainer__filter label:not(:last-of-type) { margin-right: 1rem; }
 
-.inputContainer__filter label:hover {
-  cursor: pointer;
-}
+input[name="listFilter"]:checked + label { opacity: 1; }
 
-input[name="listFilter"]:checked + label {
-  opacity: 1;
-}
 
-label[for="filterOpen"] {
-  background-color: rgb(178, 34, 34)
-}
-
-label[for="filterInProgress"] {
-  background-color: rgb(70, 130, 180);
-}
-
-label[for="filterComplete"] {
-  background-color:rgb(39, 174, 96);
-}
-
+/* ------------------------------------ MAIN > TASKBOARD MENU > SEARCH BAR */
 .inputContainer__searchBar {
   position: relative;
-  /* border: 2px solid orange; */
   display: inline-block;
+  flex: 1;
 }
 
 .taskBoard__searchBar {
   background-color: #FAFAFA;
+  border: 2px solid #111;
   border-radius: 5px;
   padding: 1rem 30px 1rem 1rem;
   width: 100%;
@@ -162,30 +177,31 @@ label[for="filterComplete"] {
   transform: translateY(-50%);
 }
 
+/* ------------------------------------ MAIN > TASKBOARD MENU > DELETE ALL TASKS */
+
+.taskBoard__menu .btn { padding: 1rem; }
+
+/* 
+================================================================================ MAIN > TASK LISTS
+*/
+
 .taskLists {
-  display: flex;
-  justify-content: space-between;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  /* gap: 4rem; */
   column-gap: 4rem;
   row-gap: 2rem;
-  /* text-align: center; */
 }
 
 .taskList__heading {
   margin-bottom: 1.5rem;
   font-weight: 400;
-  padding-bottom: 10px;
   border-radius: 5px;
   background-color: #FAFAFA;
   padding: 1.5rem;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
 }
 
-.taskList__count {
-  margin-left: 1rem;
-}
+.taskList__count { margin-left: 1rem; }
 
 .taskList__list {
   display: grid;
@@ -193,83 +209,51 @@ label[for="filterComplete"] {
   gap: 1.5rem;
 }
 
-.btn__taskList {
-  font-size: 1.6rem;
-  padding: 6px;
-  /* border: 2px solid transparent; */
-}
-
-button {
-  border: 2px solid transparent;
-  /* border-radius: 5px; */
-}
-
-button:disabled {
-  opacity: 0.4;
-}
-
-button:disabled:hover {
-  cursor: not-allowed;
-}
-
-.btn__taskList--menu {
+/* TODO remove menuBtn if not being used in html */
+.taskList__menuBtn {
   float: left;
   border: none;
   background: none;
   padding: 6px 10px;
-  /* color: #111; */
-}
-.btn__taskList--add {
-  float: right;
-  border-radius: 5px;
-  color: #EEE;
 }
 
-.taskList__heading--open {
-  border-bottom: 5px solid rgb(178, 34, 34);
-}
+.taskList__addBtn { float: right; }
+
+.taskList__heading--open { border-bottom: 5px solid rgb(178, 34, 34); }
 
 .taskList__heading--open .taskList__count,
-.taskList__heading--open .btn__taskList--menu {
+.taskList__heading--open .taskList__menuBtn {
   color: rgb(178, 34, 34);
 }
 
-.taskList__heading--open .btn__taskList--add {
-  background: rgb(178, 34, 34);
-}
+.taskList__heading--open .taskList__addBtn { background: rgb(178, 34, 34);}
 
-.taskList__heading--inProgress {
-  border-bottom: 5px solid rgb(70, 130, 180);
-}
+.taskList__heading--inProgress { border-bottom: 5px solid rgb(70, 130, 180); }
 
 .taskList__heading--inProgress .taskList__count,
-.taskList__heading--inProgress .btn__taskList--menu {
+.taskList__heading--inProgress .taskList__menuBtn {
   color: rgb(70, 130, 180);
 }
 
-.taskList__heading--inProgress .btn__taskList--add {
-  background: rgb(70, 130, 180);
-}
+.taskList__heading--inProgress .taskList__addBtn { background: rgb(70, 130, 180); }
 
-.taskList__heading--complete {
-  border-bottom: 5px solid rgb(39, 174, 96);
-}
+.taskList__heading--complete { border-bottom: 5px solid rgb(39, 174, 96); }
 
 .taskList__heading--complete .taskList__count,
-.taskList__heading--complete .btn__taskList--menu {
+.taskList__heading--complete .taskList__menuBtn {
   color: rgb(39, 174, 96);
 }
 
-.taskList__heading--complete .btn__taskList--add {
-  background: #27ae60;
-}
+.taskList__heading--complete .taskList__addBtn { background: #27ae60; }
+
+/* 
+================================================================================ MAIN > TASK ITEMS
+*/
 
 .taskItem {
   padding: 2rem 5rem;
-  /* border: 1px solid black; */
   border-radius: 5px;
   position: relative;
-  /* box-shadow: 0 2px 5px rgba(0,0,0,0.5); */
   background-color: #FAFAFA;
   min-height: 120px;
   overflow: hidden;
@@ -282,9 +266,7 @@ button:disabled:hover {
   white-space: pre-line;
 }
 
-.taskItem__text:hover {
-  cursor: pointer;
-}
+.taskItem__text:hover { cursor: pointer; }
 
 .taskItem__editInput {
   width: 100%;
@@ -293,97 +275,48 @@ button:disabled:hover {
   margin-bottom: 1rem;
 }
 
-.taskItem--open {
-  box-shadow: 0 2px 3px rgba(178, 34, 34,.8);
-}
+.taskItem--open { box-shadow: 0 2px 3px rgba(178, 34, 34,.8); }
+.taskItem--inProgress { box-shadow: 0 2px 3px rgba(70, 130, 180,.8); }
+.taskItem--complete { box-shadow: 0 2px 3px rgba(39, 174, 96,.8); }
 
-.taskItem--inProgress {
-  box-shadow: 0 2px 3px rgba(70, 130, 180,.8);
-}
-
-.taskItem--complete {
-  box-shadow: 0 2px 3px rgba(39, 174, 96,.8);
-}
-
-.taskItem--stage {
-  /* box-shadow: 0 1px 2px rgba(255, 165, 0,.8); */
-}
-
-.btn__task {
+.taskItem__btn {
+  padding: 0 18px;
   border: 0;
-  padding: 8px;
-  color: #FAFAFA;
-}
-
-.btn__task:hover,
-.btn__task:focus,
-.btn__task:active {
-  cursor: pointer;
-}
-
-/* TODO remove ? */
-.btn__task--edit {
-  /* top: 0;
-  right: 0; */
-  background-color: orange;
-  /* border-bottom-left-radius: 5px; */
-}
-.btn__task--save,
-.btn__task--edit,
-.btn__task--delete {
-  float: right;
-}
-.btn__task--save {
-  background-color: rgb(39, 174, 96);
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.btn__task--delete {
-  background: none;
-  /* top: 5px;
-  right: 10px; */
-  /* color: black; */
-  background-color: rgb(178, 34, 34);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.btn__task--prev,
-.btn__task--next {
+  background-color: transparent;
   position: absolute;
   top: 0;
   bottom: 0;
-  background: none;
-  color: black;
-  padding: 0 18px;
+  color: #111;
   transition: background-color 0.3s;
 }
 
-.btn__task--prev:hover,
-.btn__task--next:hover {
-  background-color: orange;
-}
+.taskItem__btn:hover { background-color: #CCC; }
 
-.btn__task--prev {
+.taskItem__btn--prev {
   left: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.btn__task--next {
+.taskItem__btn--next {
   right: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
+
+/* 
+================================================================================ MAIN > TASK ITEMS > TASK FORM
+*/
+
+.taskForm { text-align: center; }
+
+.taskForm .btn:not(:last-of-type) { margin-right: 1rem; }
+
+/* 
+================================================================================ FOOTER
+*/
 
 footer {
   padding: 2rem 0;
   text-align: center;
-}
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

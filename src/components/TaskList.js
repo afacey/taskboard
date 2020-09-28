@@ -67,10 +67,11 @@ class TaskList extends Component {
     return(
       <div className="taskList">
         <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
-          <button className="btn__taskList btn__taskList--menu"><FontAwesomeIcon icon={faEllipsisV} /></button>
+          {/* TODO keep ellipsis button? */}
+          {/* <button className="taskList__menuBtn"><FontAwesomeIcon icon={faEllipsisV} /></button> */}
           {children} 
           {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
-          <button onClick={this.toggleTaskStaging} className={`btn__taskList btn__taskList--add`}>+ Task</button>
+          <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
         </h2>
         <ul className="taskList__list">
           { 

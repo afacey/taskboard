@@ -79,9 +79,9 @@ class TaskItem extends Component {
       {
         status !== 'open' 
         &&
-        <button className="btn__task btn__task--prev" onClick={this.handleMovePrev}>
+        <button className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
           <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
-          <span className="sr-only">Click to move task to the next status</span>
+          <span className="srOnly">Click to move task to the next status</span>
         </button>
       }
     
@@ -103,9 +103,9 @@ class TaskItem extends Component {
     {
       status !== "complete" 
       &&
-      <button className="btn__task btn__task--next" onClick={this.handleMoveNext}>
+      <button className="taskItem__btn taskItem__btn--next" onClick={this.handleMoveNext}>
         <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
-        <span className="sr-only">Click to move task to the next status</span>
+        <span className="srOnly">Click to move task to the next status</span>
       </button>
     }
     </li>

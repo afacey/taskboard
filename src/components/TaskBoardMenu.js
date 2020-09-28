@@ -11,14 +11,17 @@ const TaskBoardMenu = props => {
 
       <div className="inputContainer__filter">
         {/* <h4>Lists: </h4> */}
-        <input type="radio" className="sr-only" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
-        <label htmlFor="filterAll">All</label>
-        <input type="radio" className="sr-only" name="listFilter" id="filterOpen" value="open" onChange={handleChange} />
-        <label htmlFor="filterOpen">Open</label>
-        <input type="radio" className="sr-only" name="listFilter" id="filterInProgress" value="inProgress" onChange={handleChange} />
-        <label htmlFor="filterInProgress">In Progress</label>
-        <input type="radio" className="sr-only" name="listFilter" id="filterComplete" value="complete" onChange={handleChange} />
-        <label htmlFor="filterComplete">Complete</label>
+        <input type="radio" className="srOnly" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
+        <label className="btn btn--orange" htmlFor="filterAll">All</label>
+        
+        <input type="radio" className="srOnly" name="listFilter" id="filterOpen" value="open" onChange={handleChange} />
+        <label className="btn btn--red" htmlFor="filterOpen">Open</label>
+        
+        <input type="radio" className="srOnly" name="listFilter" id="filterInProgress" value="inProgress" onChange={handleChange} />
+        <label className="btn btn--blue" htmlFor="filterInProgress">In Progress</label>
+        
+        <input type="radio" className="srOnly" name="listFilter" id="filterComplete" value="complete" onChange={handleChange} />
+        <label className="btn btn--green" htmlFor="filterComplete">Complete</label>
       </div>
 
       <div className="inputContainer__searchBar">
@@ -33,10 +36,10 @@ const TaskBoardMenu = props => {
       <div className="inputContainer__buttons">
         <button 
           onClick={clearTaskboard} 
-          className="btn__taskList btn__taskList--clear" 
+          className="btn btn--black btn__taskBoard btn__taskBoard--clear" 
           disabled={ numOfTasks ? "" : "disabled" }
         >
-          Clear Board
+          Delete All Tasks
         </button>
       </div>
 
