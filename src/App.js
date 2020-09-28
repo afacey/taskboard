@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       taskStatus: ['open', 'inProgress', 'complete'],
       taskItems: [],
+      listFilter: "all",
       searchTerms: "",
       searchItems: []
     }
@@ -40,6 +41,7 @@ class App extends Component {
       this.setState({taskItems});
     });
   }
+
   // --------------------------- clearTaskboard
   clearTaskboard = (newTask) => firebase.database().ref("tasks").remove();
 
@@ -107,9 +109,10 @@ class App extends Component {
       complete: "Completed"
     } 
     const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, } = this;
-    const { taskStatus, taskItems, searchItems, searchTerms } = this.state;
+    const { taskStatus, taskItems, listFilter, searchItems, searchTerms } = this.state;
     
     const items = !searchTerms.length ? taskItems : searchItems;
+    const lists = listFilter === 'all' ? taskStatus : [listFilter];
 
     return (
       <div className="App">
@@ -126,20 +129,36 @@ class App extends Component {
           <div className="wrapper">
             <div className="taskBoard__menu">
 
-            <button 
-              onClick={clearTaskboard} 
-              className="btn__taskList btn__taskList--clear" 
-              disabled={ taskItems.length ? "" : "disabled" }
-            >Clear Board</button>
-            <div className="inputContainer__search">
-            <input className="taskBoard__search" type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
-            {/* TODO style to pad the text to the right to prevent the icon overlapping */}
-            <FontAwesomeIcon className="taskBoard__searchIcon" icon={faSearch} />
+              <button 
+                onClick={clearTaskboard} 
+                className="btn__taskList btn__taskList--clear" 
+                disabled={ taskItems.length ? "" : "disabled" }
+              >
+                Clear Board
+              </button>
+
+              <div className="inputContainer__filter">
+                <span>Lists: </span>
+                <input type="radio" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
+                <label htmlFor="filterAll">All</label>
+                <input type="radio" name="listFilter" id="filterOpen" value="open" onChange={handleChange} />
+                <label htmlFor="filterOpen">Open</label>
+                <input type="radio" name="listFilter" id="filterInProgress" value="inProgress" onChange={handleChange} />
+                <label htmlFor="filterInProgress">In Progress</label>
+                <input type="radio" name="listFilter" id="filterComplete" value="complete" onChange={handleChange} />
+                <label htmlFor="filterComplete">Complete</label>
+              </div>
+
+              <div className="inputContainer__search">
+                <input className="taskBoard__search" type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
+                {/* TODO style to pad the text to the right to prevent the icon overlapping */}
+                <FontAwesomeIcon className="taskBoard__searchIcon" icon={faSearch} aria-hidden="true"/>
+              </div>
             </div>
-            </div>
+            
             <div className="taskLists">
               { 
-                taskStatus.map((status, idx) => {
+                lists.map((status, idx) => {
                   const tasks = items.filter(task => task.status === status);
                   return (
                     <TaskList 

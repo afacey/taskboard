@@ -97,8 +97,10 @@ body {
   margin-bottom: 2rem;
   padding: 2rem;
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  justify-items: first baseline;
 }
 
 .inputContainer__search {
