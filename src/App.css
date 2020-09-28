@@ -98,25 +98,64 @@ body {
   padding: 2rem;
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+  grid-template-columns: 3fr 3fr 1fr;
   gap: 2rem;
-  justify-items: first baseline;
+  justify-items: space-between;
+  align-items: center;
 }
 
-.inputContainer__search {
+.inputContainer__filter {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: baseline;
+  padding: 1rem;
+}
+
+.inputContainer__filter label { 
+  margin-right: 1rem;
+  padding: 1rem;
+  background-color: orange;
+  border-radius: 5px;
+  color: #FAFAFA;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+.inputContainer__filter label:hover {
+  cursor: pointer;
+}
+
+input[name="listFilter"]:checked + label {
+  opacity: 1;
+}
+
+label[for="filterOpen"] {
+  background-color: rgb(178, 34, 34)
+}
+
+label[for="filterInProgress"] {
+  background-color: rgb(70, 130, 180);
+}
+
+label[for="filterComplete"] {
+  background-color:rgb(39, 174, 96);
+}
+
+.inputContainer__searchBar {
   position: relative;
   /* border: 2px solid orange; */
   display: inline-block;
 }
 
-.taskBoard__search {
+.taskBoard__searchBar {
   background-color: #FAFAFA;
   border-radius: 5px;
-  padding: 1rem;
-  /* position: relative; */
+  padding: 1rem 30px 1rem 1rem;
+  width: 100%;
 }
 
-.taskBoard__searchIcon {
+.taskBoard__searchBarIcon {
   position: absolute;
   right: 10px;
   top: 50%;

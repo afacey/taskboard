@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import firebase from './firebase.js'
-import TaskList from './TaskList.js'
+import firebase from './firebase.js';
+import TaskBoardMenu from './TaskBoardMenu.js';
+import TaskList from './TaskList.js';
 import './App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 class App extends Component {
   constructor() {
     super();
@@ -77,7 +77,7 @@ class App extends Component {
   handleChange = (evt) => {
     const { name, value } = evt.target;
     
-    // call handleSearch if they are tasks, and the search value is gte 3 characters
+    // call handleSearch if the input searchTerms input was changed and there are tasks
     if (name === 'searchTerms' && this.state.taskItems.length) {
       this.setState({[name]: value}, this.handleSearch);
       // this.handleSearch();
@@ -127,34 +127,12 @@ class App extends Component {
         {/* START of MAIN */}
         <main className="App-main">
           <div className="wrapper">
-            <div className="taskBoard__menu">
-
-              <button 
-                onClick={clearTaskboard} 
-                className="btn__taskList btn__taskList--clear" 
-                disabled={ taskItems.length ? "" : "disabled" }
-              >
-                Clear Board
-              </button>
-
-              <div className="inputContainer__filter">
-                <span>Lists: </span>
-                <input type="radio" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
-                <label htmlFor="filterAll">All</label>
-                <input type="radio" name="listFilter" id="filterOpen" value="open" onChange={handleChange} />
-                <label htmlFor="filterOpen">Open</label>
-                <input type="radio" name="listFilter" id="filterInProgress" value="inProgress" onChange={handleChange} />
-                <label htmlFor="filterInProgress">In Progress</label>
-                <input type="radio" name="listFilter" id="filterComplete" value="complete" onChange={handleChange} />
-                <label htmlFor="filterComplete">Complete</label>
-              </div>
-
-              <div className="inputContainer__search">
-                <input className="taskBoard__search" type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
-                {/* TODO style to pad the text to the right to prevent the icon overlapping */}
-                <FontAwesomeIcon className="taskBoard__searchIcon" icon={faSearch} aria-hidden="true"/>
-              </div>
-            </div>
+            <TaskBoardMenu 
+              clearTaskboard={clearTaskboard}
+              numOfTasks={taskItems.length}
+              handleChange={handleChange}
+              searchTerms={searchTerms}
+            />
             
             <div className="taskLists">
               { 
