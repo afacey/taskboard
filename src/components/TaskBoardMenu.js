@@ -33,7 +33,7 @@ const TaskBoardMenu = props => {
 
       
 
-      <div className="inputContainer__buttons">
+      {/* <div className="inputContainer__buttons">
         <button 
           onClick={clearTaskboard} 
           className="btn btn--black btn__taskBoard btn__taskBoard--clear" 
@@ -41,7 +41,7 @@ const TaskBoardMenu = props => {
         >
           Delete All Tasks
         </button>
-      </div>
+      </div> */}
 
     </div>
   )

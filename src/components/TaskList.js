@@ -12,7 +12,6 @@ class TaskList extends Component {
     this.state = {
       isStaging: false,
       stagingTask: "",
-      isMultiLine: false,
     }
   }
 
@@ -40,12 +39,6 @@ class TaskList extends Component {
     }, 0);
   }
 
-  // --------------------------- handleMultiLine
-  handleMultiLine = (e) => {
-    const { isMultiLine } = this.state;
-    this.setState({isMultiLine: !isMultiLine});
-  }
-
   // --------------------------- handleStagingTask
   handleStagingTask = (e) => this.setState({stagingTask: e.target.value});
   // --------------------------- toggleTaskStaging
@@ -58,25 +51,18 @@ class TaskList extends Component {
     // prevent adding empty tasks
     if (this.state.stagingTask) {
 
-      const { stagingTask, isMultiLine } = this.state;
+      const { stagingTask: task } = this.state;
       const { status } = this.props;
 
-      // if (!this.state.isMultiLine) {
-      //   const single = this.state.stagingTask.replaceAll('\n', '');
-      //   console.log('staged',this.state.stagingTask);
-      //   console.log('single',single);
-      // }
-
       this.props.addTask({
-        task: isMultiLine ? stagingTask : stagingTask.replaceAll('\n', ''),
-        isMultiLine: this.state.isMultiLine,
-        status: this.props.status
+        task,
+        status
       })
+
       // reset staging states
       this.setState({
         isStaging: false, 
         stagingTask: "",
-        isMultiLine: false
       });
     }
     
@@ -102,24 +88,20 @@ class TaskList extends Component {
               <h3>New Task</h3>
               <TaskForm 
                 id={status}
-                isMultiLine={this.state.isMultiLine}
                 taskValue={this.state.stagingTask}
                 handleSubmit={this.handleAddTask}
                 toggleForm={this.toggleTaskStaging}
                 handleBlur={this.handleBlur}
                 handleChange={this.handleStagingTask}
-                handleMultiLine={this.handleMultiLine}
-
               />
             </li>
           }
           { 
-            this.props.tasks.map(({key, task, isMultiLine, status}) => (
+            this.props.tasks.map(({key, task, status}) => (
               <TaskItem 
                 key={key} 
                 id={key} 
                 task={task} 
-                isMultiLine={isMultiLine}
                 status={status} 
                 editTask={editTask}
                 removeTask={removeTask} 

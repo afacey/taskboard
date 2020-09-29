@@ -32,7 +32,6 @@ class App extends Component {
         const taskItem = {
           key: key,
           task: tasksData[key].task,
-          isMultiLine: tasksData[key].isMultiLine,
           status: tasksData[key].status
         }
         taskItems.push(taskItem);
@@ -50,8 +49,7 @@ class App extends Component {
   addTask = (newTask) => firebase.database().ref("tasks").push(newTask);
   
   // --------------------------- updateTask
-  updateTask = (key, updatedTask) => firebase.database().ref('tasks/' + key).update(updatedTask);
-  // updateTask = (key, newValue) => firebase.database().ref('tasks/' + key).update({task: newValue});
+  updateTask = (key, newValue) => firebase.database().ref('tasks/' + key).update({task: newValue});
 
   // --------------------------- removeTask
   removeTask = (key) => firebase.database().ref('tasks').child(key).remove();

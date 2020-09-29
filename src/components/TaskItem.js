@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import TaskForm from './TaskForm.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import autosize, { update } from 'autosize';
+import autosize from 'autosize';
 
 class TaskItem extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ class TaskItem extends Component {
     this.state = {
       taskFormInput: props.task,
       isEditing: false,
-      isMultiLine: props.isMultiLine,
     }
   }
   
@@ -51,23 +50,12 @@ class TaskItem extends Component {
     })
   }
 
-  // --------------------------- handleMultiLine
-  handleMultiLine = (e) => {
-    const { isMultiLine } = this.state;
-    console.log('mutli change');
-    this.setState({isMultiLine: !isMultiLine});
-  }
-
   // --------------------------- handleEditSubmit
   handleEditSubmit = (evt) => {
     evt.preventDefault();
-    const { taskFormInput: task, isMultiLine } = this.state; 
-    const updatedTask = {
-      task: isMultiLine ? task : task.replaceAll('\n', ''),
-      isMultiLine
-    }
-    // this.props.editTask(this.props.id, this.state.taskFormInput);
-    this.props.editTask(this.props.id, updatedTask);
+  
+    this.props.editTask(this.props.id, this.state.taskFormInput);
+    
     this.setState({isEditing: false});
   }
 
@@ -95,7 +83,7 @@ class TaskItem extends Component {
         &&
         <button className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
           <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
-          <span className="srOnly">Click to move task to the next status</span>
+          <span className="srOnly">Click to move task to the previous status</span>
         </button>
       }
     
@@ -104,7 +92,6 @@ class TaskItem extends Component {
         ? <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
         : <TaskForm 
             id={id}
-            isMultiLine={this.state.isMultiLine}
             type="edit"
             handleSubmit={this.handleEditSubmit} 
             handleBlur={this.handleBlur} 
@@ -112,7 +99,6 @@ class TaskItem extends Component {
             taskValue={this.state.taskFormInput}
             removeTask={this.removeTask}
             toggleForm={this.toggleEdit}
-            handleMultiLine={this.handleMultiLine}
           />
     }
       

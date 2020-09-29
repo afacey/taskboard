@@ -60,9 +60,9 @@ body {
   font-size: 1.6rem;
   color: #EEE;
   color: #FAFAFA;
-  border: 3px solid transparent;
+  border: 2px solid transparent;
   border-radius: 5px;
-  padding: 3px;
+  padding: 6px;
   transition: border-color 0.3s;
 }
 
@@ -118,7 +118,7 @@ header h1 {
 ================================================================================ MAIN
 */
 
-main { padding: 3rem 0; }
+main { padding: 1rem 0; }
 
 /* 
 ================================================================================ MAIN > TASKBOARD MENU
@@ -145,7 +145,8 @@ main { padding: 3rem 0; }
 .inputContainer__filter {
   display: flex;
   align-items: baseline;
-  padding: 1rem;
+  /* padding: 1rem; */
+  justify-content: center;
 }
 
 .inputContainer__filter label { 
@@ -162,14 +163,16 @@ input[name="listFilter"]:focus + label { border-color: black; }
 .inputContainer__searchBar {
   position: relative;
   display: inline-block;
-  flex: 1;
+  /* flex: 1; */
+  width: 100%;
+  max-width: 320px;
 }
 
 .taskBoard__searchBar {
   background-color: #FAFAFA;
   border: 2px solid #111;
   border-radius: 5px;
-  padding: 4px 30px 4px 4px;
+  padding: 6px 30px 6px 6px;
   width: 100%;
 }
 
@@ -329,4 +332,26 @@ input[name="listFilter"]:focus + label { border-color: black; }
 footer {
   padding: 2rem 0;
   text-align: center;
+}
+
+/* 
+================================================================================ MEDIA QUERIES
+*/
+
+/* ------------------------------------ MAX-WIDTH 768px */
+@media (max-width: 768px) {
+  .taskBoard__menu {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    justify-items: center;
+  }
+}
+
+/* ------------------------------------ MAX-WIDTH 480px */
+@media (max-width: 480px) {
+  .inputContainer__filter label:not(:last-of-type) { margin-right: .6rem; }
+  .btn {
+    font-size: 1.2rem;
+  }
 }
