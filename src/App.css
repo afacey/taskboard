@@ -56,6 +56,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    font-size: 1.6rem;
+}
+
+h1 {
+  font-size: calc(2rem + 2vw);
+  letter-spacing: 1px;
 }
 
 /* 
@@ -100,7 +106,6 @@ body {
 */
 
 body {
-  font-size: 1.6rem;
   background-color: #EEE;
   color: #111;
 }
@@ -130,12 +135,6 @@ header .displayContainer {
   font-weight: 300;
 }
 
-.header__text h1 {
-  font-size: calc(2rem + 2vw);
-  letter-spacing: 1px;
-  /* color: #27ae60; */
-}
-
 header .btn {
   justify-self: end;
 }
@@ -157,8 +156,8 @@ main { padding: 2rem 0 11rem; }
   padding: 2rem;
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
   /* display: grid; */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem; */
   display: flex;
   justify-content: space-between;
   justify-items: space-between;
@@ -170,7 +169,6 @@ main { padding: 2rem 0 11rem; }
 .inputContainer__filter {
   display: flex;
   align-items: baseline;
-  /* padding: 1rem; */
   justify-content: center;
 }
 
@@ -188,7 +186,6 @@ input[name="listFilter"]:focus + label { border-color: black; }
 .inputContainer__searchBar {
   position: relative;
   display: inline-block;
-  /* flex: 1; */
   width: 100%;
   max-width: 320px;
 }
@@ -207,10 +204,6 @@ input[name="listFilter"]:focus + label { border-color: black; }
   top: 50%;
   transform: translateY(-50%);
 }
-
-/* ------------------------------------ MAIN > TASKBOARD MENU > DELETE ALL TASKS */
-
-/* .taskBoard__menu .btn { padding: 1rem; } */
 
 /* 
 ================================================================================ MAIN > TASK LISTS
@@ -373,8 +366,6 @@ footer .displayContainer {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   row-gap: .3rem;
 }
-
-/* footer p:not(:last-of-type) { margin-bottom: 0.3rem; } */
 
 footer a {
   color: inherit;

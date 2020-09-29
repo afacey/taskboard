@@ -9,7 +9,7 @@ const TaskBoardMenu = props => {
     <section className="taskBoard__menu">
 
       <div className="inputContainer__filter">
-        {/* <h4>Lists: </h4> */}
+        <span className="srOnly">Filter the task items by list</span>
         <input type="radio" className="srOnly" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
         <label className="btn btn--orange" htmlFor="filterAll">All</label>
         
@@ -25,7 +25,6 @@ const TaskBoardMenu = props => {
 
       <div className="inputContainer__searchBar">
         <input className="taskBoard__searchBar" type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
-        {/* TODO style to pad the text to the right to prevent the icon overlapping */}
         <FontAwesomeIcon className="taskBoard__searchBarIcon" icon={faSearch} aria-hidden="true"/>
       </div>
 
