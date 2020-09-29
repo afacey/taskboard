@@ -35,17 +35,17 @@ ul {  list-style: none; }
 ================================================================================ LAYOUT
 */
 
+.pageContainer {
+  min-height: 100vh;
+  position: relative;
+}
+
 .wrapper {
   max-width: 1440px;
   width: 90%;
   margin: 0 auto;
 }
 
-.App,
-.pageContainer {
-  min-height: 100vh;
-  position: relative;
-}
 
 /* 
 ================================================================================ TYPOGRAPHY
@@ -245,6 +245,11 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskList__addBtn { float: right; }
 
+.taskList__addHeading {
+  font-weight: 400;
+  margin-bottom: .5rem;
+}
+
 .taskList__heading--open { border-bottom: 5px solid rgb(178, 34, 34); }
 
 .taskList__heading--open .taskList__count,
@@ -328,7 +333,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 ================================================================================ MAIN > TASK ITEMS > TASK FORM
 */
 
-.taskForm { text-align: center; }
+.taskForm { text-align: right; }
 
 .taskForm .inputContainer { margin-bottom: 1rem; }
 

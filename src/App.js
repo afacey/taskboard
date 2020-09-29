@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
+import Header from './components/Header.js';
 import TaskBoardMenu from './components/TaskBoardMenu.js';
 import TaskList from './components/TaskList.js';
+import Footer from './components/Footer.js';
 import './App.css';
 
 class App extends Component {
@@ -115,17 +117,9 @@ class App extends Component {
     const lists = listFilter === 'all' ? taskStatus : [listFilter];
 
     return (
-      <div className="App">
+      <div className="pageContainer">
         {/* START of HEADER */}
-        <header>
-          <div className="wrapper displayContainer">
-            <div className="header__text">
-              <h1>Task Board</h1>
-              <p>Add and track your tasks to increase productivity!</p>
-            </div>
-            <button onClick={clearTaskboard}  className="btn btn--black btn__taskBoard btn__taskBoard--clear" disabled={ taskItems.length ? "" : "disabled" }>Clear Task Board</button>
-          </div>
-        </header>
+        <Header clearTaskboard={clearTaskboard} numOfTasks={taskItems.length} />
         
         {/* START of MAIN */}
         <main>
@@ -145,14 +139,13 @@ class App extends Component {
                       className="taskList" 
                       key={idx} 
                       status={status}
+                      statusString={statusString[status]}
                       tasks={tasks} 
                       addTask={addTask}
                       moveTask={moveTask}
                       removeTask={removeTask}
                       editTask={updateTask}
-                    >
-                      {statusString[status]}
-                    </TaskList>
+                    />
                   )
                 })
               } 
@@ -161,11 +154,7 @@ class App extends Component {
         </main>
 
         {/* START of FOOTER */}
-        <footer>
-          <div className="wrapper">
-            <p>Copyright 2020 - Created By <a href="https://andrefacey.com">Andre Facey</a> at <a href="https://junocollege.com" target="_blank" rel="noopener noreferrer">Juno College</a> - Design Inspiration from <a href="https://scottrs.ca" target="_blank" rel="noopener noreferrer">Scott Sobere-Yu</a> and <a href="https://dribbble.com/shots/6250762-Kanban-Board" target="_blank" rel="noopener noreferrer">Nikita</a></p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     );
   }

@@ -70,14 +70,14 @@ class TaskList extends Component {
   
   // --------------------------- render
   render() {
-    const { status, tasks, children, editTask, removeTask, moveTask } = this.props;
+    const { status, statusString, tasks, children, editTask, removeTask, moveTask } = this.props;
   
     return(
       <div className="taskList">
         <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
           {/* TODO keep ellipsis button? */}
           {/* <button className="taskList__menuBtn"><FontAwesomeIcon icon={faEllipsisV} /></button> */}
-          {children} 
+          {statusString} 
           {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
           <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
         </h2>
@@ -85,7 +85,7 @@ class TaskList extends Component {
           { 
             this.state.isStaging && 
             <li className={`taskItem taskItem--${status}`}>
-              <h3>New Task</h3>
+              <h3 className="taskList__addHeading">New {statusString} Task</h3>
               <TaskForm 
                 id={status}
                 taskValue={this.state.stagingTask}
