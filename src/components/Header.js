@@ -5,7 +5,7 @@ const Header = ({clearTaskboard, numOfTasks}) => (
     <div className="wrapper displayContainer">
       <div className="header__text">
         <h1>Task Board</h1>
-        <p>Add and track your tasks to increase productivity!</p>
+        <p>Add and track tasks to increase productivity!</p>
       </div>
       <button onClick={clearTaskboard}  className="btn btn--black btn__taskBoard btn__taskBoard--clear" disabled={ numOfTasks ? "" : "disabled" }>Clear Task Board</button>
     </div>

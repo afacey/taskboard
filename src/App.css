@@ -118,6 +118,13 @@ header {
   border-bottom-right-radius: 5px;
 }
 
+header .displayContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+  justify-content: space-between;
+  align-items: center;
+}
+
 .header__text {
   margin-bottom: 1rem;
   font-weight: 300;
@@ -129,16 +136,14 @@ header {
   /* color: #27ae60; */
 }
 
-.header__text p {
-  font-size: 1.8rem;
+header .btn {
+  justify-self: end;
 }
-
-
 /* 
 ================================================================================ MAIN
 */
 
-main { padding: 2rem 0; }
+main { padding: 2rem 0 11rem; }
 
 /* 
 ================================================================================ MAIN > TASKBOARD MENU
@@ -213,7 +218,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskLists {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   column-gap: 4rem;
   row-gap: 2rem;
 }
@@ -231,7 +236,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskList__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   gap: 1.5rem;
 }
 
@@ -244,11 +249,6 @@ input[name="listFilter"]:focus + label { border-color: black; }
 }
 
 .taskList__addBtn { float: right; }
-
-.taskList__addHeading {
-  font-weight: 400;
-  margin-bottom: .5rem;
-}
 
 .taskList__heading--open { border-bottom: 5px solid rgb(178, 34, 34); }
 
@@ -335,18 +335,20 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskForm { text-align: right; }
 
-.taskForm .inputContainer { margin-bottom: 1rem; }
-
-.taskForm .btn:not(:last-of-type) { margin-right: 0.6rem; }
-
-.taskForm__input {
-  width: 100%;
-  margin-bottom: 1rem;
+.taskForm__heading {
+  font-weight: 400;
+  margin-bottom: .5rem;
 }
 
-.taskForm__input--multiline {
-  resize: none;
+.taskForm .inputContainer { margin-bottom: 1rem; }
+
+.taskForm .btn:not(:last-of-type) { margin-right: 0.3rem; }
+
+.taskForm__input {
   min-height: 5rem;
+  width: 100%;
+  resize: none;
+  margin-bottom: 1rem;
 }
 
 
@@ -358,12 +360,28 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 2rem 0;
-  text-align: center;
   color:#111;
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 2rem 0;
   background-color: #FAFAFA;
   box-shadow: 0 -2px 3px rgba(17,17,17,0.4);
 }
+
+footer .displayContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  row-gap: .3rem;
+}
+
+/* footer p:not(:last-of-type) { margin-bottom: 0.3rem; } */
+
+footer a {
+  color: inherit;
+  transition: color 0.3s;
+}
+
+footer a:hover { color: rgb(178, 34, 34) }
 
 /* 
 ================================================================================ MEDIA QUERIES
@@ -381,6 +399,9 @@ footer {
 
 /* ------------------------------------ MAX-WIDTH 480px */
 @media (max-width: 480px) {
+  header .btn {
+    justify-self: center;
+  }
   header .displayContainer { text-align: center; }
   .inputContainer__filter label:not(:last-of-type) { margin-right: .6rem; }
   .btn {

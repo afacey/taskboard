@@ -70,7 +70,7 @@ class TaskList extends Component {
   
   // --------------------------- render
   render() {
-    const { status, statusString, tasks, children, editTask, removeTask, moveTask } = this.props;
+    const { status, statusString, tasks, editTask, removeTask, moveTask } = this.props;
   
     return(
       <div className="taskList">
@@ -85,7 +85,6 @@ class TaskList extends Component {
           { 
             this.state.isStaging && 
             <li className={`taskItem taskItem--${status}`}>
-              <h3 className="taskList__addHeading">New {statusString} Task</h3>
               <TaskForm 
                 id={status}
                 taskValue={this.state.stagingTask}
