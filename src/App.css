@@ -64,6 +64,8 @@ h1 {
   letter-spacing: 1px;
 }
 
+h2 { font-weight: 400; }
+
 /* 
 ================================================================================ COMPONENTS
 */
@@ -142,7 +144,7 @@ header .btn {
 ================================================================================ MAIN
 */
 
-main { padding: 2rem 0 11rem; }
+main { padding: 2rem 0 12rem; }
 
 /* 
 ================================================================================ MAIN > TASKBOARD MENU
@@ -155,12 +157,8 @@ main { padding: 2rem 0 11rem; }
   margin-bottom: 2rem;
   padding: 2rem;
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
-  /* display: grid; */
-  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem; */
   display: flex;
   justify-content: space-between;
-  justify-items: space-between;
   align-items: center;
 }
 
@@ -216,16 +214,28 @@ input[name="listFilter"]:focus + label { border-color: black; }
   row-gap: 2rem;
 }
 
-.taskList__heading {
+/* ------------------------------------ MAIN > TASK LISTS > TASK LIST HEADER */
+.taskList__header {
   margin-bottom: 1.5rem;
-  font-weight: 400;
   border-radius: 5px;
   background-color: #FAFAFA;
   padding: 1.5rem;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
+  display: grid;
+  grid-template-columns: 3.5rem 1fr 8rem;
+}
+/* TODO remove menuBtn if not being used in html */
+.taskList__menuBtn {
+  /* float: left; */
+  border: none;
+  background: none;
+  padding: 6px 10px;
 }
 
+.taskList__headingText { display: inline-block;}
+
 .taskList__count { margin-left: 1rem; }
+/* .taskList__addBtn { float: right; } */
 
 .taskList__list {
   display: grid;
@@ -233,42 +243,34 @@ input[name="listFilter"]:focus + label { border-color: black; }
   gap: 1.5rem;
 }
 
-/* TODO remove menuBtn if not being used in html */
-.taskList__menuBtn {
-  float: left;
-  border: none;
-  background: none;
-  padding: 6px 10px;
-}
 
-.taskList__addBtn { float: right; }
 
-.taskList__heading--open { border-bottom: 5px solid rgb(178, 34, 34); }
+.taskList__header--open { border-bottom: 5px solid rgb(178, 34, 34); }
 
-.taskList__heading--open .taskList__count,
-.taskList__heading--open .taskList__menuBtn {
+.taskList__header--open .taskList__count,
+.taskList__header--open .taskList__menuBtn {
   color: rgb(178, 34, 34);
 }
 
-.taskList__heading--open .taskList__addBtn { background: rgb(178, 34, 34);}
+.taskList__header--open .taskList__addBtn { background: rgb(178, 34, 34);}
 
-.taskList__heading--inProgress { border-bottom: 5px solid rgb(70, 130, 180); }
+.taskList__header--inProgress { border-bottom: 5px solid rgb(70, 130, 180); }
 
-.taskList__heading--inProgress .taskList__count,
-.taskList__heading--inProgress .taskList__menuBtn {
+.taskList__header--inProgress .taskList__count,
+.taskList__header--inProgress .taskList__menuBtn {
   color: rgb(70, 130, 180);
 }
 
-.taskList__heading--inProgress .taskList__addBtn { background: rgb(70, 130, 180); }
+.taskList__header--inProgress .taskList__addBtn { background: rgb(70, 130, 180); }
 
-.taskList__heading--complete { border-bottom: 5px solid rgb(39, 174, 96); }
+.taskList__header--complete { border-bottom: 5px solid rgb(39, 174, 96); }
 
-.taskList__heading--complete .taskList__count,
-.taskList__heading--complete .taskList__menuBtn {
+.taskList__header--complete .taskList__count,
+.taskList__header--complete .taskList__menuBtn {
   color: rgb(39, 174, 96);
 }
 
-.taskList__heading--complete .taskList__addBtn { background: #27ae60; }
+.taskList__header--complete .taskList__addBtn { background: #27ae60; }
 
 /* 
 ================================================================================ MAIN > TASK ITEMS
@@ -385,6 +387,7 @@ footer a:hover { color: rgb(178, 34, 34) }
     grid-template-columns: 1fr;
     justify-content: center;
     justify-items: center;
+    row-gap: 1rem;
   }
 }
 

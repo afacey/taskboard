@@ -74,13 +74,17 @@ class TaskList extends Component {
   
     return(
       <div className="taskList">
-        <h2 className={`taskList__heading taskList__heading--${status} clearfix`}>
+        <div className={`taskList__header taskList__header--${status} clearfix`}>
           {/* TODO keep ellipsis button? */}
-          {/* <button className="taskList__menuBtn"><FontAwesomeIcon icon={faEllipsisV} /></button> */}
-          {statusString} 
-          {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
+          <button className="taskList__menuBtn"><FontAwesomeIcon icon={faEllipsisV} /></button>
+          
+          <h2 className="taskList__headingText">
+            {statusString} 
+            {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
+          </h2>
+
           <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
-        </h2>
+        </div>
         <ul className="taskList__list">
           { 
             this.state.isStaging && 
