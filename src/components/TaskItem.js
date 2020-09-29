@@ -2,28 +2,29 @@ import React, { Component} from 'react';
 import TaskForm from './TaskForm.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import autosize from 'autosize';
+import autosize, { update } from 'autosize';
 
 class TaskItem extends Component {
   constructor(props) {
     super()
 
     this.state = {
-      taskEdit: props.task,
+      taskFormInput: props.task,
       isEditing: false,
+      isMultiLine: props.isMultiLine,
     }
   }
   
   // --------------------------- componentDidUpdate
   componentDidUpdate() {
-    const input = document.querySelector(`#taskEdit_${this.props.id}`);
+    const input = document.querySelector(`#taskFormInput_${this.props.id}`);
     if (input) {
       autosize(input);
 
-      // set the cursor to the end of the text input by setting value to "" > focus > value back to state.taskEdit
+      // set the cursor to the end of the text input by setting value to "" > focus > value back to state.taskFormInput
       input.value = "";
       input.focus();
-      input.value = this.state.taskEdit;
+      input.value = this.state.taskFormInput;
     } 
 
   }
@@ -50,10 +51,23 @@ class TaskItem extends Component {
     })
   }
 
+  // --------------------------- handleMultiLine
+  handleMultiLine = (e) => {
+    const { isMultiLine } = this.state;
+    console.log('mutli change');
+    this.setState({isMultiLine: !isMultiLine});
+  }
+
   // --------------------------- handleEditSubmit
   handleEditSubmit = (evt) => {
     evt.preventDefault();
-    this.props.editTask(this.props.id, this.state.taskEdit);
+    const { taskFormInput: task, isMultiLine } = this.state; 
+    const updatedTask = {
+      task: isMultiLine ? task : task.replaceAll('\n', ''),
+      isMultiLine
+    }
+    // this.props.editTask(this.props.id, this.state.taskFormInput);
+    this.props.editTask(this.props.id, updatedTask);
     this.setState({isEditing: false});
   }
 
@@ -90,13 +104,15 @@ class TaskItem extends Component {
         ? <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
         : <TaskForm 
             id={id}
+            isMultiLine={this.state.isMultiLine}
             type="edit"
             handleSubmit={this.handleEditSubmit} 
             handleBlur={this.handleBlur} 
             handleChange={this.handleChange}
-            taskValue={this.state.taskEdit}
+            taskValue={this.state.taskFormInput}
             removeTask={this.removeTask}
             toggleForm={this.toggleEdit}
+            handleMultiLine={this.handleMultiLine}
           />
     }
       

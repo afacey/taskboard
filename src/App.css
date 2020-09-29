@@ -62,7 +62,7 @@ body {
   color: #FAFAFA;
   border: 3px solid transparent;
   border-radius: 5px;
-  padding: 6px;
+  padding: 3px;
   transition: border-color 0.3s;
 }
 
@@ -169,7 +169,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
   background-color: #FAFAFA;
   border: 2px solid #111;
   border-radius: 5px;
-  padding: 1rem 30px 1rem 1rem;
+  padding: 4px 30px 4px 4px;
   width: 100%;
 }
 
@@ -182,7 +182,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 /* ------------------------------------ MAIN > TASKBOARD MENU > DELETE ALL TASKS */
 
-.taskBoard__menu .btn { padding: 1rem; }
+/* .taskBoard__menu .btn { padding: 1rem; } */
 
 /* 
 ================================================================================ MAIN > TASK LISTS
@@ -271,12 +271,6 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskItem__text:hover { cursor: pointer; }
 
-.taskItem__editInput {
-  width: 100%;
-  resize: none;
-  min-height: 5rem;
-  margin-bottom: 1rem;
-}
 
 .taskItem--open { box-shadow: 0 2px 3px rgba(178, 34, 34,.8); }
 .taskItem--inProgress { box-shadow: 0 2px 3px rgba(70, 130, 180,.8); }
@@ -313,7 +307,20 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskForm { text-align: center; }
 
-.taskForm .btn:not(:last-of-type) { margin-right: 1rem; }
+.taskForm .inputContainer { margin-bottom: 1rem; }
+
+.taskForm .btn:not(:last-of-type) { margin-right: 0.6rem; }
+
+.taskForm__input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.taskForm__input--multiline {
+  resize: none;
+  min-height: 5rem;
+}
+
 
 /* 
 ================================================================================ FOOTER
