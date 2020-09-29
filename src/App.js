@@ -118,8 +118,12 @@ class App extends Component {
       <div className="App">
         {/* START of HEADER */}
         <header>
-          <div className="wrapper">
-            <h1>Task Board</h1>
+          <div className="wrapper displayContainer">
+            <div className="header__text">
+              <h1>Task Board</h1>
+              <p>Add and track your tasks to increase productivity!</p>
+            </div>
+            <button onClick={clearTaskboard}  className="btn btn--black btn__taskBoard btn__taskBoard--clear" disabled={ taskItems.length ? "" : "disabled" }>Clear Task Board</button>
           </div>
         </header>
         
@@ -128,12 +132,11 @@ class App extends Component {
           <div className="wrapper">
             <TaskBoardMenu 
               clearTaskboard={clearTaskboard}
-              numOfTasks={taskItems.length}
               handleChange={handleChange}
               searchTerms={searchTerms}
             />
             
-            <div className="taskLists">
+            <section className="taskLists">
               { 
                 lists.map((status, idx) => {
                   const tasks = items.filter(task => task.status === status);
@@ -153,7 +156,7 @@ class App extends Component {
                   )
                 })
               } 
-            </div>
+            </section>
           </div>
         </main>
 

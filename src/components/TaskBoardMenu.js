@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const TaskBoardMenu = props => {
-  const { clearTaskboard, numOfTasks, handleChange, searchTerms } = props;
+  const { handleChange, searchTerms } = props;
 
   return(
-    <div className="taskBoard__menu">
-
+    <section className="taskBoard__menu">
 
       <div className="inputContainer__filter">
         {/* <h4>Lists: </h4> */}
@@ -30,20 +29,7 @@ const TaskBoardMenu = props => {
         <FontAwesomeIcon className="taskBoard__searchBarIcon" icon={faSearch} aria-hidden="true"/>
       </div>
 
-
-      
-
-      {/* <div className="inputContainer__buttons">
-        <button 
-          onClick={clearTaskboard} 
-          className="btn btn--black btn__taskBoard btn__taskBoard--clear" 
-          disabled={ numOfTasks ? "" : "disabled" }
-        >
-          Delete All Tasks
-        </button>
-      </div> */}
-
-    </div>
+    </section>
   )
 }
 
