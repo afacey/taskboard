@@ -60,15 +60,17 @@ body {
   font-size: 1.6rem;
   color: #EEE;
   color: #FAFAFA;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   border-radius: 5px;
   padding: 6px;
+  transition: border-color 0.3s;
 }
 
 .btn:hover,
 .btn:active,
 .btn:focus {
   cursor: pointer;
+  border-color: #111;
 }
 
 .btn:disabled { opacity: 0.4; }
@@ -148,11 +150,12 @@ main { padding: 3rem 0; }
 
 .inputContainer__filter label { 
   opacity: 0.4;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, border-color 0.3s;
 }
 .inputContainer__filter label:not(:last-of-type) { margin-right: 1rem; }
 
 input[name="listFilter"]:checked + label { opacity: 1; }
+input[name="listFilter"]:focus + label { border-color: black; }
 
 
 /* ------------------------------------ MAIN > TASKBOARD MENU > SEARCH BAR */
