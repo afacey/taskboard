@@ -16,14 +16,17 @@ class TaskItem extends Component {
   
   // --------------------------- componentDidUpdate
   componentDidUpdate() {
-    const input = document.querySelector(`#taskFormInput_${this.props.id}`);
-    if (input) {
-      autosize(input);
+    const taskInput = document.querySelector(`#taskFormInput_${this.props.id}`);
+    if (taskInput) {
+      // autosize the textarea height as needed
+      autosize(taskInput);
 
       // set the cursor to the end of the text input by setting value to "" > focus > value back to state.taskFormInput
-      input.value = "";
-      input.focus();
-      input.value = this.state.taskFormInput;
+      taskInput.value = "";
+      // focus on the input
+      taskInput.focus();
+      // set the input value
+      taskInput.value = this.state.taskFormInput;
     } 
 
   }
@@ -37,7 +40,7 @@ class TaskItem extends Component {
     setTimeout(() => {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
-        // You can invoke a callback or add custom logic here
+        // if new focused element is not contained in the form ... toggle out of editing the task
         this.setState({isEditing: false});
       }
     }, 0);
@@ -79,6 +82,7 @@ class TaskItem extends Component {
       <li className={`taskItem taskItem--${status}`} >
       
       {
+        // If status is 'open' DO NOT render the "previous" status button
         status !== 'open' 
         &&
         <button className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
@@ -88,6 +92,7 @@ class TaskItem extends Component {
       }
     
     { 
+      // if not in editing mode render the task as text ... otherwise render the task form to edit the task
       !this.state.isEditing 
         ? <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
         : <TaskForm 
@@ -103,6 +108,7 @@ class TaskItem extends Component {
     }
       
     {
+      // If status is 'complete' DO NOT render the "next" status button
       status !== "complete" 
       &&
       <button className="taskItem__btn taskItem__btn--next" onClick={this.handleMoveNext}>

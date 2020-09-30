@@ -18,13 +18,14 @@ class TaskList extends Component {
 
   // --------------------------- componentDidUpdate
   componentDidUpdate() {
-    const input = document.querySelector(`#taskFormInput_${this.props.status}`);
-    if (input) {
-      autosize(input);
-      input.focus();
+    const taskInput = document.querySelector(`#taskFormInput_${this.props.status}`);
+    if (taskInput) {
+      // autosize the textarea height as needed
+      autosize(taskInput);
+      // focus on the input
+      taskInput.focus();
     } 
   }
-
 
   // --------------------------- toggleMenuEnabled
   toggleMenuEnabled = () => this.setState({menuEnabled: !this.state.menuEnabled});
@@ -38,8 +39,7 @@ class TaskList extends Component {
     setTimeout(() => {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
-        // TODO add comment 
-        // You can invoke a callback or add custom logic here
+        // if new focused element is not contained in the form ... toggle out of staging a task
         this.setState({isStaging: false});
       }
     }, 0);
@@ -60,6 +60,7 @@ class TaskList extends Component {
       const { stagingTask: task } = this.state;
       const { status } = this.props;
 
+      // add task
       this.props.addTask({
         task,
         status
@@ -78,19 +79,22 @@ class TaskList extends Component {
   handleClearList = () => {
     const { tasks, status, clearTaskList } = this.props;
     
+    // if task lst has items
     if (tasks.length) {
 
+      // filter out the full task items list to those with the status of the task list
       const taskListItems = 
       tasks
         .filter(task => task.status === status)
+        // create an object with the keys of the task list items with a null value
         .reduce(((deleteList, taskItem) => { 
           deleteList[taskItem.key] = null;
           return deleteList;
         }), {});
-      
+      // remove the filtered items from firebase
       clearTaskList(taskListItems, status)  
     }
-    
+    // toggle tasklist menu to false
     this.setState({menuEnabled: false});
   }
   
@@ -109,11 +113,14 @@ class TaskList extends Component {
           </button>
           
           <h2 className="taskList__headingText">
+            {/* Task List Name */}
             {statusString} 
+            {/* Task List Item Counter */}
             {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
           </h2>
 
           {
+            // Toggle task list header icon depending if the menuEnabled is true
             !this.state.menuEnabled 
             ? 
             <>
@@ -131,6 +138,7 @@ class TaskList extends Component {
         </div>
         <ul className="taskList__list">
           { 
+          // render a TaskForm to add a new task for the task list
             this.state.isStaging && 
             <li className={`taskItem taskItem--${status}`}>
               <TaskForm 
@@ -144,6 +152,7 @@ class TaskList extends Component {
             </li>
           }
           { 
+          // render the taskform items for the list
             this.props.tasks.map(({key, task, status}) => (
               <TaskItem 
                 key={key} 

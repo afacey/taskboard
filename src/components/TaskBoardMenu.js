@@ -8,6 +8,7 @@ const TaskBoardMenu = props => {
   return(
     <section className="taskBoard__menu">
 
+      {/* Task List Filter Inputs */}
       <div className="inputContainer__filter">
         <span className="srOnly">Filter the task items by list</span>
         <input type="radio" className="srOnly" name="listFilter" id="filterAll" value="all" onChange={handleChange} defaultChecked />
@@ -23,6 +24,7 @@ const TaskBoardMenu = props => {
         <label className="btn btn--green" htmlFor="filterComplete">Complete</label>
       </div>
 
+      {/* Task List Search Bar */}
       <div className="inputContainer__searchBar">
         <input className="taskBoard__searchBar" type="text" name="searchTerms" id="seachTerms" placeholder="search" onChange={handleChange} value={searchTerms} />
         <FontAwesomeIcon className="taskBoard__searchBarIcon" icon={faSearch} aria-hidden="true"/>

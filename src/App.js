@@ -46,15 +46,20 @@ class App extends Component {
 
   // --------------------------- clearTaskboard
   clearTaskboard = (newTask) => {
+    // remove all items in firebase
     firebase.database().ref("tasks").remove();
+
+    // reset searchItems to empty
     this.setState({searchItems: []})
   }
 
   // --------------------------- clearTaskList
   clearTaskList = (taskListItems, status) => {
+    // pass an object of keys with null values to clear multiple items
     firebase.database().ref("tasks").update(taskListItems);
 
-    const filterSearchItems = this.state.searchItems.filter(item => item.status != status);
+    // update the searchItems with the filtered out items that may have been removed
+    const filterSearchItems = this.state.searchItems.filter(item => item.status !== status);
     this.setState({searchItems: filterSearchItems})
   }
 
@@ -92,10 +97,11 @@ class App extends Component {
     
     // call handleSearch if the input searchTerms input was changed and there are tasks
     if (name === 'searchTerms' && this.state.taskItems.length) {
+      // set seachTerms state to value, and then call this.handleSearch
       this.setState({[name]: value}, this.handleSearch);
-      // this.handleSearch();
     }
     else { 
+      // otherwise update other inputs in state by their name and input value
       this.setState({[name]: value});
     }
   }
