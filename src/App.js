@@ -45,10 +45,18 @@ class App extends Component {
   }
 
   // --------------------------- clearTaskboard
-  clearTaskboard = (newTask) => firebase.database().ref("tasks").remove();
+  clearTaskboard = (newTask) => {
+    firebase.database().ref("tasks").remove();
+    this.setState({searchItems: []})
+  }
 
   // --------------------------- clearTaskList
-  clearTaskList = (taskListItems) => firebase.database().ref("tasks").update(taskListItems);
+  clearTaskList = (taskListItems, status) => {
+    firebase.database().ref("tasks").update(taskListItems);
+
+    const filterSearchItems = this.state.searchItems.filter(item => item.status != status);
+    this.setState({searchItems: filterSearchItems})
+  }
 
   // --------------------------- addTask
   addTask = (newTask) => firebase.database().ref("tasks").push(newTask);
@@ -140,7 +148,7 @@ class App extends Component {
                   return (
                     <TaskList 
                       className="taskList" 
-                      key={idx} 
+                      key={status} 
                       status={status}
                       statusString={statusString[status]}
                       tasks={tasks} 

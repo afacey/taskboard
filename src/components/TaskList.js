@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 import TaskForm from './TaskForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faTimes } from '@fortawesome/free-solid-svg-icons';
 import autosize from 'autosize';
 
 class TaskList extends Component {
@@ -88,7 +88,7 @@ class TaskList extends Component {
           return deleteList;
         }), {});
       
-      clearTaskList(taskListItems)  
+      clearTaskList(taskListItems, status)  
     }
     
     this.setState({menuEnabled: false});
@@ -101,8 +101,12 @@ class TaskList extends Component {
     return(
       <div className="taskList">
         <div className={`taskList__header taskList__header--${status}`}>
-          {/* TODO keep ellipsis button? */}
-          <button className={this.state.menuEnabled ? "taskList__menuBtn taskList__menuBtn--active" : "taskList__menuBtn" } onClick={this.toggleMenuEnabled}><FontAwesomeIcon icon={faEllipsisV} /></button>
+          <label htmlFor="taskListMenuBtn" className="srOnly">Click the button to toggle the task list menu to clear the task list's items</label>
+          <button 
+            id="taskListMenuBtn" className={this.state.menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
+            onClick={this.toggleMenuEnabled}>
+            {!this.state.menuEnabled ? <FontAwesomeIcon icon={faEllipsisV} /> : <FontAwesomeIcon icon={faTimes} /> }  
+          </button>
           
           <h2 className="taskList__headingText">
             {statusString} 
@@ -111,8 +115,16 @@ class TaskList extends Component {
 
           {
             !this.state.menuEnabled 
-            ? <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
-            : <button onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`}>Clear Task List</button>
+            ? 
+            <>
+              <label htmlFor="taskListAddBtn" className="srOnly">Click the button to toggle the add new task form</label>
+              <button id="taskListAddBtn" onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
+            </>
+            : 
+            <>
+              <label htmlFor="taskListClearBtn" className="srOnly">Click the button to clear the task list's items</label>
+              <button onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`} disabled={tasks.length ? '' : 'disabled' }>Clear List</button>
+            </>
           }
           
           
