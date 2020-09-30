@@ -47,6 +47,9 @@ class App extends Component {
   // --------------------------- clearTaskboard
   clearTaskboard = (newTask) => firebase.database().ref("tasks").remove();
 
+  // --------------------------- clearTaskList
+  clearTaskList = (taskListItems) => firebase.database().ref("tasks").update(taskListItems);
+
   // --------------------------- addTask
   addTask = (newTask) => firebase.database().ref("tasks").push(newTask);
   
@@ -110,7 +113,7 @@ class App extends Component {
       inProgress: "In Progress",
       complete: "Completed"
     } 
-    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, } = this;
+    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList } = this;
     const { taskStatus, taskItems, listFilter, searchItems, searchTerms } = this.state;
     
     const items = !searchTerms.length ? taskItems : searchItems;
@@ -145,6 +148,7 @@ class App extends Component {
                       moveTask={moveTask}
                       removeTask={removeTask}
                       editTask={updateTask}
+                      clearTaskList={clearTaskList}
                     />
                   )
                 })

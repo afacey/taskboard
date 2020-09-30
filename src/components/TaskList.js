@@ -12,6 +12,7 @@ class TaskList extends Component {
     this.state = {
       isStaging: false,
       stagingTask: "",
+      menuEnabled: false
     }
   }
 
@@ -24,6 +25,10 @@ class TaskList extends Component {
     } 
   }
 
+
+  // --------------------------- toggleMenuEnabled
+  toggleMenuEnabled = () => this.setState({menuEnabled: !this.state.menuEnabled});
+
   // --------------------------- handleBlur
   handleBlur = (evt) => {
     // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
@@ -33,6 +38,7 @@ class TaskList extends Component {
     setTimeout(() => {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
+        // TODO add comment 
         // You can invoke a callback or add custom logic here
         this.setState({isStaging: false});
       }
@@ -67,23 +73,49 @@ class TaskList extends Component {
     }
     
   }
+
+  // --------------------------- handleClearList
+  handleClearList = () => {
+    const { tasks, status, clearTaskList } = this.props;
+    
+    if (tasks.length) {
+
+      const taskListItems = 
+      tasks
+        .filter(task => task.status === status)
+        .reduce(((deleteList, taskItem) => { 
+          deleteList[taskItem.key] = null;
+          return deleteList;
+        }), {});
+      
+      clearTaskList(taskListItems)  
+    }
+    
+    this.setState({menuEnabled: false});
+  }
   
   // --------------------------- render
   render() {
     const { status, statusString, tasks, editTask, removeTask, moveTask } = this.props;
-  
+
     return(
       <div className="taskList">
-        <div className={`taskList__header taskList__header--${status} clearfix`}>
+        <div className={`taskList__header taskList__header--${status}`}>
           {/* TODO keep ellipsis button? */}
-          <button className="taskList__menuBtn"><FontAwesomeIcon icon={faEllipsisV} /></button>
+          <button className={this.state.menuEnabled ? "taskList__menuBtn taskList__menuBtn--active" : "taskList__menuBtn" } onClick={this.toggleMenuEnabled}><FontAwesomeIcon icon={faEllipsisV} /></button>
           
           <h2 className="taskList__headingText">
             {statusString} 
             {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
           </h2>
 
-          <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
+          {
+            !this.state.menuEnabled 
+            ? <button onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
+            : <button onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`}>Clear Task List</button>
+          }
+          
+          
         </div>
         <ul className="taskList__list">
           { 

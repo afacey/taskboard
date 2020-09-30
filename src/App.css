@@ -219,23 +219,26 @@ input[name="listFilter"]:focus + label { border-color: black; }
   margin-bottom: 1.5rem;
   border-radius: 5px;
   background-color: #FAFAFA;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem 0;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.4);
   display: grid;
-  grid-template-columns: 3.5rem 1fr 8rem;
+  grid-template-columns: 3.5rem 1fr 12.5rem;
 }
 /* TODO remove menuBtn if not being used in html */
 .taskList__menuBtn {
-  /* float: left; */
   border: none;
   background: none;
-  padding: 6px 10px;
 }
+
+.taskList__header .taskList__menuBtn--active { color: #111; }
 
 .taskList__headingText { display: inline-block;}
 
 .taskList__count { margin-left: 1rem; }
-/* .taskList__addBtn { float: right; } */
+
+.taskList__addBtn {
+  justify-self: end;
+}
 
 .taskList__list {
   display: grid;
@@ -244,7 +247,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 }
 
 
-
+/* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- OPEN */
 .taskList__header--open { border-bottom: 5px solid rgb(178, 34, 34); }
 
 .taskList__header--open .taskList__count,
@@ -254,6 +257,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskList__header--open .taskList__addBtn { background: rgb(178, 34, 34);}
 
+/* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- IN PROGRESS */
 .taskList__header--inProgress { border-bottom: 5px solid rgb(70, 130, 180); }
 
 .taskList__header--inProgress .taskList__count,
@@ -263,6 +267,7 @@ input[name="listFilter"]:focus + label { border-color: black; }
 
 .taskList__header--inProgress .taskList__addBtn { background: rgb(70, 130, 180); }
 
+/* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- COMPLETE */
 .taskList__header--complete { border-bottom: 5px solid rgb(39, 174, 96); }
 
 .taskList__header--complete .taskList__count,
@@ -271,6 +276,8 @@ input[name="listFilter"]:focus + label { border-color: black; }
 }
 
 .taskList__header--complete .taskList__addBtn { background: #27ae60; }
+
+
 
 /* 
 ================================================================================ MAIN > TASK ITEMS

@@ -6,7 +6,7 @@ const TaskForm = props => {
   return (
     <>
     <h3 className="taskForm__heading">{type === 'edit' ? 'Edit Task' : 'New Task'}</h3>
-    <form action="#" onSubmit={handleSubmit} onBlur={handleBlur} className="taskForm clearfix">
+    <form action="#" onSubmit={handleSubmit} onBlur={handleBlur} className="taskForm">
       <textarea className="taskForm__input" id={`taskFormInput_${id}`} name="taskFormInput" onChange={handleChange} value={taskValue}></textarea>
       <button className="btn btn--green">Save</button>
       <button type="button" onClick={toggleForm} className="btn btn--orange">Cancel</button>
