@@ -22,8 +22,13 @@ class TaskList extends Component {
     if (taskInput) {
       // autosize the textarea height as needed
       autosize(taskInput);
+
+      // set the cursor to the end of the text input by setting value to "" > focus > value back to state.stagingTask
+      taskInput.value = "";
       // focus on the input
       taskInput.focus();
+      // set the input value
+      taskInput.value = this.state.stagingTask;
     } 
   }
 
