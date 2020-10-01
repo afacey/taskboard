@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/andre-facey-project-five/precache-manifest.c4c610f5f5765b4b284506013608d2d6.js"
+  "/andre-facey-project-five/precache-manifest.7412123aae4828846d0092d50c7f32f9.js"
 );
 
 self.addEventListener('message', (event) => {
