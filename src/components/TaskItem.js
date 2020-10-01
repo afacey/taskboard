@@ -17,7 +17,9 @@ class TaskItem extends Component {
   // --------------------------- componentDidUpdate
   componentDidUpdate() {
     const taskInput = document.querySelector(`#taskFormInput_${this.props.id}`);
-    if (taskInput) {
+
+    // only go to the end of the text if the input is not already focused
+    if (taskInput && taskInput !== document.activeElement) {
       // autosize the textarea height as needed
       autosize(taskInput);
 
