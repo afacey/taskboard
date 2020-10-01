@@ -81,7 +81,6 @@ h3 {
 /* ------------------------------------ BUTTONS */
 .btn {
   font-size: 1.6rem;
-  color: #EEE;
   color: #FAFAFA;
   border: 2.4px solid transparent;
   border-radius: 5px;
@@ -250,9 +249,7 @@ input[name="listFilter"]:focus + label { border-color: #111; }
 
 .taskList__count { margin-left: 1rem; }
 
-.taskList__addBtn {
-  justify-self: end;
-}
+.taskList__addBtn { justify-self: end; }
 
 .taskList__list {
   display: grid;
