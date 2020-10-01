@@ -96,7 +96,10 @@ class TaskItem extends Component {
     { 
       // if not in editing mode render the task as text ... otherwise render the task form to edit the task
       !this.state.isEditing 
-        ? <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
+        ? <>
+            <span className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</span>
+            <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
+          </>
         : <TaskForm 
             id={id}
             type="edit"
