@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/andre-facey-project-five/static/css/main.5a51b99d.chunk.css",
-    "main.js": "/andre-facey-project-five/static/js/main.e9c57204.chunk.js",
-    "main.js.map": "/andre-facey-project-five/static/js/main.e9c57204.chunk.js.map",
-    "runtime-main.js": "/andre-facey-project-five/static/js/runtime-main.3efebbe6.js",
-    "runtime-main.js.map": "/andre-facey-project-five/static/js/runtime-main.3efebbe6.js.map",
-    "static/js/2.0141e88f.chunk.js": "/andre-facey-project-five/static/js/2.0141e88f.chunk.js",
-    "static/js/2.0141e88f.chunk.js.map": "/andre-facey-project-five/static/js/2.0141e88f.chunk.js.map",
-    "index.html": "/andre-facey-project-five/index.html",
-    "precache-manifest.b92da11377d03948b5f0a45c07e2030f.js": "/andre-facey-project-five/precache-manifest.b92da11377d03948b5f0a45c07e2030f.js",
-    "service-worker.js": "/andre-facey-project-five/service-worker.js",
-    "static/css/main.5a51b99d.chunk.css.map": "/andre-facey-project-five/static/css/main.5a51b99d.chunk.css.map",
-    "static/js/2.0141e88f.chunk.js.LICENSE.txt": "/andre-facey-project-five/static/js/2.0141e88f.chunk.js.LICENSE.txt"
+    "main.css": "/taskboard/static/css/main.5a51b99d.chunk.css",
+    "main.js": "/taskboard/static/js/main.161c4468.chunk.js",
+    "main.js.map": "/taskboard/static/js/main.161c4468.chunk.js.map",
+    "runtime-main.js": "/taskboard/static/js/runtime-main.adae2a35.js",
+    "runtime-main.js.map": "/taskboard/static/js/runtime-main.adae2a35.js.map",
+    "static/js/2.fc0d1a94.chunk.js": "/taskboard/static/js/2.fc0d1a94.chunk.js",
+    "static/js/2.fc0d1a94.chunk.js.map": "/taskboard/static/js/2.fc0d1a94.chunk.js.map",
+    "index.html": "/taskboard/index.html",
+    "precache-manifest.e6ba10f4ccf97825796d6efcfb8c3c37.js": "/taskboard/precache-manifest.e6ba10f4ccf97825796d6efcfb8c3c37.js",
+    "service-worker.js": "/taskboard/service-worker.js",
+    "static/css/main.5a51b99d.chunk.css.map": "/taskboard/static/css/main.5a51b99d.chunk.css.map",
+    "static/js/2.fc0d1a94.chunk.js.LICENSE.txt": "/taskboard/static/js/2.fc0d1a94.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3efebbe6.js",
-    "static/js/2.0141e88f.chunk.js",
+    "static/js/runtime-main.adae2a35.js",
+    "static/js/2.fc0d1a94.chunk.js",
     "static/css/main.5a51b99d.chunk.css",
-    "static/js/main.e9c57204.chunk.js"
+    "static/js/main.161c4468.chunk.js"
   ]
 }
