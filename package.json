@@ -1,6 +1,6 @@
 {
-  "homepage": "https://afacey.github.io/andre-facey-project-five",
-  "name": "andre-facey-project-five",
+  "homepage": "https://afacey.github.io/taskboard",
+  "name": "taskboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
