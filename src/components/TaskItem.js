@@ -58,8 +58,10 @@ class TaskItem extends Component {
   // --------------------------- handleEditSubmit
   handleEditSubmit = (evt) => {
     evt.preventDefault();
-  
-    this.props.editTask(this.props.id, this.state.taskFormInput);
+
+    if (this.state.taskFormInput.length) {
+      this.props.editTask(this.props.id, this.state.taskFormInput);
+    }
     
     this.setState({isEditing: false});
   }
@@ -102,7 +104,6 @@ class TaskItem extends Component {
         ? <>
             <label htmlFor={`taskItem--${id}`} className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</label>
             <button id={`taskItem--${id}`} className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit}>{task}</button> 
-            {/* <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p>  */}
           </>
         : <TaskForm 
             id={id}
