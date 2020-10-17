@@ -75,7 +75,20 @@ class TaskItem extends Component {
   removeTask = () => this.props.removeTask(this.props.id);
   
   // --------------------------- toggleEdit
-  toggleEdit = () => this.setState({ isEditing: !this.state.isEditing });
+  toggleEdit = () => {
+    // check if taskFormInput has a value (not cleared by user)
+    this.state.taskFormInput 
+      ? this.setState({ isEditing: !this.state.isEditing }) 
+      
+      // if empty, reset state with task value handed down in prop
+      : this.setState({
+          isEditing: !this.state.isEditing,
+          taskFormInput: this.props.task
+        });
+  } 
+
+  // --------------------------- clearTask
+  clearTask = () => { this.setState({taskFormInput: ""}); }
 
   // --------------------------- render
   render() {
@@ -114,6 +127,7 @@ class TaskItem extends Component {
             taskValue={this.state.taskFormInput}
             removeTask={this.removeTask}
             toggleForm={this.toggleEdit}
+            handleClear={this.clearTask}
           />
     }
       

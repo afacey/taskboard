@@ -104,6 +104,9 @@ class TaskList extends Component {
     // toggle tasklist menu to false
     this.setState({menuEnabled: false});
   }
+
+  // clear stagingTask state
+  clearStagingTask = () => { this.setState({stagingTask: ""}); }
   
   // --------------------------- render
   render() {
@@ -156,6 +159,7 @@ class TaskList extends Component {
                 toggleForm={this.toggleTaskStaging}
                 handleBlur={this.handleBlur}
                 handleChange={this.handleStagingTask}
+                handleClear={this.clearStagingTask}
               />
             </li>
           }

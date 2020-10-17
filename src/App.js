@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   // --------------------------- clearTaskboard
-  clearTaskboard = (newTask) => {
+  clearTaskboard = () => {
     // remove all items in firebase
     firebase.database().ref("tasks").remove();
 
