@@ -112,10 +112,11 @@ class TaskList extends Component {
     return(
       <div className="taskList">
         <div className={`taskList__header taskList__header--${status}`}>
-          <label htmlFor="taskListMenuBtn" className="srOnly">Click the button to toggle the task list menu to clear the task list's items</label>
+          <label htmlFor={`taskListMenuBtn--${status}`} className="srOnly">Click the button to toggle the task list menu to clear the task list's items</label>
           <button 
-            id="taskListMenuBtn" className={this.state.menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
+            id={`taskListMenuBtn--${status}`} className={this.state.menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
             onClick={this.toggleMenuEnabled}>
+              <span className="srOnly">Toggle the task list's menu</span>
             {!this.state.menuEnabled ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} /> }  
           </button>
           
@@ -131,13 +132,13 @@ class TaskList extends Component {
             !this.state.menuEnabled 
             ? 
             <>
-              <label htmlFor="taskListAddBtn" className="srOnly">Click the button to toggle the add new task form</label>
-              <button id="taskListAddBtn" onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`} disabled={this.state.isStaging ? 'disabled' : ''}>+ Task</button>
+              <label htmlFor={`taskListAddBtn--${status}`} className="srOnly">Click the button to toggle the add new task form</label>
+              <button id={`taskListAddBtn--${status}`} onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`} disabled={this.state.isStaging ? 'disabled' : ''}>+ Task</button>
             </>
             : 
             <>
-              <label htmlFor="taskListClearBtn" className="srOnly">Click the button to clear the task list's items</label>
-              <button onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`} disabled={tasks.length ? '' : 'disabled' }>Clear List</button>
+              <label htmlFor={`taskListClearBtn--${status}`} className="srOnly">Click the button to clear the task list's items</label>
+              <button id={`taskListClearBtn--${status}`} onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`} disabled={tasks.length ? '' : 'disabled' }>Clear List</button>
             </>
           }
           

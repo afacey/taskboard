@@ -9,7 +9,7 @@ const TaskForm = props => {
     <form action="#" onSubmit={handleSubmit} onBlur={handleBlur} className="taskForm">
       <textarea className="taskForm__input" id={`taskFormInput_${id}`} name="taskFormInput" onChange={handleChange} value={taskValue}></textarea>
       {type === "edit" && <button type="button" onClick={removeTask} className="btn btn--red">Delete</button>}
-      <button type="button" onClick={toggleForm} className="btn btn--orange">Cancel</button>
+      <button type="button" onClick={toggleForm} className="btn btn--black">Cancel</button>
       {type === "add" && <button type="button" onClick={addTask} className="btn__task btn__task--add">Add</button>}
       <button className="btn btn--green">Save</button>
     </form>  

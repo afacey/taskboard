@@ -87,18 +87,22 @@ class TaskItem extends Component {
         // If status is 'open' DO NOT render the "previous" status button
         status !== 'open' 
         &&
-        <button className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
-          <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
-          <span className="srOnly">Click to move task to the previous status</span>
-        </button>
+        <>
+          <label htmlFor={`btnPrev--${id}`} className="srOnly">Move task to the previous status</label>
+          <button id={`btnPrev--${id}`} className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
+            <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
+            <span className="srOnly">Move task to the previous status</span>
+          </button>
+        </>
       }
     
     { 
       // if not in editing mode render the task as text ... otherwise render the task form to edit the task
       !this.state.isEditing 
         ? <>
-            <span className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</span>
-            <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p> 
+            <label htmlFor={`taskItem--${id}`} className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</label>
+            <button id={`taskItem--${id}`} className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit}>{task}</button> 
+            {/* <p className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit} tabIndex="0">{task}</p>  */}
           </>
         : <TaskForm 
             id={id}
@@ -116,10 +120,13 @@ class TaskItem extends Component {
       // If status is 'complete' DO NOT render the "next" status button
       status !== "complete" 
       &&
-      <button className="taskItem__btn taskItem__btn--next" onClick={this.handleMoveNext}>
-        <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
-        <span className="srOnly">Click to move task to the next status</span>
-      </button>
+      <>
+        <label htmlFor={`btnNext--${id}`} className="srOnly">Move task to the previous status</label>
+        <button id={`btnNext--${id}`} className="taskItem__btn taskItem__btn--next" onClick={this.handleMoveNext}>
+          <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
+          <span className="srOnly">Click to move task to the next status</span>
+        </button>
+      </>
     }
     </li>
     ) 

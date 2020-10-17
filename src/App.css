@@ -23,9 +23,14 @@ h2,
 h3,
 p,
 ul,
-li {
+li,
+fieldset {
   padding: 0;
   margin: 0;
+}
+
+fieldset {
+  border: none;
 }
 
 ul {  list-style: none; }
@@ -74,6 +79,11 @@ h3 {
   font-weight: 400;
 }
 
+button {
+  letter-spacing: inherit;
+  font-family: inherit;
+}
+
 /* 
 ================================================================================ COMPONENTS
 */
@@ -105,9 +115,8 @@ h3 {
 .btn:disabled:hover { cursor: not-allowed;}
 
 .btn--black { background-color: rgb(17, 17, 17); }
-.btn--blue { background-color: rgb(70, 130, 180); }
-.btn--green { background-color: rgb(39, 174, 96); }
-.btn--orange { background-color: orange; }
+.btn--blue { background-color: rgb(30, 55, 153); }
+.btn--green { background-color: rgb(0, 100, 0); }
 .btn--red { background-color: rgb(178, 34, 34); }
 
 /* 
@@ -182,8 +191,16 @@ main { padding: 2rem 0 12rem; }
 }
 .inputContainer__filter label:not(:last-of-type) { margin-right: 1rem; }
 
-input[name="listFilter"]:checked + label { opacity: 1; }
-input[name="listFilter"]:focus + label { border-color: #111; }
+.taskBoard__filterInput:checked + label,
+.taskBoard__filterInput:checked:hover + label { 
+  opacity: 1; 
+  border-color: #111;
+}
+
+.taskBoard__filterInput:hover + label { 
+  border-color: transparent; 
+  opacity: 1;
+}
 
 
 /* ------------------------------------ MAIN > TASKBOARD MENU > SEARCH BAR */
@@ -255,8 +272,8 @@ input[name="listFilter"]:focus + label { border-color: #111; }
   border-radius: 0;
   background: none;
   position: absolute;
-  padding: 1rem;
-  top: 0;
+  padding: 10px 8px 10px 12px;
+  top: 2px;
   left: 0;
   bottom: 0;
   transition: color 0.3s, background-color 0.3s;
@@ -290,24 +307,24 @@ input[name="listFilter"]:focus + label { border-color: #111; }
 .taskList__header--open .taskList__addBtn { background: rgb(178, 34, 34);}
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- IN PROGRESS */
-.taskList__header--inProgress { border-bottom: 5px solid rgb(70, 130, 180); }
+.taskList__header--inProgress { border-bottom: 5px solid rgb(30, 55, 153); }
 
 .taskList__header--inProgress .taskList__count,
 .taskList__header--inProgress .taskList__menuBtn {
-  color: rgb(70, 130, 180);
+  color: rgb(30, 55, 153);
 }
 
-.taskList__header--inProgress .taskList__addBtn { background: rgb(70, 130, 180); }
+.taskList__header--inProgress .taskList__addBtn { background: rgb(30, 55, 153); }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- COMPLETE */
-.taskList__header--complete { border-bottom: 5px solid rgb(39, 174, 96); }
+.taskList__header--complete { border-bottom: 5px solid rgb(0, 100, 0); }
 
 .taskList__header--complete .taskList__count,
 .taskList__header--complete .taskList__menuBtn {
-  color: rgb(39, 174, 96);
+  color: rgb(0, 100, 0);
 }
 
-.taskList__header--complete .taskList__addBtn { background: #27ae60; }
+.taskList__header--complete .taskList__addBtn { background: rgb(0,100,0); }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- MENU BUTTON ACTIVE STATE */
 .taskList__header .taskList__menuBtn--active { 
@@ -332,16 +349,20 @@ input[name="listFilter"]:focus + label { border-color: #111; }
 }
 
 .taskItem__text {
+  width: 100%;
+  text-align: left;
   padding: 0 0 2rem;
   white-space: pre-line;
+  border: none;
+  background: none;
 }
 
 .taskItem__text:hover { cursor: pointer; }
 
-
+/* rgb(30, 55, 153) */
 .taskItem--open { box-shadow: 0 2px 3px rgba(178, 34, 34,.8); }
-.taskItem--inProgress { box-shadow: 0 2px 3px rgba(70, 130, 180,.8); }
-.taskItem--complete { box-shadow: 0 2px 3px rgba(39, 174, 96,.8); }
+.taskItem--inProgress { box-shadow: 0 2px 3px rgba(30, 55, 153,.8); }
+.taskItem--complete { box-shadow: 0 2px 3px rgba(0, 100, 0,.8); }
 
 .taskItem__btn {
   padding: 0 18px;
@@ -439,5 +460,5 @@ footer a:hover { color: rgb(178, 34, 34) }
   header .btn { justify-self: center; }
   header .displayContainer { text-align: center; }
   
-  .inputContainer__filter label:not(:last-of-type) { margin-right: .6rem; }
+  .inputContainer__filter label:not(:last-of-type) { margin-right: .5rem; }
 }
