@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 import TaskForm from './TaskForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import autosize from 'autosize';
 
 class TaskList extends Component {
@@ -116,7 +116,7 @@ class TaskList extends Component {
           <button 
             id="taskListMenuBtn" className={this.state.menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
             onClick={this.toggleMenuEnabled}>
-            {!this.state.menuEnabled ? <FontAwesomeIcon icon={faEllipsisV} /> : <FontAwesomeIcon icon={faTimes} /> }  
+            {!this.state.menuEnabled ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} /> }  
           </button>
           
           <h2 className="taskList__headingText">
