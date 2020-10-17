@@ -132,7 +132,7 @@ class TaskList extends Component {
             ? 
             <>
               <label htmlFor="taskListAddBtn" className="srOnly">Click the button to toggle the add new task form</label>
-              <button id="taskListAddBtn" onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`}>+ Task</button>
+              <button id="taskListAddBtn" onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`} disabled={this.state.isStaging ? 'disabled' : ''}>+ Task</button>
             </>
             : 
             <>
