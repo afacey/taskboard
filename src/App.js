@@ -119,6 +119,9 @@ class App extends Component {
     this.setState({searchItems});
   }
 
+  // --------------------------- handleSearch
+  clearSearch = () => { this.setState({searchTerms: "", searchItems: []}); }
+
   // --------------------------- render
   render() {
     // heading text for task status lists
@@ -127,7 +130,7 @@ class App extends Component {
       inProgress: "In Progress",
       complete: "Completed"
     } 
-    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList } = this;
+    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList, clearSearch } = this;
     const { taskStatus, taskItems, listFilter, searchItems, searchTerms } = this.state;
     
     const items = !searchTerms.length ? taskItems : searchItems;
@@ -142,9 +145,9 @@ class App extends Component {
         <main>
           <div className="wrapper">
             <TaskBoardMenu 
-              clearTaskboard={clearTaskboard}
               handleChange={handleChange}
               searchTerms={searchTerms}
+              clearSearch={clearSearch}
             />
             
             <section className="taskLists">

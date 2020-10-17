@@ -208,6 +208,23 @@ input[name="listFilter"]:focus + label { border-color: #111; }
   top: 50%;
   transform: translateY(-50%);
 }
+.taskBoard__searchBarBtn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0 10px;
+  color: #FAFAFA;
+  border: none;
+  background-color: #111;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.taskBoard__searchBarBtn:hover,
+.taskBoard__searchBarBtn:focus {
+  cursor: pointer;
+}
 
 /* 
 ================================================================================ MAIN > TASK LISTS
