@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
+import "firebase/auth";
+import Swal from "sweetalert2";
 import Header from './components/Header.js';
 import TaskBoardMenu from './components/TaskBoardMenu.js';
 import TaskList from './components/TaskList.js';
@@ -11,6 +13,8 @@ class App extends Component {
     super();
     
     this.state = {
+      user: null,
+      dbRef: "tasks/",
       taskStatus: ['open', 'inProgress', 'complete'],
       taskItems: [],
       listFilter: "all",
@@ -21,9 +25,61 @@ class App extends Component {
 
   // --------------------------- componentDidMount
   componentDidMount() {
-    // db reference of "tasks"
-    const dbRef = firebase.database().ref("tasks");
+    this.loginUser();
+  }
+  
+  // --------------------------- loginUser
+  loginUser = () => {
+    const auth = firebase.auth();
 
+    // anonymous auth
+    auth.signInAnonymously().catch(function(error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      
+      Swal.fire({
+        title:"Oops!",
+        text: `There has been error!. ${errorCode}: ${errorMessage}`,
+        icon: "error",
+        confirmButton: "OK"
+      })
+    });
+
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        const uid = user.uid;
+
+        
+        this.setState({
+          user: uid, 
+          dbRef: `${uid}/tasks/`,
+          auth: 'anonymous',
+        }, 
+        this.retrieveTaskItems
+        )
+        // ...
+      } else {
+        // User is signed out.
+        this.setState({
+          user: null,
+          auth: null,
+          dbRef: "tasks/",
+        },
+        this.retrieveTaskItems
+        )
+        
+      }
+      
+    });
+    
+  }
+
+  // --------------------------- retrieveTaskItems
+  retrieveTaskItems = () => {
+    // db reference of "tasks"
+    const dbRef = firebase.database().ref(this.state.dbRef);
+  
     // listener for any value change on the db reference
     dbRef.on('value', response => {
       const tasksData = response.val();
@@ -41,13 +97,15 @@ class App extends Component {
       
       // update state with the taskItems retrieved from the database
       this.setState({taskItems});
-    });
+    })
+    
+
   }
 
   // --------------------------- clearTaskboard
   clearTaskboard = () => {
     // remove all items in firebase
-    firebase.database().ref("tasks").remove();
+    firebase.database().ref(this.state.dbRef).remove();
 
     // reset searchItems to empty
     this.setState({searchItems: []})
@@ -56,7 +114,7 @@ class App extends Component {
   // --------------------------- clearTaskList
   clearTaskList = (taskListItems, status) => {
     // pass an object of keys with null values to clear multiple items
-    firebase.database().ref("tasks").update(taskListItems);
+    firebase.database().ref(this.state.dbRef).update(taskListItems);
 
     // update the searchItems with the filtered out items that may have been removed
     const filterSearchItems = this.state.searchItems.filter(item => item.status !== status);
@@ -64,17 +122,17 @@ class App extends Component {
   }
 
   // --------------------------- addTask
-  addTask = (newTask) => firebase.database().ref("tasks").push(newTask);
+  addTask = (newTask) => firebase.database().ref(this.state.dbRef).push(newTask);
   
   // --------------------------- updateTask
-  updateTask = (key, newValue) => firebase.database().ref('tasks/' + key).update({task: newValue});
+  updateTask = (key, newValue) => firebase.database().ref(this.state.dbRef + key).update({task: newValue});
 
   // --------------------------- removeTask
-  removeTask = (key) => firebase.database().ref('tasks').child(key).remove();
+  removeTask = (key) => firebase.database().ref(this.state.dbRef).child(key).remove();
 
   // --------------------------- moveTask
   moveTask = (key, status, direction) => {
-    const dbRef = firebase.database().ref('tasks/' + key);
+    const dbRef = firebase.database().ref(this.state.dbRef + key);
     const { taskStatus } = this.state;
 
     // find current status index
