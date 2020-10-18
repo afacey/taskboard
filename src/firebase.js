@@ -1,17 +1,18 @@
 // firebase.js
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
 
 // *** USE YOUR CONFIG OBJECT ***
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDBqq9f4CwQkWmvi0jA9or1uqWUTx73r_E",
-  authDomain: "andre-facey-project-five.firebaseapp.com",
-  databaseURL: "https://andre-facey-project-five.firebaseio.com",
-  projectId: "andre-facey-project-five",
-  storageBucket: "andre-facey-project-five.appspot.com",
-  messagingSenderId: "940406876843",
-  appId: "1:940406876843:web:d25925e9d0cc096f1b65ee"
+  apiKey: "AIzaSyCf4r4_JiAWZjMYxHx2oPdOOPBunUeG9zg",
+  authDomain: "taskboard-drethedev.firebaseapp.com",
+  databaseURL: "https://taskboard-drethedev.firebaseio.com",
+  projectId: "taskboard-drethedev",
+  storageBucket: "taskboard-drethedev.appspot.com",
+  messagingSenderId: "868447749524",
+  appId: "1:868447749524:web:bc280f2ee21da6c3fe7b81"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

@@ -98,27 +98,29 @@ button {
   transition: border-color 0.3s;
 }
 
-.btn:hover,
 .btn:active,
 .btn:focus {
   cursor: pointer;
   border-color: #111;
 }
 
-.btn--black:hover,
 .btn--black:active,
 .btn--black:focus {
   border-color: rgb(178, 34, 34);
 }
 
 .btn:disabled { opacity: 0.4; }
-.btn:disabled:hover { cursor: not-allowed;}
 
 .btn--black { background-color: rgb(17, 17, 17); }
 .btn--blue { background-color: rgb(30, 55, 153); }
 .btn--green { background-color: rgb(0, 100, 0); }
 .btn--red { background-color: rgb(178, 34, 34); }
 
+@media (hover:hover) {
+  .btn:hover { border-color: #111; }
+  .btn--black:hover { border-color: rgb(178, 34, 34);}
+  .btn:disabled:hover { cursor: not-allowed;}
+}
 /* 
 ================================================================================ BODY
 */
@@ -153,9 +155,14 @@ header .displayContainer {
   font-weight: 300;
 }
 
-header .btn {
-  justify-self: end;
+.header__buttons {
+  text-align: right;
 }
+
+.header__buttons .btn:not(:first-child) {
+  margin-left: 10px;
+}
+
 /* 
 ================================================================================ MAIN
 */
@@ -459,6 +466,7 @@ footer a:hover { color: rgb(178, 34, 34) }
 
   header .btn { justify-self: center; }
   header .displayContainer { text-align: center; }
+  .header__buttons { text-align: center; }
   
   .inputContainer__filter label:not(:last-of-type) { margin-right: .5rem; }
 }

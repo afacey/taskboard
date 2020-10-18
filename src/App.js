@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
-import "firebase/auth";
 import Swal from "sweetalert2";
 import Header from './components/Header.js';
 import TaskBoardMenu from './components/TaskBoardMenu.js';
@@ -13,8 +12,9 @@ class App extends Component {
     super();
     
     this.state = {
+      loadComplete: false,
       user: null,
-      dbRef: "tasks/",
+      dbRef: "public/",
       taskStatus: ['open', 'inProgress', 'complete'],
       taskItems: [],
       listFilter: "all",
@@ -25,54 +25,59 @@ class App extends Component {
 
   // --------------------------- componentDidMount
   componentDidMount() {
-    this.loginUser();
+    
+    // check if there is a signed in user
+    firebase.auth().onAuthStateChanged(user => {
+      user
+        // if there is a user signed in, update state with the id, and user's dbRef
+        ? this.setState({user: user.uid, dbRef: user.uid + "/"}, this.retrieveTaskItems)
+        // else retrieve the task items from the default non-authenticated dbRef
+        : this.retrieveTaskItems();
+    })
   }
   
-  // --------------------------- loginUser
-  loginUser = () => {
-    const auth = firebase.auth();
+  // --------------------------- signInUser (Google Auth)
 
-    // anonymous auth
-    auth.signInAnonymously().catch(function(error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      
-      Swal.fire({
-        title:"Oops!",
-        text: `There has been error!. ${errorCode}: ${errorMessage}`,
-        icon: "error",
-        confirmButton: "OK"
-      })
-    });
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in.
-        const uid = user.uid;
-
-        
-        this.setState({
-          user: uid, 
-          dbRef: `${uid}/tasks/`,
-          auth: 'anonymous',
-        }, 
-        this.retrieveTaskItems
-        )
-        // ...
-      } else {
-        // User is signed out.
-        this.setState({
-          user: null,
-          auth: null,
-          dbRef: "tasks/",
-        },
-        this.retrieveTaskItems
-        )
-        
-      }
-      
-    });
+  signInUser = () => {
+    // create new google auth provider
+    const provider = new firebase.auth.GoogleAuthProvider();
     
+    // initiate sign in with popup using google auth
+    firebase.auth().signInWithPopup(provider)
+      .then(({user}) => {
+        // once user is signed in, set user info and user's dbRef in state
+        this.setState({
+          user: user.uid,
+          dbRef: user.uid + "/",
+        });
+      })
+      .catch(error => {
+        // if there is an error, display an alert
+        Swal.fire({
+          title: "Oops!",
+          text: "There was an error signing in: " + error,
+          icon: "error",
+          confirmButton: "OK"
+        })
+      })
+  }
+
+  // --------------------------- logoutUser
+  logoutUser = () => {
+    firebase.auth().signOut()
+      .then(() => {
+        // once user is logged out, reset user and dbRef in state
+        this.setState({user: null, dbRef: "public/"}, this.retrieveTaskItems)
+      })
+      .catch(error => {
+        // if there is an error, display an alert
+        Swal.fire({
+          title: "Oops!",
+          text: "There was an error while logging out: ", error,
+          icon: "error",
+          confirmButton: "OK"
+        })
+      })
   }
 
   // --------------------------- retrieveTaskItems
@@ -96,7 +101,7 @@ class App extends Component {
       }
       
       // update state with the taskItems retrieved from the database
-      this.setState({taskItems});
+      this.setState({taskItems}, () => this.setState({loadComplete: true}));
     })
     
 
@@ -167,7 +172,7 @@ class App extends Component {
   // --------------------------- handleSearch
   handleSearch = () => {
     const { searchTerms, taskItems }= this.state;
-    // create regex for search terms globall/case insensistive
+    // create regex for search terms - case insensistive
     const searchString = new RegExp(searchTerms, 'i');
 
     // filter out tasks by test against search terms
@@ -188,8 +193,8 @@ class App extends Component {
       inProgress: "In Progress",
       complete: "Completed"
     } 
-    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList, clearSearch } = this;
-    const { taskStatus, taskItems, listFilter, searchItems, searchTerms } = this.state;
+    const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList, clearSearch, signInUser, logoutUser } = this;
+    const { taskStatus, taskItems, listFilter, searchItems, searchTerms, user, loadComplete } = this.state;
     
     const items = !searchTerms.length ? taskItems : searchItems;
     const lists = listFilter === 'all' ? taskStatus : [listFilter];
@@ -197,7 +202,7 @@ class App extends Component {
     return (
       <div className="pageContainer">
         {/* START of HEADER */}
-        <Header clearTaskboard={clearTaskboard} numOfTasks={taskItems.length} />
+        <Header clearTaskboard={clearTaskboard} numOfTasks={taskItems.length} user={user} loadComplete={loadComplete} signInUser={signInUser} logoutUser={logoutUser} />
         
         {/* START of MAIN */}
         <main>
@@ -210,7 +215,7 @@ class App extends Component {
             
             <section className="taskLists">
               { 
-                lists.map((status, idx) => {
+                lists.map((status) => {
                   const tasks = items.filter(task => task.status === status);
                   return (
                     <TaskList 
