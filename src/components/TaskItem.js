@@ -42,10 +42,10 @@ class TaskItem extends Component {
     setTimeout(() => {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
-        // if new focused element is not contained in the form ... toggle out of editing the task
+        // if new focused element is not contained in the form ... toggle out of staging a task
         this.setState({isEditing: false});
       }
-    }, 0);
+    }, 5);
   }
 
   // --------------------------- handleChange
@@ -92,9 +92,10 @@ class TaskItem extends Component {
 
   // --------------------------- render
   render() {
-
+    const { handleEditSubmit, handleChange, handleBlur, removeTask, toggleEdit, clearTask, handleMovePrev, handleMoveNext  } = this;
+    const {taskFormInput } = this.state;
     const { id, task, status } = this.props;
-  
+
     return(
       <li className={`taskItem taskItem--${status}`} >
       
@@ -104,7 +105,7 @@ class TaskItem extends Component {
         &&
         <>
           <label htmlFor={`btnPrev--${id}`} className="srOnly">Move task to the previous status</label>
-          <button id={`btnPrev--${id}`} className="taskItem__btn taskItem__btn--prev" onClick={this.handleMovePrev}>
+          <button id={`btnPrev--${id}`} className="taskItem__btn taskItem__btn--prev" onClick={handleMovePrev}>
             <FontAwesomeIcon icon={faChevronLeft} aria-hidden="true" />
             <span className="srOnly">Move task to the previous status</span>
           </button>
@@ -116,18 +117,18 @@ class TaskItem extends Component {
       !this.state.isEditing 
         ? <>
             <label htmlFor={`taskItem--${id}`} className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</label>
-            <button id={`taskItem--${id}`} className="taskItem__text" onClick={this.toggleEdit} onFocus={this.toggleEdit}>{task}</button> 
+            <button id={`taskItem--${id}`} className="taskItem__text" onClick={toggleEdit} onFocus={toggleEdit}>{task}</button> 
           </>
         : <TaskForm 
             id={id}
             type="edit"
-            handleSubmit={this.handleEditSubmit} 
-            handleBlur={this.handleBlur} 
-            handleChange={this.handleChange}
-            taskValue={this.state.taskFormInput}
-            removeTask={this.removeTask}
-            toggleForm={this.toggleEdit}
-            handleClear={this.clearTask}
+            handleSubmit={handleEditSubmit} 
+            handleBlur={handleBlur} 
+            handleChange={handleChange}
+            taskValue={taskFormInput}
+            removeTask={removeTask}
+            toggleForm={toggleEdit}
+            handleClear={clearTask}
           />
     }
       
@@ -137,7 +138,7 @@ class TaskItem extends Component {
       &&
       <>
         <label htmlFor={`btnNext--${id}`} className="srOnly">Move task to the previous status</label>
-        <button id={`btnNext--${id}`} className="taskItem__btn taskItem__btn--next" onClick={this.handleMoveNext}>
+        <button id={`btnNext--${id}`} className="taskItem__btn taskItem__btn--next" onClick={handleMoveNext}>
           <FontAwesomeIcon icon={faChevronRight} aria-hidden="true"/>
           <span className="srOnly">Click to move task to the next status</span>
         </button>

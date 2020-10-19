@@ -49,7 +49,7 @@ class TaskList extends Component {
         // if new focused element is not contained in the form ... toggle out of staging a task
         this.setState({isStaging: false});
       }
-    }, 0);
+    }, 5);
   }
 
   // --------------------------- handleStagingTask
@@ -111,6 +111,8 @@ class TaskList extends Component {
   // --------------------------- render
   render() {
     const { status, tasks, editTask, removeTask, moveTask } = this.props;
+    const {handleAddTask, toggleTaskStaging, handleStagingTask, handleClearList, clearStagingTask, handleBlur } = this;
+    const { menuEnabled, stagingTask } = this.state;
 
      // heading text for task status lists
     const statusString = {
@@ -124,10 +126,10 @@ class TaskList extends Component {
         <div className={`taskList__header taskList__header--${status}`}>
           <label htmlFor={`taskListMenuBtn--${status}`} className="srOnly">Click the button to toggle the task list menu to clear the task list's items</label>
           <button 
-            id={`taskListMenuBtn--${status}`} className={this.state.menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
+            id={`taskListMenuBtn--${status}`} className={menuEnabled ? "btn taskList__menuBtn taskList__menuBtn--active" : "btn taskList__menuBtn" } 
             onClick={this.toggleMenuEnabled}>
               <span className="srOnly">Toggle the task list's menu</span>
-            {!this.state.menuEnabled ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} /> }  
+            {!menuEnabled ? <FontAwesomeIcon icon={faBars} /> : <FontAwesomeIcon icon={faTimes} /> }  
           </button>
           
           <h2 className="taskList__headingText">
@@ -143,12 +145,12 @@ class TaskList extends Component {
             ? 
             <>
               <label htmlFor={`taskListAddBtn--${status}`} className="srOnly">Click the button to toggle the add new task form</label>
-              <button id={`taskListAddBtn--${status}`} onClick={this.toggleTaskStaging} className={`btn taskList__addBtn`} disabled={this.state.isStaging ? 'disabled' : ''}>+ Task</button>
+              <button id={`taskListAddBtn--${status}`} onClick={toggleTaskStaging} className={`btn taskList__addBtn`} disabled={this.state.isStaging ? 'disabled' : ''}>+ Task</button>
             </>
             : 
             <>
               <label htmlFor={`taskListClearBtn--${status}`} className="srOnly">Click the button to clear the task list's items</label>
-              <button id={`taskListClearBtn--${status}`} onClick={this.handleClearList} className={`btn btn--black taskList__clearBtn`} disabled={tasks.length ? '' : 'disabled' }>Clear List</button>
+              <button id={`taskListClearBtn--${status}`} onClick={handleClearList} className={`btn btn--black taskList__clearBtn`} disabled={tasks.length ? '' : 'disabled' }>Clear List</button>
             </>
           }
           
@@ -161,12 +163,12 @@ class TaskList extends Component {
             <li className={`taskItem taskItem--${status}`}>
               <TaskForm 
                 id={status}
-                taskValue={this.state.stagingTask}
-                handleSubmit={this.handleAddTask}
-                toggleForm={this.toggleTaskStaging}
-                handleBlur={this.handleBlur}
-                handleChange={this.handleStagingTask}
-                handleClear={this.clearStagingTask}
+                taskValue={stagingTask}
+                handleSubmit={handleAddTask}
+                toggleForm={toggleTaskStaging}
+                handleBlur={handleBlur}
+                handleChange={handleStagingTask}
+                handleClear={clearStagingTask}
               />
             </li>
           }
@@ -180,7 +182,8 @@ class TaskList extends Component {
                 status={status} 
                 editTask={editTask}
                 removeTask={removeTask} 
-                moveTask={moveTask} />)
+                moveTask={moveTask} 
+              />)
             )
           }
         </ul>
