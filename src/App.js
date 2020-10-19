@@ -127,13 +127,13 @@ class App extends Component {
   }
 
   // --------------------------- addTask
-  addTask = (newTask) => firebase.database().ref(this.state.dbRef).push(newTask);
+  addTask = (newTask) => firebase.database().ref(this.state.dbRef).push(newTask).then(this.handleSearch);;
   
   // --------------------------- updateTask
-  updateTask = (key, newValue) => firebase.database().ref(this.state.dbRef + key).update({task: newValue});
+  updateTask = (key, newValue) => firebase.database().ref(this.state.dbRef + key).update({task: newValue}).then(this.handleSearch);
 
   // --------------------------- removeTask
-  removeTask = (key) => firebase.database().ref(this.state.dbRef).child(key).remove();
+  removeTask = (key) => firebase.database().ref(this.state.dbRef).child(key).remove().then(this.handleSearch);;
 
   // --------------------------- moveTask
   moveTask = (key, status, direction) => {
@@ -154,7 +154,7 @@ class App extends Component {
     if (newIdx !== currentIdx) {
       dbRef.update({status: taskStatus[newIdx]})
         // if there are searchTerms then update the task in the searchItems state
-        .then(() => this.state.searchTerms && this.handleSearch());
+        .then(this.handleSearch);
     }
   }
 
@@ -176,14 +176,17 @@ class App extends Component {
   // --------------------------- handleSearch
   handleSearch = () => {
     const { searchTerms, taskItems }= this.state;
-    // create regex for search terms - case insensistive
-    const searchString = new RegExp(searchTerms, 'i');
 
-    // filter out tasks by test against search terms
-    const searchItems = taskItems.filter(({task}) => searchString.test(task));
-
-    // store filtered results into searchItems state to preserve the state of the taskItems
-    this.setState({searchItems});
+    if (searchTerms) {
+      // create regex for search terms - case insensistive
+      const searchString = new RegExp(searchTerms, 'i');
+  
+      // filter out tasks by test against search terms
+      const searchItems = taskItems.filter(({task}) => searchString.test(task));
+  
+      // store filtered results into searchItems state to preserve the state of the taskItems
+      this.setState({searchItems});
+    }
   }
 
   // --------------------------- handleSearch
