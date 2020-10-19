@@ -151,7 +151,11 @@ class App extends Component {
     newIdx = newIdx < 0 ? 0 : newIdx >= taskStatus.length ? taskStatus.length - 1 : newIdx;
 
     // if task has a new position update it in the database
-    newIdx !== currentIdx && dbRef.update({status: taskStatus[newIdx]});
+    if (newIdx !== currentIdx) {
+      dbRef.update({status: taskStatus[newIdx]})
+        // if there are searchTerms then update the task in the searchItems state
+        .then(() => this.state.searchTerms && this.handleSearch());
+    }
   }
 
   // --------------------------- handleChange
@@ -187,16 +191,14 @@ class App extends Component {
 
   // --------------------------- render
   render() {
-    // heading text for task status lists
-    const statusString = {
-      open: "Open",
-      inProgress: "In Progress",
-      complete: "Completed"
-    } 
+    // methods
     const { addTask, moveTask, removeTask, updateTask, handleChange, clearTaskboard, clearTaskList, clearSearch, signInUser, logoutUser } = this;
+    // state items
     const { taskStatus, taskItems, listFilter, searchItems, searchTerms, user, loadComplete } = this.state;
     
+    // if there are search terms, display the filtered searchItems, otherwise show all taskItems
     const items = !searchTerms.length ? taskItems : searchItems;
+    // if a list has been filtered, only display items from that list
     const lists = listFilter === 'all' ? taskStatus : [listFilter];
 
     return (
@@ -222,7 +224,6 @@ class App extends Component {
                       className="taskList" 
                       key={status} 
                       status={status}
-                      statusString={statusString[status]}
                       tasks={tasks} 
                       addTask={addTask}
                       moveTask={moveTask}

@@ -110,7 +110,14 @@ class TaskList extends Component {
   
   // --------------------------- render
   render() {
-    const { status, statusString, tasks, editTask, removeTask, moveTask } = this.props;
+    const { status, tasks, editTask, removeTask, moveTask } = this.props;
+
+     // heading text for task status lists
+    const statusString = {
+      open: "Open",
+      inProgress: "In Progress",
+      complete: "Completed"
+    }
 
     return(
       <div className="taskList">
@@ -125,7 +132,7 @@ class TaskList extends Component {
           
           <h2 className="taskList__headingText">
             {/* Task List Name */}
-            {statusString} 
+            {statusString[status]} 
             {/* Task List Item Counter */}
             {tasks.length > 0 && <span className="taskList__count">{tasks.length}</span>}
           </h2>
