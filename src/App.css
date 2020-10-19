@@ -451,6 +451,10 @@ footer a:hover { color: rgb(178, 34, 34) }
 
 /* ------------------------------------ MAX-WIDTH 768px */
 @media (max-width: 768px) {
+  .header__buttons > .btn:first-child {
+    margin-bottom: 5px;
+  }
+  
   .taskBoard__menu {
     display: grid;
     grid-template-columns: 1fr;
@@ -458,6 +462,8 @@ footer a:hover { color: rgb(178, 34, 34) }
     justify-items: center;
     row-gap: 1rem;
   }
+
+  
 }
 
 /* ------------------------------------ MAX-WIDTH 480px */
