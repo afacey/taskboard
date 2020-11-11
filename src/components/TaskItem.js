@@ -1,22 +1,15 @@
-import React, { Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskForm from './TaskForm.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import autosize from 'autosize';
 
-class TaskItem extends Component {
-  constructor(props) {
-    super()
-
-    this.state = {
-      taskFormInput: props.task,
-      isEditing: false,
-    }
-  }
+const TaskItem = ({id, task, status, editTask, moveTask, removeTask}) => {
+  const [ taskFormInput, setTaskFormInput ] = useState(task);
+  const [ isEditing, setIsEditing ] = useState(false);
   
-  // --------------------------- componentDidUpdate
-  componentDidUpdate() {
-    const taskInput = document.querySelector(`#taskFormInput_${this.props.id}`);
+  useEffect(() => {
+    const taskInput = document.querySelector(`#taskFormInput_${id}`);
 
     // only go to the end of the text if the input is not already focused
     if (taskInput && taskInput !== document.activeElement) {
@@ -28,13 +21,13 @@ class TaskItem extends Component {
       // focus on the input
       taskInput.focus();
       // set the input value
-      taskInput.value = this.state.taskFormInput;
+      taskInput.value = taskFormInput;
     } 
 
-  }
+  })
 
   // --------------------------- handleBlur
-  handleBlur = (evt) => {
+  const handleBlur = (evt) => {
     // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
     const currentTarget = evt.currentTarget;
 
@@ -43,59 +36,50 @@ class TaskItem extends Component {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
         // if new focused element is not contained in the form ... toggle out of staging a task
-        this.setState({isEditing: false});
+        setIsEditing(false);
       }
     }, 5);
   }
 
   // --------------------------- handleChange
-  handleChange = (evt) => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    })
-  }
+  const handleChange = (evt) => { setTaskFormInput(evt.target.value); }
 
   // --------------------------- handleEditSubmit
-  handleEditSubmit = (evt) => {
+  const handleEditSubmit = (evt) => {
     evt.preventDefault();
 
-    if (this.state.taskFormInput.length) {
-      this.props.editTask(this.props.id, this.state.taskFormInput);
+    if (taskFormInput.length) {
+      editTask(id, taskFormInput);
     }
     
-    this.setState({isEditing: false});
+    setIsEditing(false);
   }
 
   // --------------------------- handleMovePrev
-  handleMovePrev = () => this.props.moveTask(this.props.id, this.props.status, -1);
+  const handleMovePrev = () => moveTask(id, status, -1);
   // --------------------------- handleMoveNext
-  handleMoveNext = () => this.props.moveTask(this.props.id, this.props.status, 1);
+  const handleMoveNext = () => moveTask(id, status, 1);
 
   // --------------------------- removeTask
-  removeTask = () => this.props.removeTask(this.props.id);
+  const handleRemoveTask = () => removeTask(id);
   
   // --------------------------- toggleEdit
-  toggleEdit = () => {
+  const toggleEdit = () => {
     // check if taskFormInput has a value (not cleared by user)
-    this.state.taskFormInput 
-      ? this.setState({ isEditing: !this.state.isEditing }) 
-      
-      // if empty, reset state with task value handed down in prop
-      : this.setState({
-          isEditing: !this.state.isEditing,
-          taskFormInput: this.props.task
-        });
+    if (taskFormInput) {
+      setIsEditing(!isEditing);
+    }
+    // if empty, reset state with task value handed down in prop
+    else {
+      setIsEditing(!isEditing);
+      setTaskFormInput(task);
+    }  
   } 
 
   // --------------------------- clearTask
-  clearTask = () => { this.setState({taskFormInput: ""}); }
+  const clearTask = () => { setTaskFormInput(""); }
 
-  // --------------------------- render
-  render() {
-    const { handleEditSubmit, handleChange, handleBlur, removeTask, toggleEdit, clearTask, handleMovePrev, handleMoveNext  } = this;
-    const {taskFormInput } = this.state;
-    const { id, task, status } = this.props;
-
+  // --------------------------- return
     return(
       <li className={`taskItem taskItem--${status}`} >
       
@@ -114,7 +98,7 @@ class TaskItem extends Component {
     
     { 
       // if not in editing mode render the task as text ... otherwise render the task form to edit the task
-      !this.state.isEditing 
+      !isEditing 
         ? <>
             <label htmlFor={`taskItem--${id}`} className="srOnly">Click or focus on the text of the task to enter edit mode and modify or delete the task</label>
             <button id={`taskItem--${id}`} className="taskItem__text" onClick={toggleEdit} onFocus={toggleEdit}>{task}</button> 
@@ -126,7 +110,7 @@ class TaskItem extends Component {
             handleBlur={handleBlur} 
             handleChange={handleChange}
             taskValue={taskFormInput}
-            removeTask={removeTask}
+            removeTask={handleRemoveTask}
             toggleForm={toggleEdit}
             handleClear={clearTask}
           />
@@ -146,7 +130,7 @@ class TaskItem extends Component {
     }
     </li>
     ) 
-  }
+  // }
 }
 
 export default TaskItem;
