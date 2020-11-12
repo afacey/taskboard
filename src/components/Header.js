@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Header = (props) => {
-  const {clearTaskboard, numOfTasks, user, signInUser, logoutUser, loadComplete} = props;
+  const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete} = props;
 
   return (  
     <header>
@@ -15,7 +15,7 @@ const Header = (props) => {
           {
             // check if app has loaded before display sign in / log out buttons
             loadComplete 
-            ? user // check if there is a logged in user
+            ? userLoggedIn // check if there is a logged in user
                 ? <button  onClick={logoutUser} className="btn btn--green btn__taskBoard btn__taskBoard--auth">Log Out</button>
                 : <button  onClick={signInUser} className="btn btn--red btn__taskBoard btn__taskBoard--auth">Sign In With Google</button>
             // if app has not loaded do not display sign in / log out buttons

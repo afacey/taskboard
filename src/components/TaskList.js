@@ -12,7 +12,7 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
 
   // heading text for task status lists
   const statusString = {
-    open: "Open",
+    open: "Todo",
     inProgress: "In Progress",
     complete: "Completed"
   }
