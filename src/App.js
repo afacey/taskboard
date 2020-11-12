@@ -9,40 +9,38 @@ import './App.css';
 
 const App = () => {
   const [ loadComplete, setLoadComplete ] = useState(false); 
-  const [ userCheck, setUserCheck ] = useState(false); 
   const [ user, setUser ] = useState({dbRef: "public/", loggedIn: false});
-  const [ taskStatus, setTaskStatus ] = useState(['open', 'inProgress', 'complete']);
+  const [ checkForUser, setCheckForUser ] = useState(true); 
   const [ taskItems, setTaskItems ] = useState([]);
   const [ listFilter, setListFilter ] = useState("all");
+
   const [ searchTerms, setSearchTerms ] = useState("");
   const [ searchItems, setSearchItems ] = useState([]);
+
+  const taskStatus = ['open', 'inProgress', 'complete'];
   
-  // --------------------------- useEffects
   // ------- check if there's a logged in user before retrieving any tasks
-  useEffect(() => {
+  useEffect(function checkForAuthenticatedUser() {
     // check if there is a current user
     firebase.auth().onAuthStateChanged((user) => {
       // if there is a user update state with the dbRef and loggedIn to true
       if (user) {
         setUser({dbRef: user.uid + "/", loggedIn: true});
       }
-      // set userCheck to true
-      setUserCheck(true)
+      // set checkForUser to false
+      setCheckForUser(false)
     })
   }, [])
 
   // retreive tasks once userCheck is true
-  useEffect(() => {
-    if (userCheck) {
+  useEffect(function fetchTasksAfterUserCheck() {
+    if (!checkForUser) {
       retrieveTaskItems()
-      
       setLoadComplete(true);
     }
 
-  }, [userCheck])
+  }, [checkForUser])
   
-  // filter tasks from search terms
-  useEffect(() => {handleSearch()}, [searchTerms])
 
   // --------------------------- signInUser (Google Auth)
   const signInUser = () => {
@@ -55,12 +53,11 @@ const App = () => {
         // once user is signed in, set user info and user's dbRef in state
         
         setUser({
-          loggedIn: true,
-          dbRef: user.uid + "/"
+          dbRef: user.uid + "/",
+          loggedIn: true
         })
 
-        setUserCheck(false);
-        console.log('user logged in');
+        setCheckForUser(true);
       })
       .catch(error => {
         // if there is an error, display an alert
@@ -79,11 +76,11 @@ const App = () => {
       .then(() => {
         // once user is logged out, reset user and dbRef in state
         setUser({
-          loggedIn: false,
-          dbRef: "public/"
+          dbRef: "public/",
+          loggedIn: false
         })
 
-        setUserCheck(false);
+        setCheckForUser(true);
         console.log('user logged out');
       })
       .catch(error => {
@@ -143,13 +140,13 @@ const App = () => {
   }
 
   // --------------------------- addTask
-  const addTask = (newTask) => firebase.database().ref(user.dbRef).push(newTask).then(handleSearch);
+  const addTask = (newTask) => firebase.database().ref(user.dbRef).push(newTask);
   
   // --------------------------- updateTask
-  const updateTask = (key, newValue) => firebase.database().ref(user.dbRef + key).update({task: newValue}).then(handleSearch);
+  const updateTask = (key, newValue) => firebase.database().ref(user.dbRef + key).update({task: newValue});
 
   // --------------------------- removeTask
-  const removeTask = (key) => firebase.database().ref(user.dbRef).child(key).remove().then(handleSearch);
+  const removeTask = (key) => firebase.database().ref(user.dbRef).child(key).remove();
 
   // --------------------------- moveTask
   const moveTask = (key, status, direction) => {
@@ -168,8 +165,6 @@ const App = () => {
     // if task has a new position update it in the database
     if (newIdx !== currentIdx) {
       dbRef.update({status: taskStatus[newIdx]})
-        // if there are searchTerms then update the task in the searchItems state
-        .then(handleSearch);
     }
   }
 
@@ -190,7 +185,6 @@ const App = () => {
 
   // --------------------------- handleSearch
   const handleSearch = () => {
-
     if (searchTerms) {
       // create regex for search terms - case insensistive
       const searchString = new RegExp(searchTerms, 'i');
@@ -203,7 +197,10 @@ const App = () => {
     }
   }
 
-  // --------------------------- handleSearch
+  // filter tasks from search terms
+  useEffect(handleSearch, [searchTerms, taskItems])
+
+  // --------------------------- clearSearch
   const clearSearch = () => { 
     setSearchTerms("");
     setSearchItems([]);
