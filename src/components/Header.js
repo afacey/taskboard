@@ -19,15 +19,13 @@ const Header = (props) => {
           <p>Add and track tasks to increase productivity!</p>
         </div>
         <div className="header__buttons">
-            <h2>
+            <h2 onClick={displaySettings ? closeSettings : openSettings}>
               <span>Settings </span>
-            {
-              displaySettings ? <FontAwesomeIcon icon={faTimes} onClick={closeSettings} /> : <FontAwesomeIcon icon={faChevronDown} onClick={openSettings} />
-            }
+              <FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} />
             </h2>
           {
             displaySettings
-            ? 
+            &&
             <Settings 
             theme={theme} 
             setTheme={setTheme} 
@@ -37,11 +35,7 @@ const Header = (props) => {
             signInUser={signInUser}
             logoutUser={logoutUser}
             loadComplete={loadComplete}
-            closeSettings={closeSettings} 
             />
-            : 
-            <>
-            </>
           }
           
         </div>
