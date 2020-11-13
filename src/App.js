@@ -6,6 +6,7 @@ import TaskBoardMenu from './components/TaskBoardMenu.js';
 import TaskList from './components/TaskList.js';
 import Footer from './components/Footer.js';
 import './App.css';
+import { useCallback } from 'react';
 
 const App = () => {
   const [ loadComplete, setLoadComplete ] = useState(false); 
@@ -34,14 +35,6 @@ const App = () => {
     })
   }, [])
 
-  // retreive tasks once userCheck is true
-  useEffect(function fetchTasksAfterUserCheck() {
-    if (!checkForUser) {
-      retrieveTaskItems()
-      setLoadComplete(true);
-    }
-
-  }, [checkForUser])
   
 
   // --------------------------- signInUser (Google Auth)
@@ -97,7 +90,7 @@ const App = () => {
   }
 
   // --------------------------- retrieveTaskItems
-  const retrieveTaskItems = () => {
+  const retrieveTaskItems = useCallback(() => {
     // db reference of "tasks"
     const dbRef = firebase.database().ref(user.dbRef);
 
@@ -118,9 +111,20 @@ const App = () => {
       
       // update state with the taskItems retrieved from the database
       setTaskItems(taskItems)
+      console.log('got tasks');
       // setLoadComplete(true);
     })
-  }  
+  }, [user.dbRef])  
+
+  // retreive tasks once userCheck is true
+  useEffect(function fetchTasksAfterUserCheck() {
+    if (!checkForUser) {
+      retrieveTaskItems()
+      setLoadComplete(true);
+    }
+
+  }, [checkForUser, retrieveTaskItems])
+  
 
   // --------------------------- clearTaskboard
   const clearTaskboard = () => {

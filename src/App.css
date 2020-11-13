@@ -115,6 +115,40 @@ button {
 ================================================================================ COMPONENTS
 */
 
+/* ------------------------------------ SETTINGS */
+.settings {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 5px);
+  right: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border: 2px solid var(--color-dark);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+@media (max-width: 480px) {
+  .settings {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+.dark .settings {
+  background-color: var(--color-dark);
+  color: var(--color-lightgrey);
+  border-color: var(--color-lightgrey);
+
+}
+
+.settings > *:not(:last-child) {
+  margin-bottom: 20px;
+}
+
 /* ------------------------------------ THEME TOGGLE */
 
 .themeToggle__label {
@@ -139,6 +173,7 @@ button {
   display: inline-block;
   width: 30px;
   height: 15px;
+  top: 1px;
   left: 0;
   border-radius: 25px;
   background-color: var(--color-dark);
@@ -156,8 +191,8 @@ button {
   width: 13px;
   height: 13px;
   background-color: var(--color-lightgrey);
-  top: 1px;
-  left: 0;
+  top: 2px;
+  left: 1px;
   border-radius: 50%;
   transition: left 0.3s;;
 }
@@ -264,6 +299,7 @@ header .displayContainer {
 
 .header__buttons {
   text-align: right;
+  position: relative;
 }
 
 .header__buttons .btn:not(:first-child) {
