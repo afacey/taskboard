@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ThemeContext from '../contexts/ThemeContext';
 
 const Header = (props) => {
   const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete} = props;
-
+  const theme = useContext(ThemeContext);
+  
   return (  
-    <header>
+    <header className={theme}>
       <div className="wrapper displayContainer">
         <div className="header__text">
           <h1>Task Board</h1>

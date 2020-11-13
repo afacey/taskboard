@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import firebase from './firebase.js';
 import Swal from "sweetalert2";
 import Header from './components/Header.js';
 import TaskBoardMenu from './components/TaskBoardMenu.js';
 import TaskList from './components/TaskList.js';
 import Footer from './components/Footer.js';
+import ThemeContext from './contexts/ThemeContext.js';
 import './App.css';
 
 const App = () => {
@@ -18,6 +19,8 @@ const App = () => {
   const [ searchItems, setSearchItems ] = useState([]);
 
   const taskStatus = ['open', 'inProgress', 'complete'];
+
+  const theme = useContext(ThemeContext);
   
   // ------- check if there's a logged in user before retrieving any tasks
   useEffect(function checkForAuthenticatedUser() {
@@ -215,46 +218,46 @@ const App = () => {
   const lists = listFilter === 'all' ? taskStatus : [listFilter];
 
   return (
-    <div className="pageContainer">
-      {/* START of HEADER */}
-      <Header clearTaskboard={clearTaskboard} numOfTasks={taskItems.length} userLoggedIn={user.loggedIn} loadComplete={loadComplete} signInUser={signInUser} logoutUser={logoutUser} />
-      
-      {/* START of MAIN */}
-      <main>
-        <div className="wrapper">
-          <TaskBoardMenu 
-            handleListFilter={handleListFilter}
-            handleSearchInput={handleSearchInput}
-            searchTerms={searchTerms}
-            clearSearch={clearSearch}
-          />
-          
-          <section className="taskLists">
-            { 
-              lists.map((status) => {
-                const tasks = items.filter(task => task.status === status);
-                return (
-                  <TaskList 
-                    className="taskList" 
-                    key={status} 
-                    status={status}
-                    tasks={tasks} 
-                    addTask={addTask}
-                    moveTask={moveTask}
-                    removeTask={removeTask}
-                    editTask={updateTask}
-                    clearTaskList={clearTaskList}
-                  />
-                )
-              })
-            } 
-          </section>
-        </div>
-      </main>
+  <div className={`pageContainer ${theme}`}>
+    {/* START of HEADER */}
+    <Header clearTaskboard={clearTaskboard} numOfTasks={taskItems.length} userLoggedIn={user.loggedIn} loadComplete={loadComplete} signInUser={signInUser} logoutUser={logoutUser} />
+    
+    {/* START of MAIN */}
+    <main>
+      <div className="wrapper">
+        <TaskBoardMenu 
+          handleListFilter={handleListFilter}
+          handleSearchInput={handleSearchInput}
+          searchTerms={searchTerms}
+          clearSearch={clearSearch}
+        />
+        
+        <section className="taskLists">
+          { 
+            lists.map((status) => {
+              const tasks = items.filter(task => task.status === status);
+              return (
+                <TaskList 
+                  className="taskList" 
+                  key={status} 
+                  status={status}
+                  tasks={tasks} 
+                  addTask={addTask}
+                  moveTask={moveTask}
+                  removeTask={removeTask}
+                  editTask={updateTask}
+                  clearTaskList={clearTaskList}
+                />
+              )
+            })
+          } 
+        </section>
+      </div>
+    </main>
 
-      {/* START of FOOTER */}
-      <Footer />
-    </div>
+    {/* START of FOOTER */}
+    <Footer />
+  </div>
   );
 }
 

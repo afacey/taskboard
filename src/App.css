@@ -85,23 +85,54 @@ button {
 }
 
 /* 
+================================================================================ VARIABLES
+*/
+:root {
+  --color-light: #FAFAFA;
+  --color-lightgrey: #EEE;
+  --color-darkgrey: #333;
+  --color-dark: #111;
+
+  --color-red: rgb(178, 34, 34);
+  --color-red-a: rgba(178, 34, 34, 0.8);
+  --color-lightred: rgb(255, 127, 80);
+  --color-lightred-a: rgb(255, 127, 80, 0.8);
+
+  --color-green: rgb(0, 100, 0);
+  --color-green-a: rgb(0, 100, 0, 0.8);
+  --color-lightgreen: #4ecca3;
+  --color-lightgreen-a: rgba(78, 204, 163, 0.8);
+
+  --color-black: rgb(17, 17, 17);
+  
+  --color-blue: rgb(30, 55, 153);
+  --color-blue-a: rgba(30, 55, 153, 0.8);
+  --color-lightblue: #59A2FF;
+  --color-lightblue-a: rgba(89, 162, 255, 0.8);
+}
+
+/* 
 ================================================================================ COMPONENTS
 */
 
 /* ------------------------------------ BUTTONS */
 .btn {
   font-size: 1.6rem;
-  color: #FAFAFA;
+  color: var(--color-light);
   border: 2.4px solid transparent;
   border-radius: 5px;
   padding: 6px;
   transition: border-color 0.3s;
 }
 
+.dark .btn {
+  color: var(--color-dark);
+}
+
 .btn:active,
 .btn:focus {
   cursor: pointer;
-  border-color: #111;
+  border-color: var(--color-dark);
 }
 
 .btn--black:active,
@@ -111,23 +142,39 @@ button {
 
 .btn:disabled { opacity: 0.4; }
 
-.btn--black { background-color: rgb(17, 17, 17); }
-.btn--blue { background-color: rgb(30, 55, 153); }
-.btn--green { background-color: rgb(0, 100, 0); }
-.btn--red { background-color: rgb(178, 34, 34); }
+.btn--black { background-color: var(--color-dark); }
+.dark .btn--black { background-color: var(--color-lightgrey); }
+
+.btn--blue { background-color: var(--color-blue); }
+.dark .btn--blue { background-color: var(--color-lightblue); }
+
+.btn--green { background-color: var(--color-green); }
+.dark .btn--green { background-color: var(--color-lightgreen); }
+
+/* .btn--red { background-color: rgb(178, 34, 34); } */
+.btn--red { background-color: var(--color-red); }
+.dark .btn--red { background-color: var(--color-lightred); }
 
 @media (hover:hover) {
+  .btn {
+    cursor: pointer;
+  }
   .btn:hover { border-color: #111; }
   .btn--black:hover { border-color: rgb(178, 34, 34);}
   .btn:disabled:hover { cursor: not-allowed;}
 }
 /* 
-================================================================================ BODY
+================================================================================ PAGE CONTAINER
 */
 
-body {
+.pageContainer {
   background-color: #EEE;
   color: #111;
+}
+
+.pageContainer.dark {
+  background-color: var(--color-darkgrey);
+  color: var(--color-lightgrey);
 }
 
 /* 
@@ -141,6 +188,11 @@ header {
   box-shadow: 0 2px 3px rgba(17,17,17,0.4);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+header.dark {
+  color: #EEE;
+  background-color: #111;
 }
 
 header .displayContainer {
@@ -184,6 +236,10 @@ main { padding: 2rem 0 12rem; }
   align-items: center;
 }
 
+.taskBoard__menu.dark {
+  background-color: var(--color-dark);
+}
+
 /* ------------------------------------ MAIN > TASKBOARD MENU > LIST FILTER */
 
 .inputContainer__filter {
@@ -219,11 +275,17 @@ main { padding: 2rem 0 12rem; }
 }
 
 .taskBoard__searchBar {
-  background-color: #FAFAFA;
-  border: 2px solid #111;
+  background-color: var(--color-light);
+  border: 2px solid var(--color-dark);
   border-radius: 5px;
   padding: 6px 30px 6px 6px;
   width: 100%;
+}
+
+.dark .taskBoard__searchBar {
+  background-color: var(--color-darkgrey);
+  color: var(--color-lightgrey);
+  border-color: var(--color-lightgrey);
 }
 
 .taskBoard__searchBarIcon {
@@ -243,6 +305,11 @@ main { padding: 2rem 0 12rem; }
   background-color: #111;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.dark .taskBoard__searchBarBtn {
+  background-color: var(--color-lightgrey);
+  color: var(--color-dark);
 }
 
 .taskBoard__searchBarBtn:hover,
@@ -272,6 +339,10 @@ main { padding: 2rem 0 12rem; }
   grid-template-columns: 1fr 10rem;
   position: relative;
   overflow: hidden;
+}
+
+.dark .taskList__header {
+  background-color: var(--color-dark);
 }
 
 .taskList__menuBtn {
@@ -304,39 +375,58 @@ main { padding: 2rem 0 12rem; }
 
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- OPEN */
-.taskList__header--open { border-bottom: 5px solid rgb(178, 34, 34); }
+.taskList__header--open { border-bottom: 5px solid var(--color-red); }
+.dark .taskList__header--open { border-bottom: 5px solid var(--color-lightred); }
 
 .taskList__header--open .taskList__count,
 .taskList__header--open .taskList__menuBtn {
-  color: rgb(178, 34, 34);
+  color: var(--color-red);
 }
 
-.taskList__header--open .taskList__addBtn { background: rgb(178, 34, 34);}
+.dark .taskList__header--open .taskList__count,
+.dark .taskList__header--open .taskList__menuBtn {
+  color: var(--color-lightred);
+}
+
+.taskList__header--open .taskList__addBtn { background: var(--color-red);}
+.dark .taskList__header--open .taskList__addBtn { background: var(--color-lightred);}
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- IN PROGRESS */
-.taskList__header--inProgress { border-bottom: 5px solid rgb(30, 55, 153); }
+.taskList__header--inProgress { border-bottom: 5px solid var(--color-blue); }
+.dark .taskList__header--inProgress { border-bottom: 5px solid var(--color-lightblue); }
 
 .taskList__header--inProgress .taskList__count,
 .taskList__header--inProgress .taskList__menuBtn {
-  color: rgb(30, 55, 153);
+  color: var(--color-blue);
+}
+.dark .taskList__header--inProgress .taskList__count,
+.dark .taskList__header--inProgress .taskList__menuBtn {
+  color: var(--color-lightblue);
 }
 
-.taskList__header--inProgress .taskList__addBtn { background: rgb(30, 55, 153); }
+.taskList__header--inProgress .taskList__addBtn { background: var(--color-blue); }
+.dark .taskList__header--inProgress .taskList__addBtn { background: var(--color-lightblue); }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- COMPLETE */
-.taskList__header--complete { border-bottom: 5px solid rgb(0, 100, 0); }
+.taskList__header--complete { border-bottom: 5px solid var(--color-green); }
+.dark .taskList__header--complete { border-bottom: 5px solid var(--color-lightgreen); }
 
 .taskList__header--complete .taskList__count,
 .taskList__header--complete .taskList__menuBtn {
-  color: rgb(0, 100, 0);
+  color: var(--color-green);
+}
+.dark .taskList__header--complete .taskList__count,
+.dark .taskList__header--complete .taskList__menuBtn {
+  color: var(--color-lightgreen);
 }
 
-.taskList__header--complete .taskList__addBtn { background: rgb(0,100,0); }
+.taskList__header--complete .taskList__addBtn { background: var(--color-green); }
+.dark .taskList__header--complete .taskList__addBtn { background: var(--color-lightgreen); }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- MENU BUTTON ACTIVE STATE */
 .taskList__header .taskList__menuBtn--active { 
-  background-color: #111; 
-  color: #FAFAFA;
+  background-color: var(--color-dark); 
+  color: var(--color-light);
 }
 
 
@@ -348,11 +438,15 @@ main { padding: 2rem 0 12rem; }
   padding: 2rem 5rem;
   border-radius: 5px;
   position: relative;
-  background-color: #FAFAFA;
+  background-color: var(--color-light);
   min-height: 12rem;
   overflow: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+.dark .taskItem {
+  background-color: var(--color-dark);
 }
 
 .taskItem__text {
@@ -364,12 +458,21 @@ main { padding: 2rem 0 12rem; }
   background: none;
 }
 
+.dark .taskItem__text {
+  color: var(--color-light);
+}
+
 .taskItem__text:hover { cursor: pointer; }
 
 /* rgb(30, 55, 153) */
-.taskItem--open { box-shadow: 0 2px 3px rgba(178, 34, 34,.8); }
-.taskItem--inProgress { box-shadow: 0 2px 3px rgba(30, 55, 153,.8); }
-.taskItem--complete { box-shadow: 0 2px 3px rgba(0, 100, 0,.8); }
+.taskItem--open { box-shadow: 0 2px 3px var(--color-red-a); }
+.dark .taskItem--open { box-shadow: 0 2px 3px var(--color-lightred-a); }
+
+.taskItem--inProgress { box-shadow: 0 2px 3px var(--color-blue-a); }
+.dark .taskItem--inProgress { box-shadow: 0 2px 3px var(--color-lightblue-a); }
+
+.taskItem--complete { box-shadow: 0 2px 3px var(--color-green-a); }
+.dark .taskItem--complete { box-shadow: 0 2px 3px var(--color-lightgreen-a); }
 
 .taskItem__btn {
   padding: 0 18px;
@@ -378,11 +481,13 @@ main { padding: 2rem 0 12rem; }
   position: absolute;
   top: 0;
   bottom: 0;
-  color: #111;
+  /* color: var(--color-dark); */
   transition: background-color 0.3s;
+  color: inherit;
 }
 
 .taskItem__btn:hover { background-color: #CCC; }
+.dark .taskItem__btn:hover { color: var(--color-dark); }
 
 .taskItem__btn--prev {
   left: 0;
@@ -415,6 +520,10 @@ main { padding: 2rem 0 12rem; }
   margin-bottom: 1rem;
 }
 
+.dark .taskForm__input {
+  color: var(--color-darkgrey);
+  background-color: var(--color-lightgrey);
+}
 
 /* 
 ================================================================================ FOOTER
@@ -424,12 +533,17 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  color:#111;
+  color: var(--color-dark);
   font-size: 1.3rem;
   text-align: center;
   padding: 2rem 0;
-  background-color: #FAFAFA;
+  background-color: var(--color-light);
   box-shadow: 0 -2px 3px rgba(17,17,17,0.4);
+}
+
+.dark footer {
+  background-color: var(--color-dark);
+  color: var(--color-lightgrey);
 }
 
 footer .displayContainer {
@@ -443,7 +557,7 @@ footer a {
   transition: color 0.3s;
 }
 
-footer a:hover { color: rgb(178, 34, 34) }
+footer a:hover { color: var(--color-red) }
 
 /* 
 ================================================================================ MEDIA QUERIES

@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TaskItem from './TaskItem';
 import TaskForm from './TaskForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import autosize from 'autosize';
+import ThemeContext from '../contexts/ThemeContext';
 
 const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clearTaskList }) => {
   const [ isStaging, setIsStaging ] = useState(false);
   const [ stagingTask, setStagingTask ] = useState("");
   const [ menuEnabled, setMenuEnabled ] = useState(false);
+
+  const theme = useContext(ThemeContext);
 
   // heading text for task status lists
   const statusString = {
@@ -105,7 +108,7 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
   // --------------------------- return
 
   return(
-    <div className="taskList">
+    <div className={`taskList ${theme}`}>
       <div className={`taskList__header taskList__header--${status}`}>
         <label htmlFor={`taskListMenuBtn--${status}`} className="srOnly">Click the button to toggle the task list menu to clear the task list's items</label>
         <button 
