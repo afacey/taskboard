@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
-import ThemeContext from '../contexts/ThemeContext';
 
 const TaskBoardMenu = props => {
   const { searchTerms, handleListFilter, handleSearchInput, clearSearch } = props;
-  const theme = useContext(ThemeContext);
 
   return(
-    <section className={`taskBoard__menu ${theme}`}>
+    <section className="taskBoard__menu">
 
       {/* Task List Filter Inputs */}
       <fieldset className="taskBoard__listFilter">

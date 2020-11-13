@@ -1,12 +1,18 @@
-import React, { useContext } from 'react';
-import ThemeContext from '../contexts/ThemeContext';
+import React from 'react';
 
 const Header = (props) => {
-  const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete} = props;
-  const theme = useContext(ThemeContext);
-  
+  const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete, theme, setTheme} = props;
+
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("")
+    } else {
+      setTheme("dark")
+    }
+  }
+
   return (  
-    <header className={theme}>
+    <header>
       <div className="wrapper displayContainer">
         <div className="header__text">
           <h1>Task Board</h1>
@@ -23,6 +29,8 @@ const Header = (props) => {
             // if app has not loaded do not display sign in / log out buttons
             : null
           }
+          <input className="themeToggle__checkbox sr-only" type="checkbox" name="themeToggle" id="themeToggle" onChange={toggleTheme} defaultChecked={theme === "dark"}/>
+          <label className="themeToggle__label" htmlFor="themeToggle">Dark Mode <span class="themeToggle__toggler"></span></label>
         </div>
       </div>
     </header>

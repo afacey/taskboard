@@ -115,6 +115,61 @@ button {
 ================================================================================ COMPONENTS
 */
 
+/* ------------------------------------ THEME TOGGLE */
+
+.themeToggle__label {
+  position: relative;
+}
+
+
+.themeToggle__toggler,
+.themeToggle__toggler::before,
+.themeToggle__toggler::after {
+  position: absolute;
+}
+
+.themeToggle__label:active .themeToggle__label::before,
+.themeToggle__label:focus .themeToggle__label::before {
+  background-color: yellow;
+}
+
+.themeToggle__toggler::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 30px;
+  height: 15px;
+  left: 0;
+  border-radius: 25px;
+  background-color: var(--color-dark);
+  border: 2px solid var(--color-dark);
+}
+.dark .themeToggle__toggler::before { 
+  background-color: var(--color-lightgrey);
+  border: 2px solid var(--color-lightgrey);
+}
+
+.themeToggle__toggler::after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background-color: var(--color-lightgrey);
+  top: 1px;
+  left: 0;
+  border-radius: 50%;
+  transition: left 0.3s;;
+}
+
+.dark .themeToggle__toggler::after { 
+  background-color: var(--color-dark);
+}
+
+.themeToggle__checkbox:checked + .themeToggle__label .themeToggle__toggler::after {
+  left: 15px;
+}
+
 /* ------------------------------------ BUTTONS */
 .btn {
   font-size: 1.6rem;
@@ -190,7 +245,7 @@ header {
   border-bottom-right-radius: 5px;
 }
 
-header.dark {
+.dark header {
   color: #EEE;
   background-color: #111;
 }
@@ -236,7 +291,7 @@ main { padding: 2rem 0 12rem; }
   align-items: center;
 }
 
-.taskBoard__menu.dark {
+.dark .taskBoard__menu {
   background-color: var(--color-dark);
 }
 
