@@ -47,9 +47,6 @@ export const clearTaskboard = (dbRef) => {
 
 
 export const retrieveTaskItems = (dbRef, setTaskItems) => {
-  // db reference of "tasks"
-  // const dbRef = firebase.database().ref(user.dbRef);
-
   // listener for any value change on the db reference
   firebase.database().ref(dbRef).on('value', response => {
     const tasksData = response.val();
@@ -67,8 +64,6 @@ export const retrieveTaskItems = (dbRef, setTaskItems) => {
     
     // update state with the taskItems retrieved from the database
     setTaskItems(taskItems)
-    console.log('got tasks');
-    // setLoadComplete(true);
   })
 }
 
