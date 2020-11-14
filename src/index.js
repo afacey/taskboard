@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import UserContext from './contexts/UserContext';
+import ThemeContext from './contexts/ThemeContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserContext>
+      <ThemeContext>
+        <App />
+      </ThemeContext>
+    </UserContext>
   </React.StrictMode>,
   document.getElementById('root')
 );

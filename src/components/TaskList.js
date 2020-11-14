@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import TaskItem from './TaskItem';
 import TaskForm from './TaskForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import autosize from 'autosize';
+import {clearTaskList} from '../firebase.js';
+import { UserContext } from '../contexts/UserContext';
 
-const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clearTaskList }) => {
+const TaskList = ({ status, tasks, moveTask }) => {
   const [ isStaging, setIsStaging ] = useState(false);
-  const [ stagingTask, setStagingTask ] = useState("");
   const [ menuEnabled, setMenuEnabled ] = useState(false);
+
+  const { user } = useContext(UserContext);
 
   // heading text for task status lists
   const statusString = {
@@ -17,66 +19,12 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
     complete: "Completed"
   }
   
-  // --------------------------- useEffect
-  useEffect(() => {
-    const taskInput = document.querySelector(`#taskFormInput_${status}`);
-
-    // only go to the end of the text if the input is not already focused
-    if (taskInput && taskInput !== document.activeElement) {
-      // autosize the textarea height as needed
-      autosize(taskInput);
-
-      // set the cursor to the end of the text input by setting value to "" > focus > value back to state.stagingTask
-      taskInput.value = "";
-      // focus on the input
-      taskInput.focus();
-      // set the input value
-      taskInput.value = stagingTask;
-    }
-  })
 
   // --------------------------- toggleMenuEnabled
   const toggleMenuEnabled = () => setMenuEnabled(!menuEnabled);
 
-  // --------------------------- handleBlur
-  const handleBlur = (evt) => {
-    // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
-    const currentTarget = evt.currentTarget;
-
-    // Check the newly focused element in the next tick of the event loop
-    setTimeout(() => {
-      // Check if the new activeElement is a child of the original container
-      if (!currentTarget.contains(document.activeElement)) {
-        // if new focused element is not contained in the form ... toggle out of staging a task
-        setIsStaging(false);
-      }
-    }, 5);
-  }
-
-  // --------------------------- handleStagingTask
-  const handleStagingTask = (e) => setStagingTask(e.target.value);
-  // --------------------------- toggleTaskStaging
   const toggleTaskStaging = () => setIsStaging(!isStaging);
 
-  // --------------------------- handleAddTask
-  const handleAddTask = (e) => {
-    e.preventDefault();
-
-    // prevent adding empty tasks
-    if (stagingTask) {
-
-      // add task
-      addTask({
-        task: stagingTask,
-        status
-      })
-
-      // reset staging states
-      setIsStaging(false);
-      setStagingTask("");
-    }
-    
-  }
 
   // --------------------------- handleClearList
   const handleClearList = () => {
@@ -93,14 +41,11 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
           return deleteList;
         }), {});
       // remove the filtered items from firebase
-      clearTaskList(taskListItems, status)  
+      clearTaskList(user.dbRef, taskListItems)  
     }
     // toggle tasklist menu to false
     setMenuEnabled(false);
   }
-
-  // clear stagingTask state
-  const clearStagingTask = () => { setStagingTask(""); }
   
   // --------------------------- return
 
@@ -146,12 +91,7 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
           <li className={`taskItem taskItem--${status}`}>
             <TaskForm 
               id={status}
-              taskValue={stagingTask}
-              handleSubmit={handleAddTask}
-              toggleForm={toggleTaskStaging}
-              handleBlur={handleBlur}
-              handleChange={handleStagingTask}
-              handleClear={clearStagingTask}
+              setIsStaging={setIsStaging}
             />
           </li>
         }
@@ -163,8 +103,6 @@ const TaskList = ({ status, tasks, addTask, editTask, removeTask, moveTask, clea
               id={key} 
               task={task} 
               status={status} 
-              editTask={editTask}
-              removeTask={removeTask} 
               moveTask={moveTask} 
             />)
           )

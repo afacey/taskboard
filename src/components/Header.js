@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Settings from './Settings';
 
 const Header = (props) => {
-  const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete, theme, setTheme} = props;
+  const { numOfTasks, loadComplete} = props;
   const [ displaySettings, setDisplaySettings ] = useState(false);
 
   const openSettings = () => { setDisplaySettings(true);}
@@ -27,14 +27,8 @@ const Header = (props) => {
             displaySettings
             &&
             <Settings 
-            theme={theme} 
-            setTheme={setTheme} 
-            clearTaskboard={clearTaskboard} 
-            numOfTasks={numOfTasks} 
-            userLoggedIn={userLoggedIn} 
-            signInUser={signInUser}
-            logoutUser={logoutUser}
-            loadComplete={loadComplete}
+              numOfTasks={numOfTasks} 
+              loadComplete={loadComplete}
             />
           }
           

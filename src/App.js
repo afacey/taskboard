@@ -1,93 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import firebase from './firebase.js';
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import Header from './components/Header.js';
 import TaskBoardMenu from './components/TaskBoardMenu.js';
 import TaskList from './components/TaskList.js';
 import Footer from './components/Footer.js';
 import './App.css';
 import { useCallback } from 'react';
+import { useContext } from 'react';
+import { UserContext } from './contexts/UserContext.js';
+import { ThemeContext } from './contexts/ThemeContext.js';
 
 const App = () => {
   const [ loadComplete, setLoadComplete ] = useState(false); 
-  const [ user, setUser ] = useState({dbRef: "public/", loggedIn: false});
-  const [ checkForUser, setCheckForUser ] = useState(true); 
   const [ taskItems, setTaskItems ] = useState([]);
   const [ listFilter, setListFilter ] = useState("all");
 
   const [ searchTerms, setSearchTerms ] = useState("");
   const [ searchItems, setSearchItems ] = useState([]);
 
-  const [ theme, setTheme ] = useState("");
+  const { theme } = useContext(ThemeContext);
+
+  const { user, checkForUser } = useContext(UserContext);
 
   const taskStatus = ['open', 'inProgress', 'complete'];
-  
-  // ------- check if there's a logged in user before retrieving any tasks
-  useEffect(function checkForAuthenticatedUser() {
-    // check if there is a current user
-    firebase.auth().onAuthStateChanged((user) => {
-      // if there is a user update state with the dbRef and loggedIn to true
-      if (user) {
-        setUser({dbRef: user.uid + "/", loggedIn: true});
-      }
-      // set checkForUser to false
-      setCheckForUser(false)
-    })
-  }, [])
-
-  
-
-  // --------------------------- signInUser (Google Auth)
-  const signInUser = () => {
-    // create new google auth provider
-    const provider = new firebase.auth.GoogleAuthProvider();
-    
-    // initiate sign in with popup using google auth
-    firebase.auth().signInWithPopup(provider)
-      .then(({user}) => {
-        // once user is signed in, set user info and user's dbRef in state
-        
-        setUser({
-          dbRef: user.uid + "/",
-          loggedIn: true
-        })
-
-        setCheckForUser(true);
-      })
-      .catch(error => {
-        // if there is an error, display an alert
-        Swal.fire({
-          title: "Oops!",
-          text: "There was an error signing in: " + error,
-          icon: "error",
-          confirmButton: "OK"
-        })
-      })
-  }
-
-  // --------------------------- logoutUser
-  const logoutUser = () => {
-    firebase.auth().signOut()
-      .then(() => {
-        // once user is logged out, reset user and dbRef in state
-        setUser({
-          dbRef: "public/",
-          loggedIn: false
-        })
-
-        setCheckForUser(true);
-        console.log('user logged out');
-      })
-      .catch(error => {
-        // if there is an error, display an alert
-        Swal.fire({
-          title: "Oops!",
-          text: "There was an error while logging out: ", error,
-          icon: "error",
-          confirmButton: "OK"
-        })
-      })
-  }
 
   // --------------------------- retrieveTaskItems
   const retrieveTaskItems = useCallback(() => {
@@ -124,35 +60,6 @@ const App = () => {
     }
 
   }, [checkForUser, retrieveTaskItems])
-  
-
-  // --------------------------- clearTaskboard
-  const clearTaskboard = () => {
-    // remove all items in firebase
-    firebase.database().ref(user.dbRef).remove();
-
-    // reset searchItems to empty
-    setSearchItems([])
-  }
-
-  // --------------------------- clearTaskList
-  const clearTaskList = (taskListItems, status) => {
-    // pass an object of keys with null values to clear multiple items
-    firebase.database().ref(user.dbRef).update(taskListItems);
-
-    // update the searchItems with the filtered out items that may have been removed
-    const filterSearchItems = searchItems.filter(item => item.status !== status);
-    setSearchItems(filterSearchItems)
-  }
-
-  // --------------------------- addTask
-  const addTask = (newTask) => firebase.database().ref(user.dbRef).push(newTask);
-  
-  // --------------------------- updateTask
-  const updateTask = (key, newValue) => firebase.database().ref(user.dbRef + key).update({task: newValue});
-
-  // --------------------------- removeTask
-  const removeTask = (key) => firebase.database().ref(user.dbRef).child(key).remove();
 
   // --------------------------- moveTask
   const moveTask = (key, status, direction) => {
@@ -224,14 +131,8 @@ const App = () => {
   <div className={`pageContainer ${theme}`}>
     {/* START of HEADER */}
     <Header 
-      theme={theme}
-      setTheme={setTheme}
-      clearTaskboard={clearTaskboard} 
       numOfTasks={taskItems.length} 
-      userLoggedIn={user.loggedIn} 
       loadComplete={loadComplete} 
-      signInUser={signInUser} 
-      logoutUser={logoutUser} 
     />
     
     {/* START of MAIN */}
@@ -254,11 +155,8 @@ const App = () => {
                   key={status} 
                   status={status}
                   tasks={tasks} 
-                  addTask={addTask}
+                  // user={user}
                   moveTask={moveTask}
-                  removeTask={removeTask}
-                  editTask={updateTask}
-                  clearTaskList={clearTaskList}
                 />
               )
             })

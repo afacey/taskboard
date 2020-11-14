@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { UserContext } from '../contexts/UserContext';
+import { clearTaskboard } from '../firebase';
 
 const Settings = props => {
-  const {clearTaskboard, numOfTasks, userLoggedIn, signInUser, logoutUser, loadComplete, theme, setTheme} = props;
+  const { numOfTasks, loadComplete } = props;
+  const { theme, setTheme } = useContext(ThemeContext);
+  const { user: { dbRef, loggedIn }, signInUser, logoutUser } = useContext(UserContext);
 
   const toggleTheme = () => {
     if (theme === "dark") {
@@ -11,14 +16,15 @@ const Settings = props => {
     }
   }
 
+  const handleClearTaskboard = () => { clearTaskboard(dbRef); }
+
   return (
     <div className="settings">
-      {/* <h2>Settings</h2> */}
-      <button onClick={clearTaskboard}  className="btn btn--black btn__taskBoard btn__taskBoard--clear" disabled={ numOfTasks ? "" : "disabled" }>Clear Task Board</button>
+      <button onClick={handleClearTaskboard}  className="btn btn--black btn__taskBoard btn__taskBoard--clear" disabled={ numOfTasks ? "" : "disabled" }>Clear Task Board</button>
           {
             // check if app has loaded before display sign in / log out buttons
             loadComplete 
-            ? userLoggedIn // check if there is a logged in user
+            ? loggedIn // check if there is a logged in user
                 ? <button  onClick={logoutUser} className="btn btn--green btn__taskBoard btn__taskBoard--auth">Log Out</button>
                 : <button  onClick={signInUser} className="btn btn--red btn__taskBoard btn__taskBoard--auth">Sign In With Google</button>
             // if app has not loaded do not display sign in / log out buttons
