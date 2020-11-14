@@ -73,7 +73,7 @@ const TaskList = ({ status, tasks, moveTask }) => {
           ? 
           <>
             <label htmlFor={`taskListAddBtn--${status}`} className="srOnly">Click the button to toggle the add new task form</label>
-            <button id={`taskListAddBtn--${status}`} onClick={toggleTaskStaging} className={`btn taskList__addBtn`} disabled={isStaging ? 'disabled' : ''}>+ Task</button>
+            <button id={`taskListAddBtn--${status}`} onClick={toggleTaskStaging} className={`btn taskList__addBtn`} disabled={isStaging ? 'disabled' : ''}>Add Task</button>
           </>
           : 
           <>

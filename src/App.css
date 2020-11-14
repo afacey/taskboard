@@ -121,7 +121,7 @@ button {
   z-index: 1000;
   top: calc(100% + 5px);
   right: 0;
-  width: 200px;
+  width: 220px;
   display: flex;
   flex-direction: column;
   background-color: var(--color-light);

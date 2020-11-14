@@ -18,10 +18,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // --------------------------- addTask
-export const addTask = (dbRef, newTask) => {
-  console.log('add task called');
-  firebase.database().ref(dbRef).push(newTask);
-}
+export const addTask = (dbRef, newTask) => { firebase.database().ref(dbRef).push(newTask); }
 
 // --------------------------- updateTask
 export const updateTask = (dbRef, key, newValue) => firebase.database().ref(dbRef + key).update({task: newValue});
