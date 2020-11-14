@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
+import { TasksContext } from '../contexts/TasksContext';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { UserContext } from '../contexts/UserContext';
 import { clearTaskboard } from '../firebase';
 
 const Settings = props => {
-  const { numOfTasks, loadComplete } = props;
+  // const { numOfTasks, loadComplete } = props;
   const { theme, setTheme } = useContext(ThemeContext);
   const { user: { dbRef, loggedIn }, signInUser, logoutUser } = useContext(UserContext);
+  const { taskItems, loadComplete } = useContext(TasksContext);
+
+  const numOfTasks = taskItems ? taskItems.length : 0;
 
   const toggleTheme = () => {
     if (theme === "dark") {

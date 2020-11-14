@@ -4,8 +4,7 @@ import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Settings from './Settings';
 
-const Header = (props) => {
-  const { numOfTasks, loadComplete} = props;
+const Header = () => {
   const [ displaySettings, setDisplaySettings ] = useState(false);
 
   const openSettings = () => { setDisplaySettings(true);}
@@ -26,10 +25,7 @@ const Header = (props) => {
           {
             displaySettings
             &&
-            <Settings 
-              numOfTasks={numOfTasks} 
-              loadComplete={loadComplete}
-            />
+            <Settings />
           }
           
         </div>

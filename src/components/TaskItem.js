@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TaskForm from './TaskForm.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { UserContext } from '../contexts/UserContext.js';
+import { moveTask } from '../firebase';
+import { TasksContext } from '../contexts/TasksContext.js';
 
-const TaskItem = ({id, task, status, moveTask}) => {
+const TaskItem = ({id, task, status}) => {
   const [ isEditing, setIsEditing ] = useState(false);
+  const { user: { dbRef } } = useContext(UserContext);
+  const { taskStatus } = useContext(TasksContext);
 
+  const changeStatus = (direction) => {
+    // find current status index
+    const currentIdx = taskStatus.indexOf(status);
+  
+    // store new index as the value of currentIdx + the direction (1 or - 1)
+    let newIdx = currentIdx + direction;
+
+    // prevent out of range indexes of the taskStatus array
+    // if newIdx < 0 - set to 0, if newIdx gte taskStatus length - set to last item in array, otherwise keep the value
+    newIdx = newIdx < 0 ? 0 : newIdx >= taskStatus.length ? taskStatus.length - 1 : newIdx;
+
+    if (status !== taskStatus[newIdx]) {
+      moveTask(dbRef + id, taskStatus[newIdx]);
+    }
+
+  }
   // --------------------------- handleMovePrev
-  const handleMovePrev = () => moveTask(id, status, -1);
+  const handleMovePrev = () => { changeStatus(-1); }
+
   // --------------------------- handleMoveNext
-  const handleMoveNext = () => moveTask(id, status, 1);
+  const handleMoveNext = () => { changeStatus(1); }  
 
   // --------------------------- toggleEdit
   // check if taskFormInput has a value (not cleared by user)

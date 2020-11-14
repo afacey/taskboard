@@ -1,16 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import UserContext from './contexts/UserContext';
 import ThemeContext from './contexts/ThemeContext';
+import TasksContext from './contexts/TasksContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContext>
       <ThemeContext>
-        <App />
+        <TasksContext>
+          <App />
+        </TasksContext>
       </ThemeContext>
     </UserContext>
   </React.StrictMode>,

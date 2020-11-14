@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { TasksContext } from '../contexts/TasksContext';
 
-const TaskBoardMenu = props => {
-  const { searchTerms, handleListFilter, handleSearchInput, clearSearch } = props;
+const TaskBoardMenu = () => {
+  const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = useContext(TasksContext);
+
+  // --------------------------- handleChange
+  const handleSearchInput = (evt) => {
+    // call handleSearch if the input searchTerms input was changed and there are tasks
+    if (numOfTasks) {
+      // set seachTerms state to value, and then call this.handleSearch
+      setSearchTerms(evt.target.value);
+    }
+  }
+
+  const handleListFilter = evt => {
+    setListFilter(evt.target.value)
+  }
+
+  const clearSearch = () => { 
+    setSearchTerms("");
+    setSearchItems([]);
+  }
 
   return(
     <section className="taskBoard__menu">
