@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { retrieveTaskItems } from '../firebase';
+import { getTaskItems } from '../firebase';
 import { UserContext } from './UserContext';
 
 export const TasksContext = React.createContext();
@@ -17,7 +17,23 @@ const TasksProvider = ({children}) => {
   const taskStatus = ['open', 'inProgress', 'complete'];
 
   // --------------------------- retrieveTaskItems
-  const fetchTasks = useCallback(() => retrieveTaskItems(dbRef, setTaskItems), [dbRef])  
+  const fetchTasks = useCallback(() => getTaskItems(dbRef, (response) => {
+    const tasksData = response.val();
+    
+    // create empty array to store data retrieved from db later
+    const taskItems = [];
+    for (const key in tasksData) {
+      const taskItem = {
+        key: key,
+        task: tasksData[key].task,
+        status: tasksData[key].status
+      }
+      taskItems.push(taskItem);
+    }
+    
+    // update state with the taskItems retrieved from the database
+    setTaskItems(taskItems)
+  }), [dbRef])  
 
   // retreive tasks once userCheck is true
   useEffect(function fetchTasksAfterUserCheck() {

@@ -17,15 +17,15 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+
 // --------------------------- addTask
 export const addTask = (dbRef, newTask) => { firebase.database().ref(dbRef).push(newTask); }
 
 // --------------------------- updateTask
-export const updateTask = (dbRef, key, newValue) => firebase.database().ref(dbRef + key).update({task: newValue});
+export const updateTask = (dbRef, key, newValue, cb) => firebase.database().ref(dbRef + key).update({task: newValue}).then(cb);
 
 // --------------------------- removeTask
 export const removeTask = (dbRef, key) => firebase.database().ref(dbRef).child(key).remove();
-
 
 // --------------------------- moveTask
 export const moveTask = (dbRef, status) => { firebase.database().ref(dbRef).update({status}) }
@@ -38,32 +38,14 @@ export const clearTaskList = (dbRef, taskListItems) => {
 
   // --------------------------- clearTaskboard
 export const clearTaskboard = (dbRef) => {
-    // remove all items in firebase
-    firebase.database().ref(dbRef).remove();
-  }
-
-
-export const retrieveTaskItems = (dbRef, setTaskItems) => {
-  // listener for any value change on the db reference
-  firebase.database().ref(dbRef).on('value', response => {
-    const tasksData = response.val();
-    
-    // create empty array to store data retrieved from db later
-    const taskItems = [];
-    for (const key in tasksData) {
-      const taskItem = {
-        key: key,
-        task: tasksData[key].task,
-        status: tasksData[key].status
-      }
-      taskItems.push(taskItem);
-    }
-    
-    // update state with the taskItems retrieved from the database
-    setTaskItems(taskItems)
-  })
+  // remove all items in firebase at dbRef
+  firebase.database().ref(dbRef).remove();
 }
 
+export const getTaskItems = (dbRef, cb) => {
+  // listener for any value change on the db reference
+  firebase.database().ref(dbRef).on('value', cb )
+}
 
 
 // this exports the CONFIGURED version of firebase

@@ -4,16 +4,10 @@ import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TasksContext } from '../contexts/TasksContext';
 
 const TaskBoardMenu = () => {
-  const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = useContext(TasksContext);
+  const { setListFilter, searchTerms, setSearchTerms, setSearchItems } = useContext(TasksContext);
 
-  // --------------------------- handleChange
-  const handleSearchInput = (evt) => {
-    // call handleSearch if the input searchTerms input was changed and there are tasks
-    if (numOfTasks) {
-      // set seachTerms state to value, and then call this.handleSearch
-      setSearchTerms(evt.target.value);
-    }
-  }
+  // --------------------------- handleSearchInput
+  const handleSearchInput = (evt) => { setSearchTerms(evt.target.value); }
 
   const handleListFilter = evt => {
     setListFilter(evt.target.value)
@@ -35,7 +29,7 @@ const TaskBoardMenu = () => {
           <label className="btn btn--black" htmlFor="filterAll">All</label>
           
           <input type="radio" className="srOnly taskBoard__filterInput" name="listFilter" id="filterOpen" value="open" onChange={handleListFilter} />
-          <label className="btn btn--red" htmlFor="filterOpen">Open</label>
+          <label className="btn btn--red" htmlFor="filterOpen">Todo</label>
           
           <input type="radio" className="srOnly taskBoard__filterInput" name="listFilter" id="filterInProgress" value="inProgress" onChange={handleListFilter} />
           <label className="btn btn--blue" htmlFor="filterInProgress">In Progress</label>

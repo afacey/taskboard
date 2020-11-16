@@ -4,7 +4,7 @@ import {UserContext} from './../contexts/UserContext';
 import { addTask, removeTask, updateTask } from './../firebase';
 
 const TaskForm = props => {
-  const { id, type, taskValue, setIsStaging, setIsEditing } = props;
+  const { id, type, taskValue, toggleTaskForm } = props;
   // const { id, type, handleSubmit, handleBlur, handleChange, handleClear, taskValue, removeTask } = props;
   const {user} = useContext(UserContext);
   const [ taskInput, setTaskInput ] = useState(taskValue || "")
@@ -36,7 +36,7 @@ const TaskForm = props => {
       // Check if the new activeElement is a child of the original container
       if (!currentTarget.contains(document.activeElement)) {
         // if new focused element is not contained in the form ... toggle out of staging a task
-        type === "edit" ? setIsEditing(false) : setIsStaging(false);
+        toggleTaskForm();
       }
     }, 100);
   }
@@ -55,15 +55,14 @@ const TaskForm = props => {
       status: id
     }
     addTask(user.dbRef, newTask); 
-    setIsStaging(false);
+    toggleTaskForm();
   }
 
   const handleRemoveTask = () => { removeTask(user.dbRef, id); }
   
   const handleUpdateTask = (e) => { 
     e.preventDefault();
-    updateTask(user.dbRef, id, taskInput); 
-    setIsEditing(false);
+    updateTask(user.dbRef, id, taskInput, toggleTaskForm); 
   }
 
   return (

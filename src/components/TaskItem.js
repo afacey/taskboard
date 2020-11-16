@@ -65,7 +65,7 @@ const TaskItem = ({id, task, status}) => {
             id={id}
             type="edit"
             taskValue={task}
-            setIsEditing={setIsEditing}
+            toggleTaskForm={toggleEdit}
           />
     }
       

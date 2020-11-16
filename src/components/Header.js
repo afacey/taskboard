@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Settings from './Settings';
 
@@ -20,7 +20,7 @@ const Header = () => {
         <div className="header__buttons">
             <h2 onClick={displaySettings ? closeSettings : openSettings}>
               <span>Settings </span>
-              <FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} />
+              <FontAwesomeIcon icon={faChevronDown} />
             </h2>
           {
             displaySettings

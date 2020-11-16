@@ -91,7 +91,7 @@ const TaskList = ({ status, tasks, moveTask }) => {
           <li className={`taskItem taskItem--${status}`}>
             <TaskForm 
               id={status}
-              setIsStaging={setIsStaging}
+              toggleTaskForm={toggleTaskStaging}
             />
           </li>
         }
