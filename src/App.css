@@ -78,6 +78,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   font-size: 1.6rem;
+  background-color: var(--color-dark);
 }
 
 h1 {
@@ -98,6 +99,10 @@ h3 {
 button {
   letter-spacing: inherit;
   font-family: inherit;
+}
+
+.btn.btn--toggleMenu span {
+  font-size: 2rem;
 }
 
 /* 
@@ -260,7 +265,7 @@ header .displayContainer {
 .menu {
   position: absolute;
   z-index: 1000;
-  top: calc(100% + 10px);
+  top: calc(100%);
   right: 0;
   width: 220px;
   display: flex;
