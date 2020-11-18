@@ -5,11 +5,11 @@ import { addTask, removeTask, updateTask } from './../firebase';
 
 const TaskForm = props => {
   const { id, type, taskValue, toggleTaskForm } = props;
-  // const { id, type, handleSubmit, handleBlur, handleChange, handleClear, taskValue, removeTask } = props;
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  
   const [ taskInput, setTaskInput ] = useState(taskValue || "")
 
-    // --------------------------- useEffect
+    // --------------------------- Autosize the textarea input as it grows and set the cursor to the end of textarea input
     useEffect(() => {
       const textInput = document.querySelector(`#taskFormInput_${id}`);
   
@@ -18,69 +18,51 @@ const TaskForm = props => {
         // autosize the textarea height as needed
         autosize(textInput);
   
-        // set the cursor to the end of the text input by setting value to "" > focus > value back to state.stagingTask
+        // set the cursor to the end of the text input by setting value to "" > focus > value back to taskValue
         textInput.value = "";
         // focus on the input
         textInput.focus();
         // set the input value
         textInput.value = taskInput;
       }
-    })
+    }, [])
 
-  const handleBlur = (evt) => {
-    // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
-    const currentTarget = evt.currentTarget;
-    
-    // Check the newly focused element in the next tick of the event loop
-    setTimeout(() => {
-      // Check if the new activeElement is a child of the original container
-      if (!currentTarget.contains(document.activeElement)) {
-        // if new focused element is not contained in the form ... toggle out of staging a task
-        toggleTaskForm();
-      }
-    }, 100);
-  }
-
-  const handleTaskInputChange = (evt) => {
-    setTaskInput(evt.target.value);
-  }
-
-  const handleClear = () => setTaskInput("");
-
-  const handleAddTask = (e) => { 
-    e.preventDefault();
-
+  // --------------------------- Bind input to state
+  const handleTaskInputChange = evt => { setTaskInput(evt.target.value); }
+  
+  // --------------------------- Add Task
+  const handleAddTask = () => { 
     const newTask = {
       task: taskInput,
-      status: id
+      status: id // the task list's status is passed as the ID for the taks form
     }
+
     addTask(user.dbRef, newTask); 
     toggleTaskForm();
   }
 
+  // --------------------------- Remove Task
   const handleRemoveTask = () => { removeTask(user.dbRef, id); }
   
-  const handleUpdateTask = (e) => { 
-    e.preventDefault();
-    updateTask(user.dbRef, id, taskInput, toggleTaskForm); 
+  // --------------------------- Update Task
+  const handleUpdateTask = () => {  updateTask(user.dbRef, id, taskInput, toggleTaskForm); }
+
+  const handleBlur = evt => {
+    // if the currently focused element is NOT contained within the form then close the form
+    if (!evt.currentTarget.contains(evt.relatedTarget)) {
+      toggleTaskForm();
+    }
+    // otherwise do nothing, preventing the form from closing when tab focusing on the task form buttons
   }
 
   return (
     <>
-      <h3 className="taskForm__heading">{type === 'edit' ? 'Edit Task' : 'New Task'}</h3>
+      <h3 className="taskForm__heading">{type === 'edit' ? 'Edit' : 'New'} Task</h3>
+
       <form action="#" onBlur={handleBlur} className="taskForm">
         <label htmlFor={`taskFormInput_${id}`} className="srOnly">Task Item</label>
         <textarea className="taskForm__input" id={`taskFormInput_${id}`} name="taskFormInput" onChange={handleTaskInputChange} value={taskInput}></textarea>
-        
-        {
-        // if there is input, display button to clear the text
-        taskInput &&
-          <>
-            <label htmlFor={`taskBtn__clear--${id}`} className="srOnly">Clear task input</label>
-            <button id={`taskBtn__clear--${id}`} type="button" onMouseDown={handleClear} className="btn btn--black">Clear</button>
-          </>  
-        }
-        
+
         {
         // if in editing mode, display button to delete the task
         type === "edit" 
@@ -91,8 +73,8 @@ const TaskForm = props => {
           </>
         }
         
-        {/* Save task button */}
-        <label htmlFor={`taskBtn__save--${id}`} className="srOnly">Save task input</label>
+        {/* Save (edit mode) or Add task button */}
+        <label htmlFor={`taskBtn__save--${id}`} className="srOnly">{type === 'edit' ? 'Save' : 'Add'} task input</label>
         <button type="button" id={`taskBtn__save--${id}`} className="btn btn--green" onMouseDown={type === 'edit' ? handleUpdateTask : handleAddTask} disabled={taskInput ? "" : "disabled"}>{type === 'edit' ? 'Save' : 'Add'}</button>
         
       </form>  

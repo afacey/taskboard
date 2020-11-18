@@ -61,7 +61,6 @@ const UserProvider = ({children}) => {
         })
 
         setCheckForUser(true);
-        console.log('user logged out');
       })
       .catch(error => {
         // if there is an error, display an alert

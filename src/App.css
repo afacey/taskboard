@@ -36,6 +36,22 @@ fieldset {
 ul {  list-style: none; }
 
 
+input[type="checkbox"].sr-only:focus + label { outline: 2px solid blue; }
+/* input[type="checkbox"].sr-only:focus + label { outline: 2px solid blue; } */
+/* input[type="checkbox"].sr-only + label:focus { outline: 2px solid blue; } */
+
+
+@media (hover:hover) {
+  button {
+    cursor: pointer;
+  }
+
+  input[type="checkbox"].sr-only + label {
+    cursor: pointer;
+  }
+}
+
+
 /* 
 ================================================================================ LAYOUT
 */
@@ -90,6 +106,7 @@ button {
 :root {
   --color-light: #FAFAFA;
   --color-lightgrey: #EEE;
+  --color-lightgrey-2: #CCC;
   --color-darkgrey: #333;
   --color-dark: #111;
 
@@ -117,91 +134,6 @@ button {
 ================================================================================ COMPONENTS
 */
 
-/* ------------------------------------ SETTINGS */
-.settings {
-  position: absolute;
-  z-index: 1000;
-  top: calc(100% + 5px);
-  right: 0;
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-light);
-  color: var(--color-dark);
-  border: 2px solid var(--color-dark);
-  text-align: center;
-  padding: 40px 20px;
-}
-
-@media (max-width: 480px) {
-  .settings {
-    right: 50%;
-    transform: translateX(50%);
-  }
-}
-
-.dark .settings {
-  background-color: var(--color-dark);
-  color: var(--color-lightgrey);
-  border-color: var(--color-lightgrey);
-
-}
-
-.settings > *:not(:last-child) {
-  margin-bottom: 20px;
-}
-
-/* ------------------------------------ THEME TOGGLE */
-
-.themeToggle__label {
-  position: relative;
-}
-
-
-.themeToggle__toggler,
-.themeToggle__toggler::before,
-.themeToggle__toggler::after {
-  position: absolute;
-}
-
-.themeToggle__toggler::before {
-  content: "";
-  position: absolute;
-  display: inline-block;
-  width: 30px;
-  height: 15px;
-  top: 1px;
-  left: 0;
-  border-radius: 25px;
-  background-color: var(--color-dark);
-  border: 2px solid var(--color-dark);
-}
-.dark .themeToggle__toggler::before { 
-  background-color: var(--color-lightgrey);
-  border: 2px solid var(--color-lightgrey);
-}
-
-.themeToggle__toggler::after {
-  content: "";
-  position: absolute;
-  display: inline-block;
-  width: 13px;
-  height: 13px;
-  background-color: var(--color-lightgrey);
-  top: 2px;
-  left: 1px;
-  border-radius: 50%;
-  transition: left 0.3s;;
-}
-
-.dark .themeToggle__toggler::after { 
-  background-color: var(--color-dark);
-}
-
-.themeToggle__checkbox:checked + .themeToggle__label .themeToggle__toggler::after {
-  left: 15px;
-}
-
 /* ------------------------------------ BUTTONS */
 .btn {
   font-size: 1.6rem;
@@ -209,7 +141,7 @@ button {
   border: 2.4px solid transparent;
   border-radius: 5px;
   padding: 6px;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, filter 0.3s;
 }
 
 .dark .btn {
@@ -220,6 +152,10 @@ button {
 .btn:focus {
   cursor: pointer;
   border-color: var(--color-dark);
+}
+
+.dark .btn:focus {
+  border-color: var(--color-light);
 }
 
 .btn--black:active,
@@ -241,12 +177,28 @@ button {
 .btn--red { background-color: var(--color-red); }
 .dark .btn--red { background-color: var(--color-lightred); }
 
+.btn.btn--toggleMenu {
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+.btn--theme {
+  background-color: transparent;
+  border-color: var(--color-dark);
+  color: var(--color-dark);
+}
+.dark .btn--theme {
+  border-color: var(--color-light);
+  color: var(--color-light);
+}
+
 @media (hover:hover) {
-  .btn {
+  .btn:hover { 
     cursor: pointer;
+    filter: brightness(1.1);
   }
-  .btn:hover { border-color:var(--color-dark); }
-  .btn--black:hover { border-color: var(--color-red);}
+  
   .btn:disabled:hover { cursor: not-allowed;}
 }
 /* 
@@ -268,7 +220,7 @@ button {
 */
 
 header {
-  color:#111;
+  color: var(--color-dark);
   padding: 2rem 0;
   background-color: var(--color-light);
   box-shadow: var(--boxShadow);
@@ -296,6 +248,53 @@ header .displayContainer {
 .header__buttons {
   text-align: right;
   position: relative;
+}
+
+.header__buttons .displaySettings__label {
+  padding: 10px;
+}
+
+/* 
+================================================================================ HEADER > MENU
+*/
+.menu {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border: 2px solid var(--color-dark);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+@media (max-width: 480px) {
+  .menu {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+.dark .menu {
+  background-color: var(--color-dark);
+  color: var(--color-lightgrey);
+  border-color: var(--color-lightgrey);
+
+}
+
+.menu .themeToggle__label {
+  padding: 5px;
+}
+
+.menu .themeToggle__label span { 
+  margin-left: 5px;
+}
+.menu > *:not(:last-child) {
+  margin-bottom: 20px;
 }
 
 /* 
@@ -340,11 +339,10 @@ main { padding: 2rem 0 12rem; }
 .taskBoard__filterInput:checked + label,
 .taskBoard__filterInput:checked:hover + label { 
   opacity: 1; 
-  border-color: var(--color-dark);
 }
 
 .taskBoard__filterInput:hover + label { 
-  border-color: transparent; 
+  border-color: transparent;
   opacity: 1;
 }
 
@@ -518,7 +516,6 @@ main { padding: 2rem 0 12rem; }
 
 .dark .taskList__header .taskList__menuBtn--active { 
   background-color: var(--color-lightgrey); 
-  /* color: var(--color-); */
 }
 
 /* 
@@ -555,7 +552,6 @@ main { padding: 2rem 0 12rem; }
 
 .taskItem__text:hover { cursor: pointer; }
 
-/* rgb(30, 55, 153) */
 .taskItem--open { box-shadow: 0 2px 3px var(--color-red-a); }
 .dark .taskItem--open { box-shadow: 0 2px 3px var(--color-lightred-a); }
 
@@ -572,12 +568,11 @@ main { padding: 2rem 0 12rem; }
   position: absolute;
   top: 0;
   bottom: 0;
-  /* color: var(--color-dark); */
   transition: background-color 0.3s;
   color: inherit;
 }
 
-.taskItem__btn:hover { background-color: #CCC; }
+.taskItem__btn:hover { background-color: var(--color-lightgrey-2); }
 .dark .taskItem__btn:hover { color: var(--color-dark); }
 
 .taskItem__btn--prev {
@@ -612,8 +607,8 @@ main { padding: 2rem 0 12rem; }
 }
 
 .dark .taskForm__input {
-  color: var(--color-darkgrey);
-  background-color: var(--color-lightgrey);
+  color: var(--color-lightgrey);
+  background-color: var(--color-darkgrey);
 }
 
 /* 

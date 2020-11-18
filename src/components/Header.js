@@ -2,13 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import Settings from './Settings';
+import Menu from './Menu';
 
 const Header = () => {
-  const [ displaySettings, setDisplaySettings ] = useState(false);
+  const [ displayMenu, setDisplayMenu ] = useState(false);
 
-  const openSettings = () => { setDisplaySettings(true);}
-  const closeSettings = () => { setDisplaySettings(false);}
+  const toggleMenu = () => { setDisplayMenu(!displayMenu)}
 
   return (  
     <header>
@@ -18,14 +17,16 @@ const Header = () => {
           <p>Add and track tasks to increase productivity!</p>
         </div>
         <div className="header__buttons">
-            <h2 onClick={displaySettings ? closeSettings : openSettings}>
-              <span>Settings </span>
-              <FontAwesomeIcon icon={faChevronDown} />
-            </h2>
+          
+          <button className="btn btn--toggleMenu" onClick={toggleMenu} >
+            <span>Menu </span>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </button>
+
           {
-            displaySettings
+            displayMenu
             &&
-            <Settings />
+            <Menu />
           }
           
         </div>
