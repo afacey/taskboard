@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 
-const Footer = () => (
+const Footer: React.FunctionComponent = () => (
   <footer>
     <div className="wrapper displayContainer">
       <p>Copyright 2020</p> 

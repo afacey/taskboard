@@ -1,14 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 import Settings from './Settings';
 
-const Header = () => {
-  const [ displaySettings, setDisplaySettings ] = useState(false);
-
-  const openSettings = () => { setDisplaySettings(true);}
-  const closeSettings = () => { setDisplaySettings(false);}
+const Header: React.FunctionComponent = (): JSX.Element => {
+  const [ displaySettings, setDisplaySettings ] = React.useState<boolean>(false);
 
   return (  
     <header>
@@ -18,7 +14,7 @@ const Header = () => {
           <p>Add and track tasks to increase productivity!</p>
         </div>
         <div className="header__buttons">
-            <h2 onClick={displaySettings ? closeSettings : openSettings}>
+            <h2 onClick={() => setDisplaySettings(prevValue => !prevValue)}>
               <span>Settings </span>
               <FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} />
             </h2>

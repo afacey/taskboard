@@ -1,26 +1,42 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import * as React from 'react';
 import { retrieveTaskItems } from '../firebase';
-import { UserContext } from './UserContext';
+import { UserContext, UserContextData } from './UserContext';
+import {Task, TaskStatus} from '../types/task';
 
-export const TasksContext = React.createContext();
+interface TasksContextData {
+  taskStatus: TaskStatus[];
+  taskItems: Task[];
+  numOfTasks: number;
+  loadComplete: boolean;
+  searchTerms: string;
+  setSearchItems: (searchItems: Task[]) => void;
+  setSearchTerms: (searchTerms: string) => void;
+  setListFilter: (filter: TaskStatus | "all") =>void;
+}
 
-const TasksProvider = ({children}) => {
-  const [ loadComplete, setLoadComplete ] = useState(false); 
-  const [ taskItems, setTaskItems ] = useState([]);
-  const { user: { dbRef }, checkForUser } = useContext(UserContext);
+export const TasksContext = React.createContext<Partial<TasksContextData>>({});
 
-  const [ listFilter, setListFilter ] = useState("all");
+const TasksProvider: React.FunctionComponent = ({children}) => {
+  const [ loadComplete, setLoadComplete ] = React.useState<boolean>(false); 
+  const [ taskItems, setTaskItems ] = React.useState<Task[]>([]);
+  const { user, checkForUser } = React.useContext<Partial<UserContextData>>(UserContext);
 
-  const [ searchTerms, setSearchTerms ] = useState("");
-  const [ searchItems, setSearchItems ] = useState([]);
+  const [ listFilter, setListFilter ] = React.useState<"all" | TaskStatus>("all");
 
-  const taskStatus = ['open', 'inProgress', 'complete'];
+  const [ searchTerms, setSearchTerms ] = React.useState("");
+  const [ searchItems, setSearchItems ] = React.useState<Task[]>([]);
+
+  const taskStatus: TaskStatus[] = ['open', 'inProgress', 'complete'];
 
   // --------------------------- retrieveTaskItems
-  const fetchTasks = useCallback(() => retrieveTaskItems(dbRef, setTaskItems), [dbRef])  
+  const fetchTasks = React.useCallback(() => {
+    if (user && user.dbRef) {
+      retrieveTaskItems(user.dbRef, setTaskItems)
+    }
+  }, [user])  
 
   // retreive tasks once userCheck is true
-  useEffect(function fetchTasksAfterUserCheck() {
+  React.useEffect(function fetchTasksAfterUserCheck() {
     if (!checkForUser) {
       fetchTasks();
       setLoadComplete(true);
@@ -43,7 +59,7 @@ const TasksProvider = ({children}) => {
       }
     }
   // filter tasks from search terms
-  useEffect(handleSearch, [searchTerms, taskItems])
+  React.useEffect(handleSearch, [searchTerms, taskItems])
   
 
   // if there are search terms, display the filtered searchItems, otherwise show all taskItems
