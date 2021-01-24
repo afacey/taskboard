@@ -1,9 +1,14 @@
 import * as React from 'react'
 
-export const ThemeContext = React.createContext({})
+interface ThemeContextData {
+  theme: string;
+  setTheme: (theme: string) => void;
+}
+
+export const ThemeContext = React.createContext<Partial<ThemeContextData>>({})
 
 const ThemeProvider: React.FunctionComponent = ({children}) => {
-  const [ theme, setTheme ] = React.useState("");
+  const [ theme, setTheme ] = React.useState<string>("");
   const value = {
     theme,
     setTheme

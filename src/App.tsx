@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from './contexts/ThemeContext.js';
-import Header from './components/Header.js';
-import TaskBoardMenu from './components/TaskBoardMenu.js';
-import TaskLists from './components/TaskLists.js';
-import Footer from './components/Footer.js';
+import { ThemeContext } from './contexts/ThemeContext';
+import Header from './components/Header';
+import TaskBoardMenu from './components/TaskBoardMenu';
+import TaskLists from './components/TaskLists';
+import Footer from './components/Footer';
 import './App.css';
 
 const App = () => {

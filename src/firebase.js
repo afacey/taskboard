@@ -1,7 +1,7 @@
 // firebase.js
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth';
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
 
 // *** USE YOUR CONFIG OBJECT ***
 // Initialize Firebase
@@ -12,62 +12,67 @@ const firebaseConfig = {
   projectId: "taskboard-drethedev",
   storageBucket: "taskboard-drethedev.appspot.com",
   messagingSenderId: "868447749524",
-  appId: "1:868447749524:web:bc280f2ee21da6c3fe7b81"
+  appId: "1:868447749524:web:bc280f2ee21da6c3fe7b81",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 // --------------------------- addTask
 export const addTask = (dbRef, newTask) => {
-  console.log('add task called');
   firebase.database().ref(dbRef).push(newTask);
-}
+};
 
 // --------------------------- updateTask
-export const updateTask = (dbRef, key, newValue) => firebase.database().ref(dbRef + key).update({task: newValue});
+export const updateTask = (dbRef, key, newValue) =>
+  firebase
+    .database()
+    .ref(dbRef + key)
+    .update({ task: newValue });
 
 // --------------------------- removeTask
-export const removeTask = (dbRef, key) => firebase.database().ref(dbRef).child(key).remove();
-
+export const removeTask = (dbRef, key) =>
+  firebase.database().ref(dbRef).child(key).remove();
 
 // --------------------------- moveTask
-export const moveTask = (dbRef, status) => { firebase.database().ref(dbRef).update({status}) }
+export const moveTask = (dbRef, status) => {
+  firebase.database().ref(dbRef).update({ status });
+};
 
 // --------------------------- clearTaskList
 export const clearTaskList = (dbRef, taskListItems) => {
   // pass an object of keys with null values to clear multiple items
   firebase.database().ref(dbRef).update(taskListItems);
-}
+};
 
-  // --------------------------- clearTaskboard
+// --------------------------- clearTaskboard
 export const clearTaskboard = (dbRef) => {
-    // remove all items in firebase
-    firebase.database().ref(dbRef).remove();
-  }
-
+  // remove all items in firebase
+  firebase.database().ref(dbRef).remove();
+};
 
 export const retrieveTaskItems = (dbRef, setTaskItems) => {
   // listener for any value change on the db reference
-  firebase.database().ref(dbRef).on('value', response => {
-    const tasksData = response.val();
-    
-    // create empty array to store data retrieved from db later
-    const taskItems = [];
-    for (const key in tasksData) {
-      const taskItem = {
-        key: key,
-        task: tasksData[key].task,
-        status: tasksData[key].status
+  firebase
+    .database()
+    .ref(dbRef)
+    .on("value", (response) => {
+      const tasksData = response.val();
+
+      // create empty array to store data retrieved from db later
+      const taskItems = [];
+      for (const key in tasksData) {
+        const taskItem = {
+          key: key,
+          task: tasksData[key].task,
+          status: tasksData[key].status,
+        };
+        taskItems.push(taskItem);
       }
-      taskItems.push(taskItem);
-    }
-    
-    // update state with the taskItems retrieved from the database
-    setTaskItems(taskItems)
-  })
-}
 
-
+      // update state with the taskItems retrieved from the database
+      setTaskItems(taskItems);
+    });
+};
 
 // this exports the CONFIGURED version of firebase
 export default firebase;

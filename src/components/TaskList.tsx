@@ -6,7 +6,18 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { clearTaskList } from "../firebase.js";
 import { UserContext } from "../contexts/UserContext";
 
-const TaskList = ({ status, tasks }) => {
+import { Task, TaskStatus } from '../types/task'
+
+interface TaskListProps {
+  status: TaskStatus;
+  tasks: Task[];
+}
+
+interface deleteList {
+  [prop: string]: null
+}
+
+const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
   const [isStaging, setIsStaging] = useState(false);
   const [menuEnabled, setMenuEnabled] = useState(false);
 
@@ -27,12 +38,12 @@ const TaskList = ({ status, tasks }) => {
   // --------------------------- handleClearList
   const handleClearList = () => {
     // if task lst has items
-    if (tasks.length) {
+    if (user && tasks.length) {
       // filter out the full task items list to those with the status of the task list
       const taskListItems = tasks
         .filter((task) => task.status === status)
         // create an object with the keys of the task list items with a null value
-        .reduce((deleteList, taskItem) => {
+        .reduce((deleteList: deleteList, taskItem) => {
           deleteList[taskItem.key] = null;
           return deleteList;
         }, {});
@@ -89,7 +100,7 @@ const TaskList = ({ status, tasks }) => {
                 id={`taskListAddBtn--${status}`}
                 onClick={toggleTaskStaging}
                 className={`btn taskList__addBtn`}
-                disabled={isStaging ? "disabled" : ""}
+                disabled={isStaging}
               >
                 + Task
               </button>
@@ -103,7 +114,7 @@ const TaskList = ({ status, tasks }) => {
                 id={`taskListClearBtn--${status}`}
                 onClick={handleClearList}
                 className={`btn btn--black taskList__clearBtn`}
-                disabled={tasks.length ? "" : "disabled"}
+                disabled={tasks.length === 0}
               >
                 Clear List
               </button>
