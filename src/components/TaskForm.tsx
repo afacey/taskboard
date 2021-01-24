@@ -1,9 +1,18 @@
-import React, { useContext, useState, useEffect } from 'react';
+import * as React from 'react';
+import { useContext, useState, useEffect } from 'react';
 import autosize from 'autosize';
-import {UserContext} from './../contexts/UserContext';
-import { addTask, removeTask, updateTask } from './../firebase';
+import {UserContext} from '../contexts/UserContext';
+import { addTask, removeTask, updateTask } from '../firebase';
 
-const TaskForm = props => {
+interface TaskFormProps {
+  id: string;
+  type: string;
+  taskValue: string;
+  setIsStaging: (isStaging: boolean) => void;
+  setIsEditing: (isEditing: boolean) => void;
+}
+
+const TaskForm: React.FC<TaskFormProps> = (props) => {
   const { id, type, taskValue, setIsStaging, setIsEditing } = props;
   // const { id, type, handleSubmit, handleBlur, handleChange, handleClear, taskValue, removeTask } = props;
   const {user} = useContext(UserContext);
@@ -11,7 +20,7 @@ const TaskForm = props => {
 
     // --------------------------- useEffect
     useEffect(() => {
-      const textInput = document.querySelector(`#taskFormInput_${id}`);
+      const textInput = document.querySelector(`#taskFormInput_${id}`) as HTMLInputElement;
   
       // only go to the end of the text if the input is not already focused
       if (textInput && textInput !== document.activeElement) {
@@ -27,7 +36,7 @@ const TaskForm = props => {
       }
     })
 
-    const handleBlur = (evt) => {
+    const handleBlur = (evt: React.SyntheticEvent) => {
       // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
       const currentTarget = evt.currentTarget;
   
@@ -41,28 +50,37 @@ const TaskForm = props => {
       }, 5);
     }
 
-  const handleTaskInputChange = (evt) => {
+  const handleTaskInputChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTaskInput(evt.target.value);
   }
 
   const handleClear = () => setTaskInput("");
 
-  const handleAddTask = (e) => { 
-    e.preventDefault();
+  const handleAddTask = (evt: React.SyntheticEvent) => { 
+    evt.preventDefault();
     const newTask = {
       task: taskInput,
       status: id
     }
-    addTask(user.dbRef, newTask); 
-    setIsStaging(false);
+
+    if (user) {
+      addTask(user.dbRef, newTask); 
+      setIsStaging(false);
+    }
   }
 
-  const handleRemoveTask = () => { removeTask(user.dbRef, id); }
+  const handleRemoveTask = () => { 
+    if (user) {
+      removeTask(user.dbRef, id); 
+    }
+  }
   
-  const handleUpdateTask = (e) => { 
-    e.preventDefault();
-    updateTask(user.dbRef, id, taskInput); 
-    setIsEditing(false);
+  const handleUpdateTask = (evt: React.SyntheticEvent) => { 
+    evt.preventDefault();
+    if (user) {
+      updateTask(user.dbRef, id, taskInput); 
+      setIsEditing(false);
+    }
   }
 
   return (
@@ -93,7 +111,7 @@ const TaskForm = props => {
         
         {/* Save task button */}
         <label htmlFor={`taskBtn__save--${id}`} className="srOnly">Save task input</label>
-        <button id={`taskBtn__save--${id}`} className="btn btn--green" disabled={taskInput ? "" : "disabled"}>{type === 'edit' ? 'Save' : 'Add'}</button>
+        <button id={`taskBtn__save--${id}`} className="btn btn--green" disabled={taskInput.length === 0}>{type === 'edit' ? 'Save' : 'Add'}</button>
         
       </form>  
     </>

@@ -9,7 +9,8 @@ export const ThemeContext = React.createContext<Partial<ThemeContextData>>({})
 
 const ThemeProvider: React.FunctionComponent = ({children}) => {
   const [ theme, setTheme ] = React.useState<string>("");
-  const value = {
+  
+  const value: ThemeContextData = {
     theme,
     setTheme
   }

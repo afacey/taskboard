@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/autosize": "^3.0.7",
     "typescript": "^3.9.7"
   }
 }

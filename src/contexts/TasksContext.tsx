@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { retrieveTaskItems } from '../firebase';
 import { UserContext, UserContextData } from './UserContext';
-import {Task, TaskStatus} from '../types/task';
+import {Task, TaskStatus, TaskListFilter} from '../types/task';
 
 interface TasksContextData {
   taskStatus: TaskStatus[];
@@ -11,7 +11,7 @@ interface TasksContextData {
   searchTerms: string;
   setSearchItems: (searchItems: Task[]) => void;
   setSearchTerms: (searchTerms: string) => void;
-  setListFilter: (filter: TaskStatus | "all") =>void;
+  setListFilter: (filter: TaskListFilter) => void;
 }
 
 export const TasksContext = React.createContext<Partial<TasksContextData>>({});
@@ -21,7 +21,7 @@ const TasksProvider: React.FunctionComponent = ({children}) => {
   const [ taskItems, setTaskItems ] = React.useState<Task[]>([]);
   const { user, checkForUser } = React.useContext<Partial<UserContextData>>(UserContext);
 
-  const [ listFilter, setListFilter ] = React.useState<"all" | TaskStatus>("all");
+  const [ listFilter, setListFilter ] = React.useState<TaskListFilter>("all");
 
   const [ searchTerms, setSearchTerms ] = React.useState("");
   const [ searchItems, setSearchItems ] = React.useState<Task[]>([]);

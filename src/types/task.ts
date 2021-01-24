@@ -6,3 +6,5 @@ export interface Task {
 }
 
 export type TaskStatus = "open" | "inProgress" | "complete";
+
+export type TaskListFilter = "all" | TaskStatus;
