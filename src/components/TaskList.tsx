@@ -3,7 +3,7 @@ import TaskItem from "./TaskItem";
 import TaskForm from "./TaskForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { clearTaskList } from "../firebase.js";
+import { clearTaskList } from "../firebase";
 import { UserContext } from "../contexts/UserContext";
 
 import { Task, TaskStatus, TaskDeleteList } from '../types/task'
@@ -12,10 +12,6 @@ interface TaskListProps {
   status: TaskStatus;
   tasks: Task[];
 }
-
-// interface deleteList {
-//   [prop: string]: null
-// }
 
 const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
   const [isStaging, setIsStaging] = useState(false);
@@ -139,7 +135,6 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
               id={key}
               task={task}
               status={status}
-              // moveTask={moveTask}
             />
           ))
         }

@@ -16,7 +16,7 @@ const Header: React.FunctionComponent = (): JSX.Element => {
         <div className="header__buttons">
             <h2 onClick={() => setDisplaySettings(prevValue => !prevValue)}>
               <span>Settings </span>
-              <FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} />
+              <span className="header__menuToggleIcon"><FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} /></span>
             </h2>
           {
             displaySettings

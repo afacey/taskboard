@@ -130,7 +130,6 @@ const TaskItem: React.FunctionComponent<TaskItemProps> = ({ id, task, status }) 
       }
     </li>
   );
-  // }
 };
 
 export default TaskItem;

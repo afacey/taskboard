@@ -9,8 +9,6 @@ interface TaskFormProps {
   type: "edit" | "staging";
   taskValue?: string;
   formToggler: (toggler: boolean) => void;
-  // setIsStaging?: (isStaging: boolean) => void;
-  // setIsEditing?: (isEditing: boolean) => void;
 }
 
 const TaskForm: React.FC<TaskFormProps> = (props) => {
@@ -45,7 +43,6 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
         // Check if the new activeElement is a child of the original container
         if (!currentTarget.contains(document.activeElement)) {
           // if new focused element is not contained in the form ... toggle out of staging a task
-          // type === "edit" ? setIsEditing(false) : setIsStaging(false);
           formToggler(false)
         }
       }, 5);
