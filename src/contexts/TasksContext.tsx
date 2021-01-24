@@ -16,7 +16,7 @@ interface TasksContextData {
 
 export const TasksContext = React.createContext<Partial<TasksContextData>>({});
 
-const TasksProvider: React.FunctionComponent = ({children}) => {
+const TasksProvider: React.FC = ({children}) => {
   const [ loadComplete, setLoadComplete ] = React.useState<boolean>(false); 
   const [ taskItems, setTaskItems ] = React.useState<Task[]>([]);
   const { user, checkForUser } = React.useContext<Partial<UserContextData>>(UserContext);

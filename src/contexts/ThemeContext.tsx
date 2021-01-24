@@ -7,7 +7,7 @@ interface ThemeContextData {
 
 export const ThemeContext = React.createContext<Partial<ThemeContextData>>({})
 
-const ThemeProvider: React.FunctionComponent = ({children}) => {
+const ThemeProvider: React.FC = ({children}) => {
   const [ theme, setTheme ] = React.useState<string>("");
   
   const value: ThemeContextData = {

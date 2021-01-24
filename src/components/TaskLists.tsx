@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TasksContext } from '../contexts/TasksContext';
 import TaskList from './TaskList';
 
-const TaskLists: React.FunctionComponent = () => {
+const TaskLists: React.FC = () => {
   const { taskItems, taskStatus } = React.useContext(TasksContext);
 
   return (

@@ -19,7 +19,7 @@ interface TaskItemProps {
   status: TaskStatus
 }
 
-const TaskItem: React.FunctionComponent<TaskItemProps> = ({ id, task, status }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useContext(UserContext);
   const { taskStatus } = useContext(TasksContext);
@@ -56,7 +56,7 @@ const TaskItem: React.FunctionComponent<TaskItemProps> = ({ id, task, status }) 
   // --------------------------- toggleEdit
   // check if taskFormInput has a value (not cleared by user)
   const toggleEdit = () => {
-    setIsEditing(!isEditing);
+    setIsEditing(isEditing => !isEditing);
   };
 
   // --------------------------- return
@@ -103,7 +103,7 @@ const TaskItem: React.FunctionComponent<TaskItemProps> = ({ id, task, status }) 
             id={id}
             type="edit"
             taskValue={task}
-            formToggler={setIsEditing}
+            closeForm={toggleEdit}
           />
         )
       }

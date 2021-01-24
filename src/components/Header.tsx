@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Settings from './Settings';
 
-const Header: React.FunctionComponent = (): JSX.Element => {
-  const [ displaySettings, setDisplaySettings ] = React.useState<boolean>(false);
+const Header: React.FC = () => {
+  const [ openSettingsMenu, setOpenSettingsMenu ] = React.useState<boolean>(false);
 
   return (  
     <header>
@@ -14,12 +14,12 @@ const Header: React.FunctionComponent = (): JSX.Element => {
           <p>Add and track tasks to increase productivity!</p>
         </div>
         <div className="header__buttons">
-            <h2 onClick={() => setDisplaySettings(prevValue => !prevValue)}>
+            <h2 onClick={() => setOpenSettingsMenu(openSettingsMenu => !openSettingsMenu)}>
               <span>Settings </span>
-              <span className="header__menuToggleIcon"><FontAwesomeIcon icon={displaySettings ? faTimes : faChevronDown} /></span>
+              <span className="header__menuToggleIcon"><FontAwesomeIcon icon={openSettingsMenu ? faTimes : faChevronDown} /></span>
             </h2>
           {
-            displaySettings
+            openSettingsMenu
             &&
             <Settings />
           }

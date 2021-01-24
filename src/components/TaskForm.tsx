@@ -8,17 +8,17 @@ interface TaskFormProps {
   id: TaskStatus | string;
   type: "edit" | "staging";
   taskValue?: string;
-  formToggler: (toggler: boolean) => void;
+  closeForm: () => void;
 }
 
 const TaskForm: React.FC<TaskFormProps> = (props) => {
-  const { id, type, taskValue, formToggler } = props;
+  const { id, type, taskValue, closeForm } = props;
   const {user} = useContext(UserContext);
   const [ taskInput, setTaskInput ] = useState(taskValue || "")
 
     // --------------------------- useEffect
     useEffect(() => {
-      const textInput = document.querySelector(`#taskFormInput_${id}`) as HTMLInputElement;
+      const textInput = document.querySelector(`#taskFormInput_${id}`) as HTMLTextAreaElement;
   
       // only go to the end of the text if the input is not already focused
       if (textInput && textInput !== document.activeElement) {
@@ -43,7 +43,7 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
         // Check if the new activeElement is a child of the original container
         if (!currentTarget.contains(document.activeElement)) {
           // if new focused element is not contained in the form ... toggle out of staging a task
-          formToggler(false)
+          closeForm()
         }
       }, 5);
     }
@@ -63,13 +63,14 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
 
     if (user) {
       addTask(user.dbRef, newTask); 
-      formToggler(false);
+      closeForm()
     }
   }
 
   const handleRemoveTask = () => { 
     if (user) {
       removeTask(user.dbRef, id); 
+      closeForm()
     }
   }
   
@@ -77,7 +78,7 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
     evt.preventDefault();
     if (user) {
       updateTask(user.dbRef, id, taskInput); 
-      formToggler(false);
+      closeForm()
     }
   }
 

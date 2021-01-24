@@ -13,7 +13,7 @@ export interface UserContextData {
 
 export const UserContext = React.createContext<Partial<UserContextData>>({});
 
-const UserProvider: React.FunctionComponent = ({children}): JSX.Element => {
+const UserProvider: React.FC = ({children}) => {
   const [ user, setUser ] = React.useState<User>({dbRef: "public/", loggedIn: false});
   const [ checkForUser, setCheckForUser ] = React.useState<boolean>(true); 
 

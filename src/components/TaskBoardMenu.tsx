@@ -4,7 +4,7 @@ import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TasksContext } from '../contexts/TasksContext';
 import {TaskListFilter} from "../types/task"
 
-const TaskBoardMenu = () => {
+const TaskBoardMenu: React.FC = () => {
   const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = React.useContext(TasksContext);
 
   const changeListFilter = (filter: TaskListFilter) => {

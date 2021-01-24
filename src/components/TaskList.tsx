@@ -27,9 +27,9 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
   };
 
   // --------------------------- toggleMenuEnabled
-  const toggleMenuEnabled = () => setMenuEnabled(!menuEnabled);
+  const toggleMenuEnabled = () => setMenuEnabled(menuEnabled => !menuEnabled);
 
-  const toggleTaskStaging = () => setIsStaging(!isStaging);
+  const toggleTaskStaging = () => setIsStaging(isStaging => !isStaging);
 
   // --------------------------- handleClearList
   const handleClearList = () => {
@@ -123,7 +123,7 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
           // render a TaskForm to add a new task for the task list
           isStaging && (
             <li className={`taskItem taskItem--${status}`}>
-              <TaskForm type="staging" id={status} formToggler={setIsStaging} />
+              <TaskForm type="staging" id={status} closeForm={toggleTaskStaging} />
             </li>
           )
         }
