@@ -10,6 +10,11 @@ object-assign
 	http://www.jacklmoore.com/autosize
 */
 
+/*!
+ * Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -100,7 +105,7 @@ and limitations under the License.
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -109,7 +114,7 @@ and limitations under the License.
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v16.13.1
+/** @license React v16.14.0
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
