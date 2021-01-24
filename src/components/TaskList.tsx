@@ -6,16 +6,16 @@ import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { clearTaskList } from "../firebase.js";
 import { UserContext } from "../contexts/UserContext";
 
-import { Task, TaskStatus } from '../types/task'
+import { Task, TaskStatus, TaskDeleteList } from '../types/task'
 
 interface TaskListProps {
   status: TaskStatus;
   tasks: Task[];
 }
 
-interface deleteList {
-  [prop: string]: null
-}
+// interface deleteList {
+//   [prop: string]: null
+// }
 
 const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
   const [isStaging, setIsStaging] = useState(false);
@@ -43,7 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
       const taskListItems = tasks
         .filter((task) => task.status === status)
         // create an object with the keys of the task list items with a null value
-        .reduce((deleteList: deleteList, taskItem) => {
+        .reduce((deleteList: TaskDeleteList, taskItem) => {
           deleteList[taskItem.key] = null;
           return deleteList;
         }, {});
@@ -127,7 +127,7 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
           // render a TaskForm to add a new task for the task list
           isStaging && (
             <li className={`taskItem taskItem--${status}`}>
-              <TaskForm id={status} setIsStaging={setIsStaging} />
+              <TaskForm type="staging" id={status} formToggler={setIsStaging} />
             </li>
           )
         }

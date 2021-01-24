@@ -3,18 +3,18 @@ import { useContext, useState, useEffect } from 'react';
 import autosize from 'autosize';
 import {UserContext} from '../contexts/UserContext';
 import { addTask, removeTask, updateTask } from '../firebase';
-
+import { NewTask, TaskStatus } from '../types/task'
 interface TaskFormProps {
-  id: string;
-  type: string;
-  taskValue: string;
-  setIsStaging: (isStaging: boolean) => void;
-  setIsEditing: (isEditing: boolean) => void;
+  id: TaskStatus | string;
+  type: "edit" | "staging";
+  taskValue?: string;
+  formToggler: (toggler: boolean) => void;
+  // setIsStaging?: (isStaging: boolean) => void;
+  // setIsEditing?: (isEditing: boolean) => void;
 }
 
 const TaskForm: React.FC<TaskFormProps> = (props) => {
-  const { id, type, taskValue, setIsStaging, setIsEditing } = props;
-  // const { id, type, handleSubmit, handleBlur, handleChange, handleClear, taskValue, removeTask } = props;
+  const { id, type, taskValue, formToggler } = props;
   const {user} = useContext(UserContext);
   const [ taskInput, setTaskInput ] = useState(taskValue || "")
 
@@ -45,7 +45,8 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
         // Check if the new activeElement is a child of the original container
         if (!currentTarget.contains(document.activeElement)) {
           // if new focused element is not contained in the form ... toggle out of staging a task
-          type === "edit" ? setIsEditing(false) : setIsStaging(false);
+          // type === "edit" ? setIsEditing(false) : setIsStaging(false);
+          formToggler(false)
         }
       }, 5);
     }
@@ -58,14 +59,14 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
 
   const handleAddTask = (evt: React.SyntheticEvent) => { 
     evt.preventDefault();
-    const newTask = {
+    const newTask: NewTask = {
       task: taskInput,
-      status: id
+      status: id as TaskStatus
     }
 
     if (user) {
       addTask(user.dbRef, newTask); 
-      setIsStaging(false);
+      formToggler(false);
     }
   }
 
@@ -79,7 +80,7 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
     evt.preventDefault();
     if (user) {
       updateTask(user.dbRef, id, taskInput); 
-      setIsEditing(false);
+      formToggler(false);
     }
   }
 

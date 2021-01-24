@@ -3,6 +3,8 @@ import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
+import { Task, NewTask, TaskStatus, TaskDeleteList } from "./types/task";
+
 // *** USE YOUR CONFIG OBJECT ***
 // Initialize Firebase
 const firebaseConfig = {
@@ -18,39 +20,39 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // --------------------------- addTask
-export const addTask = (dbRef, newTask) => {
+export const addTask = (dbRef: string, newTask: NewTask) => {
   firebase.database().ref(dbRef).push(newTask);
 };
 
 // --------------------------- updateTask
-export const updateTask = (dbRef, key, newValue) =>
+export const updateTask = (dbRef: string, key: string, newValue: string) =>
   firebase
     .database()
     .ref(dbRef + key)
     .update({ task: newValue });
 
 // --------------------------- removeTask
-export const removeTask = (dbRef, key) =>
+export const removeTask = (dbRef: string, key: string) =>
   firebase.database().ref(dbRef).child(key).remove();
 
 // --------------------------- moveTask
-export const moveTask = (dbRef, status) => {
+export const moveTask = (dbRef: string, status: TaskStatus) => {
   firebase.database().ref(dbRef).update({ status });
 };
 
 // --------------------------- clearTaskList
-export const clearTaskList = (dbRef, taskListItems) => {
+export const clearTaskList = (dbRef: string, taskListItems: TaskDeleteList) => {
   // pass an object of keys with null values to clear multiple items
   firebase.database().ref(dbRef).update(taskListItems);
 };
 
 // --------------------------- clearTaskboard
-export const clearTaskboard = (dbRef) => {
+export const clearTaskboard = (dbRef: string) => {
   // remove all items in firebase
   firebase.database().ref(dbRef).remove();
 };
 
-export const retrieveTaskItems = (dbRef, setTaskItems) => {
+export const retrieveTaskItems = (dbRef: string, setTaskItems: (taskItems: Task[]) => void) => {
   // listener for any value change on the db reference
   firebase
     .database()
@@ -59,9 +61,9 @@ export const retrieveTaskItems = (dbRef, setTaskItems) => {
       const tasksData = response.val();
 
       // create empty array to store data retrieved from db later
-      const taskItems = [];
+      const taskItems: Task[] = [];
       for (const key in tasksData) {
-        const taskItem = {
+        const taskItem: Task = {
           key: key,
           task: tasksData[key].task,
           status: tasksData[key].status,

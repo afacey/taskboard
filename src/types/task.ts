@@ -1,6 +1,11 @@
 export interface Task {
-  id: string;
+  id?: string;
   key: string;
+  status: TaskStatus;
+  task: string;
+}
+
+export interface NewTask {
   status: TaskStatus;
   task: string;
 }
@@ -8,3 +13,7 @@ export interface Task {
 export type TaskStatus = "open" | "inProgress" | "complete";
 
 export type TaskListFilter = "all" | TaskStatus;
+
+export interface TaskDeleteList {
+  [prop: string]: null
+}

@@ -9,11 +9,17 @@ import { UserContext } from "../contexts/UserContext";
 import { moveTask } from "../firebase";
 import { TasksContext } from "../contexts/TasksContext";
 
-import { Task } from "../types/task"
+import { TaskStatus } from "../types/task"
 
 type Direction = -1 | 1;
 
-const TaskItem: React.FunctionComponent<Task> = ({ id, task, status }) => {
+interface TaskItemProps {
+  id: string;
+  task: string;
+  status: TaskStatus
+}
+
+const TaskItem: React.FunctionComponent<TaskItemProps> = ({ id, task, status }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useContext(UserContext);
   const { taskStatus } = useContext(TasksContext);
@@ -97,7 +103,7 @@ const TaskItem: React.FunctionComponent<Task> = ({ id, task, status }) => {
             id={id}
             type="edit"
             taskValue={task}
-            setIsEditing={setIsEditing}
+            formToggler={setIsEditing}
           />
         )
       }
