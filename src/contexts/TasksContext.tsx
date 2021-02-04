@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useContext, createContext, useEffect, useCallback } from 'react';
 import { retrieveTaskItems } from '../firebase';
 import { UserContext, UserContextData } from './UserContext';
 import {Task, TaskStatus, TaskListFilter} from '../types/task';
@@ -14,29 +14,29 @@ interface TasksContextData {
   setListFilter: (filter: TaskListFilter) => void;
 }
 
-export const TasksContext = React.createContext<Partial<TasksContextData>>({});
+export const TasksContext = createContext<Partial<TasksContextData>>({});
 
 const TasksProvider: React.FC = ({children}) => {
-  const [ loadComplete, setLoadComplete ] = React.useState<boolean>(false); 
-  const [ taskItems, setTaskItems ] = React.useState<Task[]>([]);
-  const { user, checkForUser } = React.useContext<Partial<UserContextData>>(UserContext);
+  const [ loadComplete, setLoadComplete ] = useState<boolean>(false); 
+  const [ taskItems, setTaskItems ] = useState<Task[]>([]);
+  const { user, checkForUser } = useContext<Partial<UserContextData>>(UserContext);
 
-  const [ listFilter, setListFilter ] = React.useState<TaskListFilter>("all");
+  const [ listFilter, setListFilter ] = useState<TaskListFilter>("all");
 
-  const [ searchTerms, setSearchTerms ] = React.useState("");
-  const [ searchItems, setSearchItems ] = React.useState<Task[]>([]);
+  const [ searchTerms, setSearchTerms ] = useState("");
+  const [ searchItems, setSearchItems ] = useState<Task[]>([]);
 
   const taskStatus: TaskStatus[] = ['open', 'inProgress', 'complete'];
 
   // --------------------------- retrieveTaskItems
-  const fetchTasks = React.useCallback(() => {
+  const fetchTasks = useCallback(() => {
     if (user && user.dbRef) {
       retrieveTaskItems(user.dbRef, setTaskItems)
     }
   }, [user])  
 
   // retreive tasks once userCheck is true
-  React.useEffect(function fetchTasksAfterUserCheck() {
+  useEffect(function fetchTasksAfterUserCheck() {
     if (!checkForUser) {
       fetchTasks();
       setLoadComplete(true);
@@ -59,7 +59,7 @@ const TasksProvider: React.FC = ({children}) => {
       }
     }
   // filter tasks from search terms
-  React.useEffect(handleSearch, [searchTerms, taskItems])
+  useEffect(handleSearch, [searchTerms, taskItems])
   
 
   // if there are search terms, display the filtered searchItems, otherwise show all taskItems

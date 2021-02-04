@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import autosize from 'autosize';
 import {UserContext} from '../contexts/UserContext';
 import { addTask, removeTask, updateTask } from '../firebase';

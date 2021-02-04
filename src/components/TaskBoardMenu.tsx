@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TasksContext } from '../contexts/TasksContext';
 import {TaskListFilter} from "../types/task"
 
 const TaskBoardMenu: React.FC = () => {
-  const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = React.useContext(TasksContext);
+  const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = useContext(TasksContext);
 
   const changeListFilter = (filter: TaskListFilter) => {
       if (setListFilter) {

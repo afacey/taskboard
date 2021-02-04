@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { TasksContext } from '../contexts/TasksContext';
 import TaskList from './TaskList';
 
 const TaskLists: React.FC = () => {
-  const { taskItems, taskStatus } = React.useContext(TasksContext);
+  const { taskItems, taskStatus } = useContext(TasksContext);
 
   return (
     <section className="taskLists">

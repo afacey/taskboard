@@ -1,14 +1,14 @@
-import * as React from 'react'
+import React, { createContext, useState } from 'react'
 
 interface ThemeContextData {
   theme: string;
   setTheme: (theme: string) => void;
 }
 
-export const ThemeContext = React.createContext<Partial<ThemeContextData>>({})
+export const ThemeContext = createContext<Partial<ThemeContextData>>({})
 
 const ThemeProvider: React.FC = ({children}) => {
-  const [ theme, setTheme ] = React.useState<string>("");
+  const [ theme, setTheme ] = useState<string>("");
   
   const value: ThemeContextData = {
     theme,

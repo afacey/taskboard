@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Settings from './Settings';

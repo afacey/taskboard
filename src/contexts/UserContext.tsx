@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import firebase from '../firebase';
 import Swal from "sweetalert2";
 import { User } from "../types/user";
@@ -11,14 +11,14 @@ export interface UserContextData {
   logoutUser: () => void;
 }
 
-export const UserContext = React.createContext<Partial<UserContextData>>({});
+export const UserContext = createContext<Partial<UserContextData>>({});
 
 const UserProvider: React.FC = ({children}) => {
-  const [ user, setUser ] = React.useState<User>({dbRef: "public/", loggedIn: false});
-  const [ checkForUser, setCheckForUser ] = React.useState<boolean>(true); 
+  const [ user, setUser ] = useState<User>({dbRef: "public/", loggedIn: false});
+  const [ checkForUser, setCheckForUser ] = useState<boolean>(true); 
 
   // ------- check if there's a logged in user before retrieving any tasks
-  React.useEffect(function checkForAuthenticatedUser() {
+  useEffect(function checkForAuthenticatedUser() {
     // check if there is a current user
     firebase.auth().onAuthStateChanged((user) => {
       // if there is a user update state with the dbRef and loggedIn to true
