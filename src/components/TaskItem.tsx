@@ -59,7 +59,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
     setIsEditing(isEditing => !isEditing);
   };
 
-  // --------------------------- return
   return (
     <li className={`taskItem taskItem--${status}`}>
       {
@@ -103,7 +102,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
             id={id}
             type="edit"
             taskValue={task}
-            closeForm={toggleEdit}
+            closeForm={() => setIsEditing(false)}
           />
         )
       }

@@ -32,7 +32,7 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
         // set the input value
         textInput.value = taskInput;
       }
-    })
+    }, [id, taskInput])
 
     const handleBlur = (evt: React.SyntheticEvent) => {
       // implementation from https://gist.github.com/pstoica/4323d3e6e37e8a23dd59
@@ -69,8 +69,8 @@ const TaskForm: React.FC<TaskFormProps> = (props) => {
 
   const handleRemoveTask = () => { 
     if (user) {
-      removeTask(user.dbRef, id); 
       closeForm()
+      removeTask(user.dbRef, id); 
     }
   }
   
