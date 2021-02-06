@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TasksContext } from '../contexts/TasksContext';
 import {TaskListFilter} from "../types/task"
+import SearchBar from './SearchBar';
 
 const TaskBoardMenu: React.FC = () => {
-  const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = useContext(TasksContext);
+  const { setListFilter } = useContext(TasksContext);
+  // const { setListFilter, searchTerms, setSearchTerms, setSearchItems, numOfTasks } = useContext(TasksContext);
 
   const changeListFilter = (filter: TaskListFilter) => {
       if (setListFilter) {
@@ -14,20 +16,20 @@ const TaskBoardMenu: React.FC = () => {
 
   }
   // --------------------------- handleChange
-  const handleSearchInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    // call handleSearch if the input searchTerms input was changed and there are tasks
-    if (setSearchTerms && numOfTasks) {
-      // set seachTerms state to value, and then call this.handleSearch
-      setSearchTerms(evt.target.value);
-    }
-  }
+  // const handleSearchInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  //   // call handleSearch if the input searchTerms input was changed and there are tasks
+  //   if (setSearchTerms && numOfTasks) {
+  //     // set seachTerms state to value, and then call this.handleSearch
+  //     setSearchTerms(evt.target.value);
+  //   }
+  // }
 
-  const clearSearch = () => {
-    if (setSearchItems && setSearchTerms) {
-      setSearchTerms("");
-      setSearchItems([]);
-    }
-  }
+  // const clearSearch = () => {
+  //   if (setSearchItems && setSearchTerms) {
+  //     setSearchTerms("");
+  //     setSearchItems([]);
+  //   }
+  // }
 
   return(
     <section className="taskBoard__menu">
@@ -50,25 +52,7 @@ const TaskBoardMenu: React.FC = () => {
         </div>
       </fieldset>
 
-      {/* Task List Search Bar */}
-      <div className="inputContainer__searchBar">
-        <label htmlFor="searchTerms" className="srOnly">Search for task items</label>
-        <input className="taskBoard__searchBar" type="text" name="searchTerms" id="searchTerms" placeholder="search" onChange={handleSearchInput} value={searchTerms} />
-        {
-          // Check if the user has started a search
-          searchTerms ?
-          // Display button to clear the search terms
-          <>
-            <label htmlFor="searchBarBtn" className="srOnly">Button to clear the search terms</label>
-            <button id="searchBarBtn" className="taskBoard__searchBarBtn" onClick={clearSearch}>
-              <FontAwesomeIcon className="taskBoard__searchBarIcon--clear" icon={faTimes} aria-hidden="true"/>
-            </button>
-          </>
-          :
-          // Display search icon to visually indicate that tasks can be searched for
-          <FontAwesomeIcon className="taskBoard__searchBarIcon" icon={faSearch} aria-hidden="true"/>
-        }
-      </div>
+      <SearchBar />
 
     </section>
   )
