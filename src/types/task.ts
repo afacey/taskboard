@@ -12,7 +12,7 @@ export interface NewTask {
 
 export type TaskStatus = "open" | "inProgress" | "complete";
 
-export type TaskListFilter = "all" | TaskStatus;
+export type TaskStatusFilter = "all" | TaskStatus;
 
 export interface TaskDeleteList {
   [prop: string]: null

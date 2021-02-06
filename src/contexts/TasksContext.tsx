@@ -1,15 +1,16 @@
 import React, { useState, useContext, createContext, useEffect, useCallback } from 'react';
 import { retrieveTaskItems } from '../firebase';
 import { UserContext, UserContextData } from './UserContext';
-import {Task, TaskStatus, TaskListFilter} from '../types/task';
+import {Task, TaskStatus, TaskStatusFilter} from '../types/task';
 interface TasksContextData {
   taskStatus: TaskStatus[];
   taskItems: Task[];
   numOfTasks: number;
   loadComplete: boolean;
   searchTerms: string;
+  listFilter: TaskStatusFilter;
   setSearchTerms: (searchTerms: string) => void;
-  setListFilter: (filter: TaskListFilter) => void;
+  setListFilter: (filter: TaskStatusFilter) => void;
 }
 
 export const TasksContext = createContext<Partial<TasksContextData>>({});
@@ -19,8 +20,7 @@ const TasksProvider: React.FC = ({children}) => {
   const [ taskItems, setTaskItems ] = useState<Task[]>([]);
   const { user, checkForUser } = useContext<Partial<UserContextData>>(UserContext);
 
-  const [ listFilter, setListFilter ] = useState<TaskListFilter>("all");
-
+  const [ listFilter, setListFilter ] = useState<TaskStatusFilter>("all");
   const [ searchTerms, setSearchTerms ] = useState<string>("");
 
   const taskStatus: TaskStatus[] = ['open', 'inProgress', 'complete'];
@@ -40,17 +40,14 @@ const TasksProvider: React.FC = ({children}) => {
     }
 
   }, [checkForUser, fetchTasks])
-
-  // if a list has been filtered, only display items from that list
-  const lists = listFilter === 'all' ? taskStatus : [listFilter];
-
   
   const value = {
-    taskStatus: lists,
+    taskStatus,
     taskItems,
     numOfTasks: taskItems.length,
     loadComplete,
     searchTerms,
+    listFilter,
     setSearchTerms,
     setListFilter,
   }
