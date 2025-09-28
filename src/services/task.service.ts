@@ -1,7 +1,6 @@
+import { TaskServiceBaseUrl } from "../config";
 import { APIStatuses } from "../types/api.types";
 import { NewTask, Task, UpdateTaskRequest } from "../types/task";
-
-export const TaskServiceBaseUrl = "http://localhost:8080/tasks";
 
 export async function getAllTasks() {
   try {
