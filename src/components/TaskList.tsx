@@ -1,52 +1,40 @@
-import React, { useContext, useState } from "react";
-import TaskItem from "./TaskItem";
-import TaskForm from "./TaskForm";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { clearTaskList } from "../firebase";
-import { UserContext } from "../contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import TaskForm from "./TaskForm";
+import TaskItem from "./TaskItem";
 
-import { Task, TaskStatus, TaskDeleteList } from '../types/task'
+import { Task, TaskStatus, TaskStatusEnum } from "../types/task";
+import { useTasks } from "../contexts/TasksContext";
 
 interface TaskListProps {
   status: TaskStatus;
   tasks: Task[];
 }
 
-const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
+// heading text for task status lists
+const statusString = {
+  [TaskStatusEnum.Todo]: "Todo",
+  [TaskStatusEnum.InProgress]: "In Progress",
+  [TaskStatusEnum.Completed]: "Completed",
+};
+
+const TaskList: React.FC<TaskListProps> = ({ status, tasks }) => {
   const [isStaging, setIsStaging] = useState(false);
   const [menuEnabled, setMenuEnabled] = useState(false);
-
-  const { user } = useContext(UserContext);
-
-  // heading text for task status lists
-  const statusString = {
-    open: "Todo",
-    inProgress: "In Progress",
-    complete: "Completed",
-  };
+  const { removeManyTasks } = useTasks();
 
   // --------------------------- toggleMenuEnabled
-  const toggleMenuEnabled = () => setMenuEnabled(menuEnabled => !menuEnabled);
+  const toggleMenuEnabled = () => setMenuEnabled((menuEnabled) => !menuEnabled);
 
-  const toggleTaskStaging = () => setIsStaging(isStaging => !isStaging);
+  const toggleTaskStaging = () => setIsStaging((isStaging) => !isStaging);
 
   // --------------------------- handleClearList
-  const handleClearList = () => {
-    // if task lst has items
-    if (user && tasks.length) {
-      // filter out the full task items list to those with the status of the task list
-      const taskListItems = tasks
-        .filter((task) => task.status === status)
-        // create an object with the keys of the task list items with a null value
-        .reduce((deleteList: TaskDeleteList, taskItem) => {
-          deleteList[taskItem.key] = null;
-          return deleteList;
-        }, {});
-      // remove the filtered items from firebase
-      clearTaskList(user.dbRef, taskListItems);
-    }
-    // toggle tasklist menu to false
+  const handleClearList = async () => {
+    const taskIds = tasks.map((task) => task.id);
+
+    await removeManyTasks(taskIds);
+
     setMenuEnabled(false);
   };
 
@@ -123,19 +111,18 @@ const TaskList: React.FC<TaskListProps> = ({ status, tasks}) => {
           // render a TaskForm to add a new task for the task list
           isStaging && (
             <li className={`taskItem taskItem--${status}`}>
-              <TaskForm type="staging" id={status} closeForm={() => setIsStaging(false)} />
+              <TaskForm
+                type="staging"
+                status={status}
+                closeForm={() => setIsStaging(false)}
+              />
             </li>
           )
         }
         {
           // render the taskform items for the list
-          tasks.map(({ key, task, status }) => (
-            <TaskItem
-              key={key}
-              id={key}
-              task={task}
-              status={status}
-            />
+          tasks.map(({ id, description: task, status }) => (
+            <TaskItem key={id} id={id} task={task} status={status} />
           ))
         }
       </ul>

@@ -1,19 +1,25 @@
-export interface Task {
-  id?: string;
-  key: string;
+export type Task = {
+  id: number;
   status: TaskStatus;
-  task: string;
-}
+  description: string;
+};
 
-export interface NewTask {
-  status: TaskStatus;
-  task: string;
-}
+export type UpdateTaskRequest = {
+  id: number;
+} & Partial<NewTask>;
 
-export type TaskStatus = "open" | "inProgress" | "complete";
+export type NewTask = Omit<Task, "id">;
+
+export const TaskStatusEnum = {
+  Todo: "TODO",
+  InProgress: "IN_PROGRESS",
+  Completed: "COMPLETED",
+} as const;
+
+export type TaskStatus = (typeof TaskStatusEnum)[keyof typeof TaskStatusEnum];
 
 export type TaskStatusFilter = "all" | TaskStatus;
 
 export interface TaskDeleteList {
-  [prop: string]: null
+  [prop: string]: null;
 }

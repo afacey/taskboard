@@ -17,19 +17,19 @@ View live at [afacey.github.io/taskboard][live]
 
 ## Requirements
 
-* Uses React, and no jQuery
-* Uses modular components
-* Uses axios and/or Firebase
-* React 'knows' about all DOM changes
-* this.state is never directly changed because .setState() is always used to alter state
-* App is dynamic based on user interaction (e.g. drop-down menu, search field)
-* It is clear to the user what the app does
-* App and interactions are accessible
-* Errors are handled effectively
+- Uses React, and no jQuery
+- Uses modular components
+- Uses axios and/or Firebase
+- React 'knows' about all DOM changes
+- this.state is never directly changed because .setState() is always used to alter state
+- App is dynamic based on user interaction (e.g. drop-down menu, search field)
+- It is clear to the user what the app does
+- App and interactions are accessible
+- Errors are handled effectively
 
 ## Known Issues
 
-* Some versions of Safari and Firefox do not handle the onBlur event of the task form as designed, resulting in users not being able to add, update, and delete tasks
-  * **Current workarounds:**
-    * Use Google Chrome
-    * Use the `tab` and `return` keys to interact with the form
+- Some versions of Safari and Firefox do not handle the onBlur event of the task form as designed, resulting in users not being able to add, update, and delete tasks
+  - **Current workarounds:**
+    - Use Google Chrome
+    - Use the `tab` and `return` keys to interact with the form

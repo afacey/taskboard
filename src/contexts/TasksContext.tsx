@@ -1,7 +1,26 @@
-import React, { useState, useContext, createContext, useEffect, useCallback } from 'react';
-import { retrieveTaskItems } from '../firebase';
-import { UserContext, UserContextData } from './UserContext';
-import {Task, TaskStatus, TaskStatusFilter} from '../types/task';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  createTask,
+  deleteMany,
+  deleteTask,
+  getAllTasks,
+  updateTask,
+} from "../services/task.service";
+import { APIStatuses } from "../types/api.types";
+import {
+  NewTask,
+  Task,
+  TaskStatus,
+  TaskStatusFilter,
+  UpdateTaskRequest,
+} from "../types/task";
+import { UserContext, UserContextData } from "./UserContext";
 interface TasksContextData {
   taskStatus: TaskStatus[];
   taskItems: Task[];
@@ -11,36 +30,100 @@ interface TasksContextData {
   listFilter: TaskStatusFilter;
   setSearchTerms: (searchTerms: string) => void;
   setListFilter: (filter: TaskStatusFilter) => void;
+  createNewTask: (newTask: NewTask) => Promise<void>;
+  removeTask: (id: number) => Promise<void>;
+  removeManyTasks: (ids: number[]) => Promise<void>;
+  modifyTask: (task: UpdateTaskRequest) => Promise<void>;
 }
 
-export const TasksContext = createContext<Partial<TasksContextData>>({});
+export const TasksContext = createContext<TasksContextData | null>(null);
 
-const TasksProvider: React.FC = ({children}) => {
-  const [ loadComplete, setLoadComplete ] = useState<boolean>(false); 
-  const [ taskItems, setTaskItems ] = useState<Task[]>([]);
-  const { user, checkForUser } = useContext<Partial<UserContextData>>(UserContext);
+export const TasksProvider: React.FC = ({ children }) => {
+  const [loadComplete, setLoadComplete] = useState<boolean>(false);
+  const [taskItems, setTaskItems] = useState<Task[]>([]);
+  const { checkForUser } = useContext<Partial<UserContextData>>(UserContext);
 
-  const [ listFilter, setListFilter ] = useState<TaskStatusFilter>("all");
-  const [ searchTerms, setSearchTerms ] = useState<string>("");
+  const [listFilter, setListFilter] = useState<TaskStatusFilter>("all");
+  const [searchTerms, setSearchTerms] = useState<string>("");
 
-  const taskStatus: TaskStatus[] = ['open', 'inProgress', 'complete'];
+  const taskStatus: TaskStatus[] = ["TODO", "IN_PROGRESS", "COMPLETED"];
+
+  async function createNewTask(task: NewTask) {
+    const result = await createTask(task);
+
+    if (result.status === APIStatuses.Success) {
+      addTaskToTaskItems(result.data);
+    }
+  }
+
+  async function removeTask(id: number) {
+    const result = await deleteTask(id);
+
+    if (result.status === APIStatuses.Success) {
+      removeTaskFromTaskItems(id);
+    }
+  }
+
+  async function modifyTask(task: UpdateTaskRequest) {
+    const result = await updateTask(task);
+
+    if (result.status === APIStatuses.Success) {
+      updateTaskFromTaskItems(result.data);
+    }
+  }
+
+  function updateTaskFromTaskItems(updatedTask: Task) {
+    setTaskItems((current) =>
+      current.map((task) => {
+        if (task.id === updatedTask.id) {
+          return updatedTask;
+        }
+
+        return task;
+      }),
+    );
+  }
+
+  async function removeManyTasks(ids: number[]) {
+    const result = await deleteMany(ids);
+
+    if (result.status === APIStatuses.Success) {
+      removeManyTaskFromTaskItems(ids);
+    }
+  }
+
+  function removeTaskFromTaskItems(id: number) {
+    setTaskItems((current) => current.filter((task) => task.id !== id));
+  }
+
+  function removeManyTaskFromTaskItems(ids: number[]) {
+    setTaskItems((current) => current.filter((task) => !ids.includes(task.id)));
+  }
+
+  function addTaskToTaskItems(task: Task) {
+    setTaskItems((current) => [...current, task]);
+  }
 
   // --------------------------- retrieveTaskItems
   const fetchTasks = useCallback(() => {
-    if (user && user.dbRef) {
-      retrieveTaskItems(user.dbRef, setTaskItems)
-    }
-  }, [user])  
+    getAllTasks().then((result) => {
+      if (result.status === "Success") {
+        setTaskItems(result.data);
+      }
+    });
+  }, []);
 
   // retreive tasks once userCheck is true
-  useEffect(function fetchTasksAfterUserCheck() {
-    if (!checkForUser) {
-      fetchTasks();
-      setLoadComplete(true);
-    }
+  useEffect(
+    function fetchTasksAfterUserCheck() {
+      if (!checkForUser) {
+        fetchTasks();
+        setLoadComplete(true);
+      }
+    },
+    [checkForUser, fetchTasks],
+  );
 
-  }, [checkForUser, fetchTasks])
-  
   const value = {
     taskStatus,
     taskItems,
@@ -50,14 +133,25 @@ const TasksProvider: React.FC = ({children}) => {
     listFilter,
     setSearchTerms,
     setListFilter,
-  }
-
+    createNewTask,
+    removeTask,
+    modifyTask,
+    removeManyTasks,
+  };
 
   return (
-    <TasksContext.Provider value={value}>
-      {children}
-    </TasksContext.Provider>
-  )
+    <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
+  );
+};
+
+export function useTasks() {
+  const context = useContext(TasksContext);
+
+  if (!context) {
+    throw Error("`useTasks` must be used within the `TaskContext.Provider`");
+  }
+
+  return context;
 }
 
-export default TasksProvider
+export default TasksProvider;

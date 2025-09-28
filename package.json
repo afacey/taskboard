@@ -28,10 +28,10 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prettier": "prettier . --write"
   },
   "prettier": {},
   "eslintConfig": {
@@ -51,6 +51,9 @@
   },
   "devDependencies": {
     "@types/autosize": "^3.0.7",
-    "typescript": "^3.9.7"
+    "@vitejs/plugin-react": "^5.0.4",
+    "prettier": "3.6.2",
+    "typescript": "^3.9.7",
+    "vite": "^7.1.7"
   }
 }

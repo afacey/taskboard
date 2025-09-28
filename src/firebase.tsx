@@ -52,7 +52,10 @@ export const clearTaskboard = (dbRef: string) => {
   firebase.database().ref(dbRef).remove();
 };
 
-export const retrieveTaskItems = (dbRef: string, setTaskItems: (taskItems: Task[]) => void) => {
+export const retrieveTaskItems = (
+  dbRef: string,
+  setTaskItems: (taskItems: Task[]) => void,
+) => {
   // listener for any value change on the db reference
   firebase
     .database()
@@ -65,7 +68,7 @@ export const retrieveTaskItems = (dbRef: string, setTaskItems: (taskItems: Task[
       for (const key in tasksData) {
         const taskItem: Task = {
           key: key,
-          task: tasksData[key].task,
+          description: tasksData[key].task,
           status: tasksData[key].status,
         };
         taskItems.push(taskItem);

@@ -273,9 +273,9 @@ ul {
 */
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1.6rem;
@@ -585,7 +585,9 @@ main {
 
 .inputContainer__filter label {
   opacity: 0.4;
-  transition: opacity 0.3s, border-color 0.3s;
+  transition:
+    opacity 0.3s,
+    border-color 0.3s;
 }
 .inputContainer__filter label:not(:last-of-type) {
   margin-right: 1rem;
@@ -690,7 +692,9 @@ main {
   top: 0;
   left: 0;
   bottom: 0;
-  transition: color 0.3s, background-color 0.3s;
+  transition:
+    color 0.3s,
+    background-color 0.3s;
 }
 
 .taskList__headingText {
@@ -713,76 +717,76 @@ main {
   gap: 1.5rem;
 }
 
-/* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- OPEN */
-.taskList__header--open {
+/* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- TODO */
+.taskList__header--TODO {
   border-bottom: 5px solid var(--color-red);
 }
-.dark .taskList__header--open {
+.dark .taskList__header--TODO {
   border-bottom: 5px solid var(--color-lightred);
 }
 
-.taskList__header--open .taskList__count,
-.taskList__header--open .taskList__menuBtn {
+.taskList__header--TODO .taskList__count,
+.taskList__header--TODO .taskList__menuBtn {
   color: var(--color-red);
 }
 
-.dark .taskList__header--open .taskList__count,
-.dark .taskList__header--open .taskList__menuBtn {
+.dark .taskList__header--TODO .taskList__count,
+.dark .taskList__header--TODO .taskList__menuBtn {
   color: var(--color-lightred);
 }
 
-.taskList__header--open .taskList__addBtn {
+.taskList__header--TODO .taskList__addBtn {
   background: var(--color-red);
 }
-.dark .taskList__header--open .taskList__addBtn {
+.dark .taskList__header--TODO .taskList__addBtn {
   background: var(--color-lightred);
 }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- IN PROGRESS */
-.taskList__header--inProgress {
+.taskList__header--IN_PROGRESS {
   border-bottom: 5px solid var(--color-blue);
 }
-.dark .taskList__header--inProgress {
+.dark .taskList__header--IN_PROGRESS {
   border-bottom: 5px solid var(--color-lightblue);
 }
 
-.taskList__header--inProgress .taskList__count,
-.taskList__header--inProgress .taskList__menuBtn {
+.taskList__header--IN_PROGRESS .taskList__count,
+.taskList__header--IN_PROGRESS .taskList__menuBtn {
   color: var(--color-blue);
 }
-.dark .taskList__header--inProgress .taskList__count,
-.dark .taskList__header--inProgress .taskList__menuBtn {
+.dark .taskList__header--IN_PROGRESS .taskList__count,
+.dark .taskList__header--IN_PROGRESS .taskList__menuBtn {
   color: var(--color-lightblue);
 }
 
-.taskList__header--inProgress .taskList__addBtn {
+.taskList__header--IN_PROGRESS .taskList__addBtn {
   background: var(--color-blue);
 }
-.dark .taskList__header--inProgress .taskList__addBtn {
+.dark .taskList__header--IN_PROGRESS .taskList__addBtn {
   background: var(--color-lightblue);
 }
 
 /* -------------- MAIN > TASK LISTS > TASK LIST HEADER -- COMPLETE */
-.taskList__header--complete {
+.taskList__header--COMPLETED {
   border-bottom: 5px solid var(--color-green);
 }
-.dark .taskList__header--complete {
+.dark .taskList__header--COMPLETED {
   border-bottom: 5px solid var(--color-lightgreen);
 }
 
-.taskList__header--complete .taskList__count,
-.taskList__header--complete .taskList__menuBtn {
+.taskList__header--COMPLETED .taskList__count,
+.taskList__header--COMPLETED .taskList__menuBtn {
   color: var(--color-green);
 }
-.dark .taskList__header--complete .taskList__count,
-.dark .taskList__header--complete .taskList__menuBtn {
+.dark .taskList__header--COMPLETED .taskList__count,
+.dark .taskList__header--COMPLETED .taskList__menuBtn {
   color: var(--color-lightgreen);
 }
 
-.taskList__header--complete .taskList__addBtn {
+.taskList__header--COMPLETED .taskList__addBtn {
   background: var(--color-green);
 }
-.dark .taskList__header--complete .taskList__addBtn {
+.dark .taskList__header--COMPLETED .taskList__addBtn {
   background: var(--color-lightgreen);
 }
 
@@ -834,24 +838,24 @@ main {
 }
 
 /* rgb(30, 55, 153) */
-.taskItem--open {
+.taskItem--TODO {
   box-shadow: 0 2px 3px var(--color-red-a);
 }
-.dark .taskItem--open {
+.dark .taskItem--TODO {
   box-shadow: 0 2px 3px var(--color-lightred-a);
 }
 
-.taskItem--inProgress {
+.taskItem--IN_PROGRESS {
   box-shadow: 0 2px 3px var(--color-blue-a);
 }
-.dark .taskItem--inProgress {
+.dark .taskItem--IN_PROGRESS {
   box-shadow: 0 2px 3px var(--color-lightblue-a);
 }
 
-.taskItem--complete {
+.taskItem--COMPLETED {
   box-shadow: 0 2px 3px var(--color-green-a);
 }
-.dark .taskItem--complete {
+.dark .taskItem--COMPLETED {
   box-shadow: 0 2px 3px var(--color-lightgreen-a);
 }
 
