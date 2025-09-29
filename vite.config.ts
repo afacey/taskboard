@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  base: "https://github.com/afacey/taskboard",
   server: {
     port: 3000, // Optional: Set your preferred development port
   },
