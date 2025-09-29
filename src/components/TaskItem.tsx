@@ -1,28 +1,27 @@
-import React, { useContext, useState } from "react";
-import TaskForm from "./TaskForm";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { UserContext } from "../contexts/UserContext";
-import { moveTask } from "../firebase";
-import { TasksContext } from "../contexts/TasksContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import { useTasks } from "../contexts/TasksContext";
+import { useUser } from "../contexts/UserContext";
+import TaskForm from "./TaskForm";
 
-import { TaskStatus } from "../types/task"
+import { TaskStatus, TaskStatusEnum } from "../types/task";
 
 type Direction = -1 | 1;
 
 interface TaskItemProps {
-  id: string;
+  id: number;
   task: string;
-  status: TaskStatus
+  status: TaskStatus;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { user } = useContext(UserContext);
-  const { taskStatus } = useContext(TasksContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const { user } = useUser();
+  const { taskStatus, modifyTask } = useTasks();
 
   const changeStatus = (direction: Direction) => {
     if (user && taskStatus) {
@@ -31,39 +30,42 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
 
       // store new index as the value of currentIdx + the direction (1 or - 1)
       let newIdx = currentIdx + direction;
-  
+
       // prevent out of range indexes of the taskStatus array
       // if newIdx < 0 - set to 0, if newIdx gte taskStatus length - set to last item in array, otherwise keep the value
       newIdx =
         newIdx < 0
           ? 0
           : newIdx >= taskStatus.length
-          ? taskStatus.length - 1
-          : newIdx;
-  
+            ? taskStatus.length - 1
+            : newIdx;
+
       if (status !== taskStatus[newIdx]) {
-        moveTask(user.dbRef + id, taskStatus[newIdx]);
+        modifyTask({ id, status: taskStatus[newIdx] });
       }
     }
-
   };
   // --------------------------- handleMovePrev
-  const handleMovePrev = () => { changeStatus(-1); };
+  const handleMovePrev = () => {
+    changeStatus(-1);
+  };
 
   // --------------------------- handleMoveNext
-  const handleMoveNext = () => { changeStatus(1); };
+  const handleMoveNext = () => {
+    changeStatus(1);
+  };
 
   // --------------------------- toggleEdit
   // check if taskFormInput has a value (not cleared by user)
   const toggleEdit = () => {
-    setIsEditing(isEditing => !isEditing);
+    setIsEditing((isEditing) => !isEditing);
   };
 
   return (
     <li className={`taskItem taskItem--${status}`}>
       {
         // If status is 'open' DO NOT render the "previous" status button
-        status !== "open" && (
+        status !== TaskStatusEnum.Todo && (
           <>
             <label htmlFor={`btnPrev--${id}`} className="srOnly">
               Move task to the previous status
@@ -109,7 +111,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
 
       {
         // If status is 'complete' DO NOT render the "next" status button
-        status !== "complete" && (
+        status !== TaskStatusEnum.Completed && (
           <>
             <label htmlFor={`btnNext--${id}`} className="srOnly">
               Move task to the previous status

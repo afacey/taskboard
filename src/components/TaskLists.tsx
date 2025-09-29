@@ -1,45 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { TasksContext } from '../contexts/TasksContext';
-import { filterTaskItems } from '../util';
-import TaskList from './TaskList';
+import React from "react";
+import { useTasks } from "../contexts/TasksContext";
+import { filterTaskItems } from "../util";
+import TaskList from "./TaskList";
 
 const TaskLists: React.FC = () => {
-  const { taskItems, taskStatus, searchTerms, listFilter } = useContext(TasksContext);
-  const [filteredItems, setFilteredItems] = useState(taskItems || [])
-  const [filteredStatus, setFilteredStatus] = useState(taskStatus)
+  const { taskItems, taskStatus, searchTerms, listFilter } = useTasks();
 
-  useEffect(() => {
-    if (searchTerms !== undefined && taskItems?.length) {
-      const filteredItems = filterTaskItems(searchTerms, taskItems)
-      setFilteredItems(filteredItems)
-    }
-  }, [searchTerms, taskItems])
-  
-  useEffect(() => {
-    if (listFilter) {
-      const lists = listFilter === 'all' ? taskStatus : [listFilter];
-      setFilteredStatus(lists)
-    }
-  }, [listFilter, taskStatus])
+  let filteredItems = taskItems;
 
+  if (searchTerms !== undefined && taskItems.length) {
+    filteredItems = filterTaskItems(searchTerms, taskItems);
+  }
+
+  const lists = listFilter === "all" ? taskStatus : [listFilter];
 
   return (
     <section className="taskLists">
-      { 
-        filteredStatus && filteredStatus.map((status) => {
-          const tasks = filteredItems ? filteredItems.filter(task => task.status === status) : [];
-          return (
-            <TaskList 
-              key={status} 
-              status={status}
-              tasks={tasks} 
-            />
-          )
-        })
-      } 
-    </section>
-  )
+      {lists.map((status) => {
+        const tasks = filteredItems.filter((task) => task.status === status);
 
-}
+        return <TaskList key={status} status={status} tasks={tasks} />;
+      })}
+    </section>
+  );
+};
 
 export default TaskLists;
