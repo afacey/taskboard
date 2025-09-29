@@ -5,7 +5,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useTasks } from "../contexts/TasksContext";
-import { useUser } from "../contexts/UserContext";
 import TaskForm from "./TaskForm";
 
 import { TaskStatus, TaskStatusEnum } from "../types/task";
@@ -20,29 +19,26 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const { user } = useUser();
   const { taskStatus, modifyTask } = useTasks();
 
   const changeStatus = (direction: Direction) => {
-    if (user && taskStatus) {
-      // find current status index
-      const currentIdx = taskStatus.indexOf(status);
+    // find current status index
+    const currentIdx = taskStatus.indexOf(status);
 
-      // store new index as the value of currentIdx + the direction (1 or - 1)
-      let newIdx = currentIdx + direction;
+    // store new index as the value of currentIdx + the direction (1 or - 1)
+    let newIdx = currentIdx + direction;
 
-      // prevent out of range indexes of the taskStatus array
-      // if newIdx < 0 - set to 0, if newIdx gte taskStatus length - set to last item in array, otherwise keep the value
-      newIdx =
-        newIdx < 0
-          ? 0
-          : newIdx >= taskStatus.length
-            ? taskStatus.length - 1
-            : newIdx;
+    // prevent out of range indexes of the taskStatus array
+    // if newIdx < 0 - set to 0, if newIdx gte taskStatus length - set to last item in array, otherwise keep the value
+    newIdx =
+      newIdx < 0
+        ? 0
+        : newIdx >= taskStatus.length
+          ? taskStatus.length - 1
+          : newIdx;
 
-      if (status !== taskStatus[newIdx]) {
-        modifyTask({ id, status: taskStatus[newIdx] });
-      }
+    if (status !== taskStatus[newIdx]) {
+      modifyTask({ id, status: taskStatus[newIdx] });
     }
   };
   // --------------------------- handleMovePrev

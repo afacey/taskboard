@@ -9,5 +9,6 @@ export default defineConfig({
   },
   build: {
     outDir: "build", // Optional: Match CRA's default build output
+    assetsDir: ".",
   },
 });
