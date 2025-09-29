@@ -28,8 +28,6 @@ const UserProvider: React.FC = ({ children }) => {
       // if there is a user update state with the dbRef and loggedIn to true
       if (user) {
         setUser({ id: user.uid });
-
-        console.log(user);
       }
       // set checkForUser to false
       setCheckForUser(false);
