@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTasks } from "../contexts/TasksContext";
 
 import { TaskStatus } from "../types/task";
+import { useUser } from "../contexts/UserContext";
 
 export type TaskFormProps =
   | {
@@ -21,6 +22,7 @@ export type TaskFormProps =
 const TaskForm = (props: TaskFormProps) => {
   const { type, taskValue, closeForm } = props;
   const { createNewTask, modifyTask, removeTask } = useTasks();
+  const { user } = useUser();
 
   const formId = type === "staging" ? props.status : props.id;
 
@@ -92,6 +94,7 @@ const TaskForm = (props: TaskFormProps) => {
       await createNewTask({
         description: taskInput,
         status: props.status,
+        ownerId: user?.id ?? null,
       });
     }
 

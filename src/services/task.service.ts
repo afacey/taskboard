@@ -2,9 +2,11 @@ import { TaskServiceBaseUrl } from "../config";
 import { APIStatuses } from "../types/api.types";
 import { NewTask, Task, UpdateTaskRequest } from "../types/task";
 
-export async function getAllTasks() {
+export async function getAllTasks(owner?: string) {
+  const queryParams = owner ? `?ownerId=${owner}` : "";
+
   try {
-    const response = await fetch(TaskServiceBaseUrl);
+    const response = await fetch(TaskServiceBaseUrl + queryParams);
 
     if (!response.ok) {
       return { status: APIStatuses.API_Error, response };

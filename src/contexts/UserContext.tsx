@@ -1,29 +1,35 @@
-import React, { createContext, useState, useEffect } from "react";
-import firebase from "../firebase";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import {
+  authenticateWithGoogle,
+  AuthService,
+  signOutUser,
+} from "../services/auth.service";
 import { User } from "../types/user";
 
 export interface UserContextData {
-  user: User;
+  user: User | null;
   checkForUser: boolean;
   setUser: (user: User) => void;
   signInUser: () => void;
   logoutUser: () => void;
 }
 
-export const UserContext = createContext<Partial<UserContextData>>({});
+export const UserContext = createContext<UserContextData | null>(null);
 
 const UserProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User>({ dbRef: "public/", loggedIn: false });
-  const [checkForUser, setCheckForUser] = useState<boolean>(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [checkForUser, setCheckForUser] = useState(true);
 
   // ------- check if there's a logged in user before retrieving any tasks
   useEffect(function checkForAuthenticatedUser() {
     // check if there is a current user
-    firebase.auth().onAuthStateChanged((user) => {
+    AuthService.onAuthStateChanged((user) => {
       // if there is a user update state with the dbRef and loggedIn to true
       if (user) {
-        setUser({ dbRef: user.uid + "/", loggedIn: true });
+        setUser({ id: user.uid });
+
+        console.log(user);
       }
       // set checkForUser to false
       setCheckForUser(false);
@@ -31,60 +37,38 @@ const UserProvider: React.FC = ({ children }) => {
   }, []);
 
   // --------------------------- signInUser (Google Auth)
-  const signInUser = () => {
-    // create new google auth provider
-    const provider = new firebase.auth.GoogleAuthProvider();
+  const signInUser = async () => {
+    try {
+      const user = await authenticateWithGoogle();
 
-    // initiate sign in with popup using google auth
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(({ user }) => {
-        // once user is signed in, set user info and user's dbRef in state
-        if (user) {
-          setUser({
-            dbRef: user.uid + "/",
-            loggedIn: true,
-          });
-        }
-
-        setCheckForUser(true);
-      })
-      .catch((error) => {
-        // if there is an error, display an alert
-
-        Swal.fire({
-          title: "Oops!",
-          text: "There was an error signing in: " + error,
-          icon: "error",
-          confirmButtonText: "OK",
-        });
+      setUser({ id: user.uid });
+      setCheckForUser(true);
+    } catch (error) {
+      Swal.fire({
+        title: "Oops!",
+        text: "There was an error signing in: " + error,
+        icon: "error",
+        confirmButtonText: "OK",
       });
+    }
   };
 
   // --------------------------- logoutUser
-  const logoutUser = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        // once user is logged out, reset user and dbRef in state
-        setUser({
-          dbRef: "public/",
-          loggedIn: false,
-        });
+  const logoutUser = async () => {
+    try {
+      await signOutUser();
+      setUser(null);
 
-        setCheckForUser(true);
-      })
-      .catch((error) => {
-        // if there is an error, display an alert
-        Swal.fire({
-          title: "Oops!",
-          text: "There was an error while logging out: " + error,
-          icon: "error",
-          confirmButtonText: "OK",
-        });
+      setCheckForUser(true);
+    } catch (error) {
+      // if there is an error, display an alert
+      Swal.fire({
+        title: "Oops!",
+        text: "There was an error while logging out: " + error,
+        icon: "error",
+        confirmButtonText: "OK",
       });
+    }
   };
 
   const value = {
@@ -97,5 +81,15 @@ const UserProvider: React.FC = ({ children }) => {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
+
+export function useUser() {
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw Error("`useUser` can only be used within `UserContext.Provider`");
+  }
+
+  return context;
+}
 
 export default UserProvider;

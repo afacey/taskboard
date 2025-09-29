@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { useTasks } from "../contexts/TasksContext";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { UserContext } from "../contexts/UserContext";
+import { useUser } from "../contexts/UserContext";
 
 const Settings: React.FC = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { user, signInUser, logoutUser } = useContext(UserContext);
+  const { user, signInUser, logoutUser } = useUser();
   const { taskItems, loadComplete, removeManyTasks } = useTasks();
 
   const numOfTasks = taskItems.length;
@@ -24,17 +24,10 @@ const Settings: React.FC = () => {
 
   return (
     <div className="settings">
-      <button
-        onClick={handleClearTaskboard}
-        className="btn btn--black btn__taskBoard btn__taskBoard--clear"
-        disabled={numOfTasks === 0}
-      >
-        Clear Task Board
-      </button>
-      {/* {
+      {
         // check if app has loaded before display sign in / log out buttons
         loadComplete ? (
-          user && user.loggedIn ? ( // check if there is a logged in user
+          user ? ( // check if there is a logged in user
             <button
               onClick={logoutUser}
               className="btn btn--green btn__taskBoard btn__taskBoard--auth"
@@ -51,7 +44,15 @@ const Settings: React.FC = () => {
           )
         ) : // if app has not loaded do not display sign in / log out buttons
         null
-      } */}
+      }
+      <button
+        onClick={handleClearTaskboard}
+        className="btn btn--black btn__taskBoard btn__taskBoard--clear"
+        disabled={numOfTasks === 0}
+      >
+        Clear Task Board
+      </button>
+
       <input
         className="themeToggle__checkbox sr-only"
         type="checkbox"

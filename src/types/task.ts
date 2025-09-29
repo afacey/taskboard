@@ -2,6 +2,7 @@ export type Task = {
   id: number;
   status: TaskStatus;
   description: string;
+  ownerId: string | null;
 };
 
 export type UpdateTaskRequest = {

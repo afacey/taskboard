@@ -1,4 +1,3 @@
-export interface User {
-  dbRef: string;
-  loggedIn: boolean;
-}
+export type User = {
+  id: string;
+};

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   createTask,
   deleteMany,
@@ -20,7 +14,7 @@ import {
   TaskStatusFilter,
   UpdateTaskRequest,
 } from "../types/task";
-import { UserContext, UserContextData } from "./UserContext";
+import { useUser } from "./UserContext";
 interface TasksContextData {
   taskStatus: TaskStatus[];
   taskItems: Task[];
@@ -41,7 +35,7 @@ export const TasksContext = createContext<TasksContextData | null>(null);
 export const TasksProvider: React.FC = ({ children }) => {
   const [loadComplete, setLoadComplete] = useState<boolean>(false);
   const [taskItems, setTaskItems] = useState<Task[]>([]);
-  const { checkForUser } = useContext<Partial<UserContextData>>(UserContext);
+  const { checkForUser, user } = useUser();
 
   const [listFilter, setListFilter] = useState<TaskStatusFilter>("all");
   const [searchTerms, setSearchTerms] = useState<string>("");
@@ -105,23 +99,22 @@ export const TasksProvider: React.FC = ({ children }) => {
   }
 
   // --------------------------- retrieveTaskItems
-  const fetchTasks = useCallback(() => {
-    getAllTasks().then((result) => {
-      if (result.status === "Success") {
-        setTaskItems(result.data);
-      }
-    });
-  }, []);
+  // const fetchTasks = () => {};
 
   // retreive tasks once userCheck is true
   useEffect(
     function fetchTasksAfterUserCheck() {
       if (!checkForUser) {
-        fetchTasks();
-        setLoadComplete(true);
+        getAllTasks(user?.id)
+          .then((result) => {
+            if (result.status === "Success") {
+              setTaskItems(result.data);
+            }
+          })
+          .finally(() => setLoadComplete(true));
       }
     },
-    [checkForUser, fetchTasks],
+    [checkForUser, user],
   );
 
   const value = {

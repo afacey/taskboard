@@ -3,9 +3,9 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTasks } from "../contexts/TasksContext";
-import { UserContext } from "../contexts/UserContext";
+import { useUser } from "../contexts/UserContext";
 import TaskForm from "./TaskForm";
 
 import { TaskStatus, TaskStatusEnum } from "../types/task";
@@ -19,8 +19,8 @@ interface TaskItemProps {
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { user } = useContext(UserContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const { user } = useUser();
   const { taskStatus, modifyTask } = useTasks();
 
   const changeStatus = (direction: Direction) => {
