@@ -23,7 +23,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div className="settings">
+    <div className="settings" data-testid="settings-menu">
       {
         // check if app has loaded before display sign in / log out buttons
         loadComplete ? (

@@ -8,19 +8,17 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.19",
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^26.0.24",
-    "@types/node": "^14.18.63",
-    "@types/react": "^16.14.66",
+    "@types/react": "^16.14.67",
     "@types/react-dom": "^16.9.25",
     "autosize": "^4.0.4",
-    "firebase": "^12.3.0",
+    "firebase": "^12.4.0",
     "font-awesome": "^4.7.0",
     "gh-pages": "^6.3.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-fontawesome": "^1.7.1",
     "sweetalert2": "^10.16.11"
   },
@@ -50,12 +48,14 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
     "@types/autosize": "^3.0.7",
+    "@types/node": "^24.7.2",
     "@vitejs/plugin-react": "^5.0.4",
     "@vitest/coverage-v8": "3.2.4",
     "prettier": "3.6.2",
     "typescript": "^3.9.10",
-    "vite": "^7.1.7",
+    "vite": "^7.1.9",
     "vitest": "^3.2.4"
   }
 }

@@ -83,8 +83,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
         !isEditing ? (
           <>
             <label htmlFor={`taskItem--${id}`} className="srOnly">
-              Click or focus on the text of the task to enter edit mode and
-              modify or delete the task
+              Edit task
             </label>
             <button
               id={`taskItem--${id}`}
@@ -110,7 +109,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, task, status }) => {
         status !== TaskStatusEnum.Completed && (
           <>
             <label htmlFor={`btnNext--${id}`} className="srOnly">
-              Move task to the previous status
+              Move task to the next status
             </label>
             <button
               id={`btnNext--${id}`}

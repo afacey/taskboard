@@ -111,6 +111,7 @@ const TaskForm = (props: TaskFormProps) => {
         onSubmit={handleOnSubmit}
         onBlur={handleBlur}
         className="taskForm"
+        data-testid="task-form"
       >
         <label htmlFor={`taskFormInput_${formId}`} className="srOnly">
           Task Item
