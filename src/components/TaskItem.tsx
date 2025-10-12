@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { useTasks } from "../contexts/TasksContext";
 import TaskForm from "./TaskForm";
 
-import { TaskStatus, TaskStatusEnum } from "../types/task";
+import { TaskStatus, TaskStatusEnum } from "../types/task.type";
 
 type Direction = -1 | 1;
 

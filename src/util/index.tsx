@@ -1,4 +1,4 @@
-import { Task } from "../types/task";
+import { Task } from "../types/task.type";
 
 export const filterTaskItems = (searchText: string, taskItems: Task[]) => {
   // create regex for search terms - case insensistive

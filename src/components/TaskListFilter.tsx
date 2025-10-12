@@ -1,6 +1,6 @@
 import React from "react";
 import { useTasks } from "../contexts/TasksContext";
-import { TaskStatusEnum, TaskStatusFilter } from "../types/task";
+import { TaskStatusEnum, TaskStatusFilter } from "../types/task.type";
 
 export default function TaskListFilter() {
   const { setListFilter } = useTasks();

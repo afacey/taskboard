@@ -30,7 +30,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "test": "vitest"
   },
   "prettier": {},
   "eslintConfig": {
@@ -51,8 +52,10 @@
   "devDependencies": {
     "@types/autosize": "^3.0.7",
     "@vitejs/plugin-react": "^5.0.4",
+    "@vitest/coverage-v8": "3.2.4",
     "prettier": "3.6.2",
     "typescript": "^3.9.10",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,6 +1,6 @@
 import { TaskServiceBaseUrl } from "../config";
-import { APIStatuses } from "../types/api.types";
-import { NewTask, Task, UpdateTaskRequest } from "../types/task";
+import { APIStatuses } from "../types/api.type";
+import { NewTask, Task, UpdateTaskRequest } from "../types/task.type";
 
 export async function getAllTasks(owner?: string) {
   const queryParams = owner ? `?ownerId=${owner}` : "";

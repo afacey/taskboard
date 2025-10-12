@@ -2,7 +2,7 @@ import autosize from "autosize";
 import React, { useEffect, useState } from "react";
 import { useTasks } from "../contexts/TasksContext";
 
-import { TaskStatus } from "../types/task";
+import { TaskStatus } from "../types/task.type";
 import { useUser } from "../contexts/UserContext";
 
 export type TaskFormProps =

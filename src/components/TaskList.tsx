@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
 
-import { Task, TaskStatus, TaskStatusEnum } from "../types/task";
+import { Task, TaskStatus, TaskStatusEnum } from "../types/task.type";
 import { useTasks } from "../contexts/TasksContext";
 
 interface TaskListProps {

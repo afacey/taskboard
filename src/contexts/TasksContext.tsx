@@ -6,14 +6,15 @@ import {
   getAllTasks,
   updateTask,
 } from "../services/task.service";
-import { APIStatuses } from "../types/api.types";
+import { APIStatuses } from "../types/api.type";
 import {
   NewTask,
   Task,
   TaskStatus,
+  TaskStatusEnum,
   TaskStatusFilter,
   UpdateTaskRequest,
-} from "../types/task";
+} from "../types/task.type";
 import { useUser } from "./UserContext";
 interface TasksContextData {
   taskStatus: TaskStatus[];
@@ -33,14 +34,18 @@ interface TasksContextData {
 export const TasksContext = createContext<TasksContextData | null>(null);
 
 export const TasksProvider: React.FC = ({ children }) => {
-  const [loadComplete, setLoadComplete] = useState<boolean>(false);
+  const [loadComplete, setLoadComplete] = useState(false);
   const [taskItems, setTaskItems] = useState<Task[]>([]);
   const { checkForUser, user } = useUser();
 
   const [listFilter, setListFilter] = useState<TaskStatusFilter>("all");
   const [searchTerms, setSearchTerms] = useState<string>("");
 
-  const taskStatus: TaskStatus[] = ["TODO", "IN_PROGRESS", "COMPLETED"];
+  const taskStatus: TaskStatus[] = [
+    TaskStatusEnum.Todo,
+    TaskStatusEnum.InProgress,
+    TaskStatusEnum.Completed,
+  ];
 
   async function createNewTask(task: NewTask) {
     const result = await createTask(task);
