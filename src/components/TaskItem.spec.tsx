@@ -1,21 +1,15 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "../util/TestUtils";
+import { fireEvent, render, screen } from "@testing-library/react";
 import TaskItem from "./TaskItem";
+import { modifyTask } from "../stores/Tasks.store";
 
-const mockModifyTask = vi.fn();
-
-vi.mock(import("../contexts/TasksContext"), async (importOriginal) => {
+vi.mock(import("../stores/Tasks.store"), async (importOriginal) => {
   const original = await importOriginal();
 
   return {
     ...original,
-    useTasks() {
-      return {
-        ...original.useTasks(),
-        modifyTask: mockModifyTask,
-      };
-    },
+    modifyTask: vi.fn(),
   };
 });
 
@@ -53,7 +47,7 @@ describe("<TaskItem />", () => {
 
     fireEvent.click(nextBtn);
 
-    expect(mockModifyTask).toHaveBeenCalledWith({
+    expect(modifyTask).toHaveBeenCalledWith({
       id: 1,
       status: "IN_PROGRESS",
     });
@@ -66,7 +60,7 @@ describe("<TaskItem />", () => {
 
     fireEvent.click(prevBtn);
 
-    expect(mockModifyTask).toHaveBeenCalledWith({
+    expect(modifyTask).toHaveBeenCalledWith({
       id: 1,
       status: "TODO",
     });
@@ -79,7 +73,7 @@ describe("<TaskItem />", () => {
 
     fireEvent.click(nextBtn);
 
-    expect(mockModifyTask).toHaveBeenCalledWith({
+    expect(modifyTask).toHaveBeenCalledWith({
       id: 1,
       status: "COMPLETED",
     });
@@ -92,7 +86,7 @@ describe("<TaskItem />", () => {
 
     fireEvent.click(prevBtn);
 
-    expect(mockModifyTask).toHaveBeenCalledWith({
+    expect(modifyTask).toHaveBeenCalledWith({
       id: 1,
       status: "IN_PROGRESS",
     });

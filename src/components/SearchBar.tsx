@@ -1,17 +1,17 @@
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { useTasks } from "../contexts/TasksContext";
+import { setTaskSearchTerms, useTasks } from "../stores/Tasks.store";
 
 export default function SearchBar() {
-  const { searchTerms, setSearchTerms } = useTasks();
+  const { searchTerms } = useTasks();
 
   const handleSearchInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerms(evt.target.value);
+    setTaskSearchTerms(evt.target.value);
   };
 
   const clearSearch = () => {
-    setSearchTerms("");
+    setTaskSearchTerms("");
   };
 
   return (

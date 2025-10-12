@@ -1,26 +1,14 @@
-import React, { useContext } from "react";
-import { useTasks } from "../contexts/TasksContext";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { useUser } from "../contexts/UserContext";
+import React from "react";
+
+import { clearTaskboard, useTasks } from "../stores/Tasks.store";
+import { toggleTheme, useTheme } from "../stores/Theme.store";
+import { logoutUser, signInUser, useUser } from "../stores/User.store";
 
 const Settings: React.FC = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
-  const { user, signInUser, logoutUser } = useUser();
-  const { taskItems, loadComplete, removeManyTasks } = useTasks();
+  const theme = useTheme();
+  const user = useUser((state) => state.user);
 
-  const numOfTasks = taskItems.length;
-
-  const toggleTheme = () => {
-    if (setTheme) {
-      setTheme(theme === "dark" ? "" : "dark");
-    }
-  };
-
-  const handleClearTaskboard = () => {
-    const taskIds = taskItems.map(({ id }) => id);
-
-    removeManyTasks(taskIds);
-  };
+  const { loadComplete, numOfTasks } = useTasks();
 
   return (
     <div className="settings" data-testid="settings-menu">
@@ -46,7 +34,7 @@ const Settings: React.FC = () => {
         null
       }
       <button
-        onClick={handleClearTaskboard}
+        onClick={clearTaskboard}
         className="btn btn--black btn__taskBoard btn__taskBoard--clear"
         disabled={numOfTasks === 0}
       >
@@ -63,7 +51,7 @@ const Settings: React.FC = () => {
       />
       <label className="themeToggle__label" htmlFor="themeToggle">
         {theme === "dark" ? "Light" : "Dark"} Mode{" "}
-        <span className="themeToggle__toggler"></span>
+        <span className="themeToggle__toggler" />
       </label>
     </div>
   );

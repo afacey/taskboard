@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, expect, it } from "vitest";
-import { fireEvent, render, screen } from "../util/TestUtils";
+import { fireEvent, render, screen } from "@testing-library/react";
 import SearchBar from "./SearchBar";
 
 describe("<SearchBar />", () => {
