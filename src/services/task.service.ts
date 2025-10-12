@@ -1,12 +1,21 @@
 import { TaskServiceBaseUrl } from "../config";
 import { APIStatuses } from "../types/api.type";
 import { NewTask, Task, UpdateTaskRequest } from "../types/task.type";
+import { getAuthorizationHeader } from "../util/ApiUtils";
 
-export async function getAllTasks(owner?: string) {
-  const queryParams = owner ? `?ownerId=${owner}` : "";
+export async function getAllTasks(
+  ownerId: string | undefined,
+  signal: AbortSignal,
+) {
+  const queryParams = ownerId ? `?ownerId=${ownerId}` : "";
 
   try {
-    const response = await fetch(TaskServiceBaseUrl + queryParams);
+    const response = await fetch(TaskServiceBaseUrl + queryParams, {
+      headers: {
+        ...(await getAuthorizationHeader()),
+      },
+      signal,
+    });
 
     if (!response.ok) {
       return { status: APIStatuses.API_Error, response };
@@ -26,6 +35,7 @@ export async function createTask(task: NewTask) {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        ...(await getAuthorizationHeader()),
       },
       body: JSON.stringify(task),
     });
@@ -48,6 +58,7 @@ export async function updateTask(task: UpdateTaskRequest) {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
+        ...(await getAuthorizationHeader()),
       },
       body: JSON.stringify(task),
     });
@@ -68,6 +79,9 @@ export async function deleteTask(taskId: number) {
   try {
     const response = await fetch(`${TaskServiceBaseUrl}/${taskId}`, {
       method: "DELETE",
+      headers: {
+        ...(await getAuthorizationHeader()),
+      },
     });
 
     if (!response.ok) {
@@ -88,6 +102,7 @@ export async function deleteMany(ids: number[]) {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        ...(await getAuthorizationHeader()),
       },
       body: JSON.stringify({
         ids,

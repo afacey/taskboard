@@ -1,14 +1,14 @@
 import React from "react";
-
 import { clearTaskboard, useTasks } from "../stores/Tasks.store";
 import { toggleTheme, useTheme } from "../stores/Theme.store";
 import { logoutUser, signInUser, useUser } from "../stores/User.store";
 
 const Settings: React.FC = () => {
   const theme = useTheme();
-  const user = useUser((state) => state.user);
+  const user = useUser();
 
-  const { loadComplete, numOfTasks } = useTasks();
+  const loadComplete = useTasks((state) => state.loadComplete);
+  const numOfTasks = useTasks((state) => state.taskItems).length;
 
   return (
     <div className="settings" data-testid="settings-menu">

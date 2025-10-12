@@ -1,7 +1,7 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FirebaseApp } from "../firebase";
 
-export const AuthService = getAuth(FirebaseApp);
+const AuthService = getAuth(FirebaseApp);
 
 export async function authenticateWithGoogle() {
   const provider = new GoogleAuthProvider();
@@ -13,4 +13,14 @@ export async function authenticateWithGoogle() {
 
 export function signOutUser() {
   return AuthService.signOut();
+}
+
+export function handleOnAuthStateChanged(
+  callback: Parameters<typeof AuthService.onAuthStateChanged>[0],
+) {
+  AuthService.onAuthStateChanged(callback);
+}
+
+export async function getAuthToken() {
+  return await AuthService.currentUser?.getIdToken();
 }

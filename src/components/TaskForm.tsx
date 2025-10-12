@@ -20,7 +20,7 @@ export type TaskFormProps =
 
 const TaskForm = (props: TaskFormProps) => {
   const { type, taskValue, closeForm } = props;
-  const user = useUser((state) => state.user);
+  const user = useUser();
 
   const formId = type === "staging" ? props.status : props.id;
 

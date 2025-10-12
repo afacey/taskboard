@@ -17,7 +17,6 @@ import {
 interface TasksState {
   taskStatuses: TaskStatus[];
   taskItems: Task[];
-  numOfTasks: number;
   loadComplete: boolean;
   searchTerms: string;
   listFilter: TaskStatusFilter;
@@ -30,7 +29,6 @@ export const useTasks = create<TasksState>()(() => ({
     TaskStatusEnum.Completed,
   ],
   taskItems: [],
-  numOfTasks: 0,
   loadComplete: false,
   searchTerms: "",
   listFilter: "all",

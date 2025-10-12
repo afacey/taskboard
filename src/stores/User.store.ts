@@ -4,31 +4,19 @@ import { User } from "../types/user.type";
 import { showErrorAlert } from "../util/ErrorUtils";
 import { FirebaseError } from "firebase/app";
 
-export interface UserState {
-  user: User | null;
-  userInitialized: boolean;
-}
+export type UserState = User | null;
 
-export const useUser = create<UserState>()(() => ({
-  user: null,
-  userInitialized: false,
-}));
+export const useUser = create<UserState>()(() => null);
 
 export function setUser(user: User) {
-  useUser.setState(() => ({ user }));
-}
-
-export function setUserInitialized(userInitialized: boolean) {
-  useUser.setState(() => ({ userInitialized }));
+  useUser.setState(() => user);
 }
 
 export async function signInUser() {
   try {
     const user = await authenticateWithGoogle();
 
-    useUser.setState(() => ({
-      user: { id: user.uid },
-    }));
+    useUser.setState(() => ({ id: user.uid }));
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === "auth/popup-closed-by-user") return;
@@ -41,7 +29,7 @@ export async function logoutUser() {
   try {
     await signOutUser();
 
-    useUser.setState(() => ({ user: null }));
+    useUser.setState(() => null);
   } catch (error) {
     showErrorAlert("There was an error while logging out: " + error);
   }
