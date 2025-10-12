@@ -1,9 +1,8 @@
 import autosize from "autosize";
 import React, { useEffect, useState } from "react";
-import { useTasks } from "../contexts/TasksContext";
-
+import { createNewTask, modifyTask, removeTask } from "../stores/Tasks.store";
+import { useUser } from "../stores/User.store";
 import { TaskStatus } from "../types/task.type";
-import { useUser } from "../contexts/UserContext";
 
 export type TaskFormProps =
   | {
@@ -21,8 +20,7 @@ export type TaskFormProps =
 
 const TaskForm = (props: TaskFormProps) => {
   const { type, taskValue, closeForm } = props;
-  const { createNewTask, modifyTask, removeTask } = useTasks();
-  const { user } = useUser();
+  const user = useUser((state) => state.user);
 
   const formId = type === "staging" ? props.status : props.id;
 

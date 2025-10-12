@@ -1,16 +1,8 @@
 import React from "react";
-import { useTasks } from "../contexts/TasksContext";
-import { TaskStatusEnum, TaskStatusFilter } from "../types/task.type";
+import { TaskStatusEnum } from "../types/task.type";
+import { setTaskStatusFilter } from "../stores/Tasks.store";
 
 export default function TaskListFilter() {
-  const { setListFilter } = useTasks();
-
-  const changeListFilter = (filter: TaskStatusFilter) => {
-    if (setListFilter) {
-      setListFilter(filter);
-    }
-  };
-
   return (
     <fieldset className="taskBoard__listFilter">
       <div className="inputContainer__filter">
@@ -21,7 +13,7 @@ export default function TaskListFilter() {
           name="listFilter"
           id="filterAll"
           value="all"
-          onChange={() => changeListFilter("all")}
+          onChange={() => setTaskStatusFilter("all")}
           defaultChecked
         />
         <label className="btn btn--black" htmlFor="filterAll">
@@ -34,7 +26,7 @@ export default function TaskListFilter() {
           name="listFilter"
           id="filterOpen"
           value="todo"
-          onChange={() => changeListFilter(TaskStatusEnum.Todo)}
+          onChange={() => setTaskStatusFilter(TaskStatusEnum.Todo)}
         />
         <label className="btn btn--red" htmlFor="filterOpen">
           Todo
@@ -46,7 +38,7 @@ export default function TaskListFilter() {
           name="listFilter"
           id="filterInProgress"
           value="inProgress"
-          onChange={() => changeListFilter(TaskStatusEnum.InProgress)}
+          onChange={() => setTaskStatusFilter(TaskStatusEnum.InProgress)}
         />
         <label className="btn btn--blue" htmlFor="filterInProgress">
           In Progress
@@ -58,7 +50,7 @@ export default function TaskListFilter() {
           name="listFilter"
           id="filterComplete"
           value="complete"
-          onChange={() => changeListFilter(TaskStatusEnum.Completed)}
+          onChange={() => setTaskStatusFilter(TaskStatusEnum.Completed)}
         />
         <label className="btn btn--green" htmlFor="filterComplete">
           Complete

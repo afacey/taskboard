@@ -1,11 +1,10 @@
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { removeManyTasks } from "../stores/Tasks.store";
+import { Task, TaskStatus, TaskStatusEnum } from "../types/task.type";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
-
-import { Task, TaskStatus, TaskStatusEnum } from "../types/task.type";
-import { useTasks } from "../contexts/TasksContext";
 
 interface TaskListProps {
   status: TaskStatus;
@@ -22,7 +21,6 @@ const statusString = {
 const TaskList: React.FC<TaskListProps> = ({ status, tasks }) => {
   const [isStaging, setIsStaging] = useState(false);
   const [menuEnabled, setMenuEnabled] = useState(false);
-  const { removeManyTasks } = useTasks();
 
   // --------------------------- toggleMenuEnabled
   const toggleMenuEnabled = () => setMenuEnabled((menuEnabled) => !menuEnabled);

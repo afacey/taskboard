@@ -1,10 +1,10 @@
 import React from "react";
-import { useTasks } from "../contexts/TasksContext";
 import { filterTaskItems } from "../util";
 import TaskList from "./TaskList";
+import { useTasks } from "../stores/Tasks.store";
 
 const TaskLists: React.FC = () => {
-  const { taskItems, taskStatus, searchTerms, listFilter } = useTasks();
+  const { taskItems, taskStatuses, searchTerms, listFilter } = useTasks();
 
   let filteredItems = taskItems;
 
@@ -12,7 +12,7 @@ const TaskLists: React.FC = () => {
     filteredItems = filterTaskItems(searchTerms, taskItems);
   }
 
-  const lists = listFilter === "all" ? taskStatus : [listFilter];
+  const lists = listFilter === "all" ? taskStatuses : [listFilter];
 
   return (
     <section className="taskLists">
