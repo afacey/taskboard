@@ -1,12 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom";
+
 import App from "./App";
 
 import UserContext from "./contexts/UserContext";
 import ThemeContext from "./contexts/ThemeContext";
 import TasksContext from "./contexts/TasksContext";
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
+const rootNode = document.getElementById("root")!;
+
+const root = createRoot(rootNode);
+
+root.render(
   <React.StrictMode>
     <UserContext>
       <ThemeContext>
@@ -16,5 +21,4 @@ ReactDOM.render(
       </ThemeContext>
     </UserContext>
   </React.StrictMode>,
-  document.getElementById("root"),
 );

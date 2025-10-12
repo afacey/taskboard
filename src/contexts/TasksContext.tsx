@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   createTask,
   deleteMany,
@@ -33,7 +39,7 @@ interface TasksContextData {
 
 export const TasksContext = createContext<TasksContextData | null>(null);
 
-export const TasksProvider: React.FC = ({ children }) => {
+export const TasksProvider = ({ children }: PropsWithChildren) => {
   const [loadComplete, setLoadComplete] = useState(false);
   const [taskItems, setTaskItems] = useState<Task[]>([]);
   const { checkForUser, user } = useUser();

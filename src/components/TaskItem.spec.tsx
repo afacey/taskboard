@@ -1,5 +1,5 @@
 import React from "react";
-import { describe, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "../util/TestUtils";
 import TaskItem from "./TaskItem";
 

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Swal from "sweetalert2";
 import {
   authenticateWithGoogle,
@@ -17,7 +23,7 @@ export interface UserContextData {
 
 export const UserContext = createContext<UserContextData | null>(null);
 
-const UserProvider: React.FC = ({ children }) => {
+const UserProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [checkForUser, setCheckForUser] = useState(true);
 

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, PropsWithChildren, useState } from "react";
 
 interface ThemeContextData {
   theme: string;
@@ -7,7 +7,7 @@ interface ThemeContextData {
 
 export const ThemeContext = createContext<Partial<ThemeContextData>>({});
 
-const ThemeProvider: React.FC = ({ children }) => {
+const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [theme, setTheme] = useState<string>("");
 
   const value: ThemeContextData = {

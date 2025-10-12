@@ -54,7 +54,7 @@ const Settings: React.FC = () => {
       </button>
 
       <input
-        className="themeToggle__checkbox sr-only"
+        className="themeToggle__checkbox srOnly"
         type="checkbox"
         name="themeToggle"
         id="themeToggle"
