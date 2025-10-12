@@ -1,11 +1,10 @@
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { removeManyTasks } from "../stores/Tasks.store";
+import { Task, TaskStatus, TaskStatusEnum } from "../types/task.type";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
-
-import { Task, TaskStatus, TaskStatusEnum } from "../types/task.type";
-import { removeManyTasks, useTasks } from "../stores/Tasks.store";
 
 interface TaskListProps {
   status: TaskStatus;

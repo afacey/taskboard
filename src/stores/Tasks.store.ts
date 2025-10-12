@@ -1,13 +1,10 @@
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import { create } from "zustand";
 import {
   createTask,
   deleteMany,
   deleteTask,
-  getAllTasks,
   updateTask,
 } from "../services/task.service";
-import { useUser } from "../stores/User.store";
 import { APIStatuses } from "../types/api.type";
 import {
   NewTask,
@@ -124,53 +121,3 @@ export function clearTaskboard() {
 
   removeManyTasks(taskIds);
 }
-
-export const TasksContext = createContext<TasksState | null>(null);
-
-export const TasksProvider = ({ children }: PropsWithChildren) => {
-  const [loadComplete, setLoadComplete] = useState(false);
-  const [taskItems, setTaskItems] = useState<Task[]>([]);
-  const userInitialized = useUser((state) => state.userInitialized);
-  const user = useUser((state) => state.user);
-
-  const [listFilter, setListFilter] = useState<TaskStatusFilter>("all");
-  const [searchTerms, setSearchTerms] = useState<string>("");
-
-  const taskStatus: TaskStatus[] = [
-    TaskStatusEnum.Todo,
-    TaskStatusEnum.InProgress,
-    TaskStatusEnum.Completed,
-  ];
-
-  // retreive tasks once userCheck is true
-  useEffect(
-    function fetchTasksAfterUserCheck() {
-      if (userInitialized) {
-        getAllTasks(user?.id)
-          .then((result) => {
-            if (result.status === "Success") {
-              setTaskItems(result.data);
-            }
-          })
-          .finally(() => setLoadComplete(true));
-      }
-    },
-    [userInitialized, user],
-  );
-
-  const value = {
-    taskStatus,
-    taskItems,
-    numOfTasks: taskItems.length,
-    loadComplete,
-    searchTerms,
-    listFilter,
-    setSearchTerms,
-    setListFilter,
-    createNewTask,
-    removeTask,
-    modifyTask,
-    removeManyTasks,
-    clearTaskboard,
-  };
-};
