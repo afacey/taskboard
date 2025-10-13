@@ -9,7 +9,7 @@ export type UpdateTaskRequest = {
   id: number;
 } & Partial<NewTask>;
 
-export type NewTask = Omit<Task, "id">;
+export type NewTask = Omit<Task, "id" | "ownerId">;
 
 export const TaskStatusEnum = {
   Todo: "TODO",

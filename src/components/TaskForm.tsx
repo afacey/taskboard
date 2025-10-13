@@ -1,7 +1,6 @@
 import autosize from "autosize";
 import React, { useEffect, useState } from "react";
 import { createNewTask, modifyTask, removeTask } from "../stores/Tasks.store";
-import { useUser } from "../stores/User.store";
 import { TaskStatus } from "../types/task.type";
 
 export type TaskFormProps =
@@ -20,7 +19,6 @@ export type TaskFormProps =
 
 const TaskForm = (props: TaskFormProps) => {
   const { type, taskValue, closeForm } = props;
-  const user = useUser();
 
   const formId = type === "staging" ? props.status : props.id;
 
@@ -92,7 +90,6 @@ const TaskForm = (props: TaskFormProps) => {
       await createNewTask({
         description: taskInput,
         status: props.status,
-        ownerId: user?.id ?? null,
       });
     }
 
@@ -120,7 +117,7 @@ const TaskForm = (props: TaskFormProps) => {
           name="taskFormInput"
           onChange={handleTaskInputChange}
           value={taskInput}
-        ></textarea>
+        />
 
         {
           // if there is input, display button to clear the text

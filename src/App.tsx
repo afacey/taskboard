@@ -23,7 +23,7 @@ const App = () => {
           setUser({ id: user.uid });
         }
 
-        const result = await getAllTasks(user?.uid, controller.signal);
+        const result = await getAllTasks(controller.signal);
 
         if (result.status === "Success") {
           setTaskItems(result.data);

@@ -3,14 +3,9 @@ import { APIStatuses } from "../types/api.type";
 import { NewTask, Task, UpdateTaskRequest } from "../types/task.type";
 import { getAuthorizationHeader } from "../util/ApiUtils";
 
-export async function getAllTasks(
-  ownerId: string | undefined,
-  signal: AbortSignal,
-) {
-  const queryParams = ownerId ? `?ownerId=${ownerId}` : "";
-
+export async function getAllTasks(signal: AbortSignal) {
   try {
-    const response = await fetch(TaskServiceBaseUrl + queryParams, {
+    const response = await fetch(TaskServiceBaseUrl, {
       headers: {
         ...(await getAuthorizationHeader()),
       },
